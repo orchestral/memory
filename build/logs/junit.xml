@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Orchestra\Memory Test Suite" tests="14" assertions="27" failures="0" errors="0" time="0.205958">
+    <testsuite name="Orchestra\Memory\Tests\Drivers\CacheTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/CacheTest.php" namespace="Orchestra\Memory\Tests\Drivers" fullPackage="Orchestra.Memory.Tests.Drivers" tests="2" assertions="3" failures="0" errors="0" time="0.065781">
+      <testcase name="testInitiateMethod" class="Orchestra\Memory\Tests\Drivers\CacheTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/CacheTest.php" line="52" assertions="3" time="0.049047"/>
+      <testcase name="testShutdownMethod" class="Orchestra\Memory\Tests\Drivers\CacheTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/CacheTest.php" line="65" assertions="0" time="0.016734"/>
+    </testsuite>
+    <testsuite name="Orchestra\Memory\Tests\Drivers\DriverTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/DriverTest.php" namespace="Orchestra\Memory\Tests\Drivers" fullPackage="Orchestra.Memory.Tests.Drivers" tests="5" assertions="14" failures="0" errors="0" time="0.027690">
+      <testcase name="testInitiateMethod" class="Orchestra\Memory\Tests\Drivers\DriverTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/DriverTest.php" line="48" assertions="1" time="0.002434"/>
+      <testcase name="testShutdownMethod" class="Orchestra\Memory\Tests\Drivers\DriverTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/DriverTest.php" line="60" assertions="2" time="0.002698"/>
+      <testcase name="testGetMethod" class="Orchestra\Memory\Tests\Drivers\DriverTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/DriverTest.php" line="74" assertions="8" time="0.014551"/>
+      <testcase name="testPutMethod" class="Orchestra\Memory\Tests\Drivers\DriverTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/DriverTest.php" line="97" assertions="2" time="0.004031"/>
+      <testcase name="testForgetMethod" class="Orchestra\Memory\Tests\Drivers\DriverTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/DriverTest.php" line="118" assertions="1" time="0.003976"/>
+    </testsuite>
+    <testsuite name="Orchestra\Memory\Tests\Drivers\EloquentTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/EloquentTest.php" namespace="Orchestra\Memory\Tests\Drivers" fullPackage="Orchestra.Memory.Tests.Drivers" tests="2" assertions="3" failures="0" errors="0" time="0.047555">
+      <testcase name="testInitiateMethod" class="Orchestra\Memory\Tests\Drivers\EloquentTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/EloquentTest.php" line="32" assertions="3" time="0.013582"/>
+      <testcase name="testShutdownMethod" class="Orchestra\Memory\Tests\Drivers\EloquentTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/EloquentTest.php" line="52" assertions="0" time="0.033973"/>
+    </testsuite>
+    <testsuite name="Orchestra\Memory\Tests\Drivers\FluentTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/FluentTest.php" namespace="Orchestra\Memory\Tests\Drivers" fullPackage="Orchestra.Memory.Tests.Drivers" tests="2" assertions="3" failures="0" errors="0" time="0.058556">
+      <testcase name="testInitiateMethod" class="Orchestra\Memory\Tests\Drivers\FluentTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/FluentTest.php" line="43" assertions="3" time="0.020333"/>
+      <testcase name="testShutdownMethod" class="Orchestra\Memory\Tests\Drivers\FluentTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/FluentTest.php" line="66" assertions="0" time="0.038223"/>
+    </testsuite>
+    <testsuite name="Orchestra\Memory\Tests\Drivers\RuntimeTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/RuntimeTest.php" namespace="Orchestra\Memory\Tests\Drivers" fullPackage="Orchestra.Memory.Tests.Drivers" tests="3" assertions="4" failures="0" errors="0" time="0.006376">
+      <testcase name="testConstructMethod" class="Orchestra\Memory\Tests\Drivers\RuntimeTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/RuntimeTest.php" line="34" assertions="2" time="0.003547"/>
+      <testcase name="testInitiateMethod" class="Orchestra\Memory\Tests\Drivers\RuntimeTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/RuntimeTest.php" line="53" assertions="1" time="0.001478"/>
+      <testcase name="testShutdownMethod" class="Orchestra\Memory\Tests\Drivers\RuntimeTest" file="/Users/crynobone/Projects/illuminate/memory/tests/Drivers/RuntimeTest.php" line="64" assertions="1" time="0.001351"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
