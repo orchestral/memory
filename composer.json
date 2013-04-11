@@ -1,0 +1,28 @@
+{
+	"name": "orchestra/memory",
+	"description": "Orchestra Platform Memory Component",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mior Muhammad Zaki",
+			"email": "crynobone@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3",
+		"orchestra/support": "dev-master"
+	},
+	"require-dev": {
+		"mockery/mockery": "0.8.0"
+	},
+	"suggest": {
+		"laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform",
+		"orchestra/foundation": "Using orchestra/memory with Orchestra Platform"
+	},
+	"autoload": {
+		"psr-0": { 
+			"Orchestra\\Memory" : "src/" 
+		}
+	},
+	"minimum-stability": "dev"
+}
