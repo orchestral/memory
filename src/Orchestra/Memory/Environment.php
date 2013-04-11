@@ -89,7 +89,7 @@ class Environment {
 					break;
 				default :
 					throw new InvalidArgumentException(
-						"Requested Orchestra\Support\Memory Driver [$storage] does not exist."
+						"Requested Orchestra\Memory Driver [$storage] does not exist."
 					);
 			}
 		}

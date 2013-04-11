@@ -57,7 +57,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Runtime::shutdown()
+	 * Test Orchestra\Memory\Drivers\Cache::shutdown()
 	 *
 	 * @test
 	 * @group support

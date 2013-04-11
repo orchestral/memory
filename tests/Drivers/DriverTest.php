@@ -40,7 +40,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Driver::initiate()
+	 * Test Orchestra\Memory\Drivers\Driver::initiate()
 	 *
 	 * @test
 	 * @group support
@@ -52,7 +52,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Driver::shutdown()
+	 * Test Orchestra\Memory\Drivers\Driver::shutdown()
 	 *
 	 * @test
 	 * @group support
@@ -66,7 +66,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Driver::get() method.
+	 * Test Orchestra\Memory\Drivers\Driver::get() method.
 	 *
 	 * @test
 	 * @group support
@@ -89,7 +89,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Driver::put() method.
+	 * Test Orchestra\Memory\Drivers\Driver::put() method.
 	 *
 	 * @test
 	 * @group support
@@ -110,7 +110,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Driver::forget() method.
+	 * Test Orchestra\Memory\Drivers\Driver::forget() method.
 	 *
 	 * @test
 	 * @group support

@@ -24,7 +24,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Fluent::initiate() method.
+	 * Test Orchestra\Memory\Drivers\Eloquent::initiate() method.
 	 *
 	 * @test
 	 * @group support
@@ -44,7 +44,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Support\Memory\Fluent::shutdown() method.
+	 * Test Orchestra\Memory\Drivers\Eloquent::shutdown() method.
 	 *
 	 * @test
 	 * @group support
