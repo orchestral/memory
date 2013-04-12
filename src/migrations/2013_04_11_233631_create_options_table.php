@@ -11,7 +11,8 @@ class CreateOptionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('orchestra_options', function($table) {
+		Schema::create('orchestra_options', function($table) 
+		{
 			$table->increments('id');
 			$table->string('name', 64);
 			$table->binary('value');
