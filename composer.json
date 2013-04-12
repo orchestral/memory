@@ -17,7 +17,7 @@
 	},
 	"suggest": {
 		"laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform",
-		"orchestra/foundation": "Using orchestra/memory with Orchestra Platform"
+		"orchestra/foundation": "Allow using orchestra/memory with Orchestra Platform"
 	},
 	"autoload": {
 		"psr-0": { 
