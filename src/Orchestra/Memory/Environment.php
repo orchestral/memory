@@ -74,11 +74,11 @@ class Environment {
 			switch ($storage)
 			{
 				case 'fluent' :
-					if ($driver === 'default') $driver = Config::get('orchestra::memory.default_table');
+					if ($driver === 'default') $driver = Config::get('orchestra/memory::default_table');
 					$this->instances[$name] = new Drivers\Fluent($driver, $config);
 					break;
 				case 'eloquent' :
-					if ($driver === 'default') $driver = Config::get('orchestra::memory.default_model');
+					if ($driver === 'default') $driver = Config::get('orchestra/memory::default_model');
 					$this->instances[$name] = new Drivers\Eloquent($driver, $config);
 					break;
 				case 'cache' :

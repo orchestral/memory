@@ -38,11 +38,11 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	{
 		$configMock = \Mockery::mock('Config')
 			->shouldReceive('get')
-				->with('orchestra::memory.default_table')
+				->with('orchestra/memory::default_table')
 				->once()
 				->andReturn('options')
 			->shouldReceive('get')
-				->with('orchestra::memory.default_model')
+				->with('orchestra/memory::default_model')
 				->once()
 				->andReturn('options');
 
