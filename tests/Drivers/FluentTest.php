@@ -3,14 +3,23 @@
 class FluentTest extends \PHPUnit_Framework_TestCase {
 
 	/**
+	 * Application mock instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
+
+	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$appMock = \Mockery::mock('Application')
-			->shouldReceive('instance')->andReturn(true);
+		$this->app = \Mockery::mock('\Illuminate\Foundation\Application');
+		$this->app->shouldReceive('instance')
+				->andReturn(true);
 
-		\Illuminate\Support\Facades\DB::setFacadeApplication($appMock->getMock());
+		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
+		\Illuminate\Support\Facades\DB::setFacadeApplication($this->app);
 	}
 
 	/**
@@ -18,6 +27,7 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		unset($this->app);
 		\Mockery::close();
 	}
 
@@ -42,15 +52,17 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInitiateMethod()
 	{
-		$queryMock = \Mockery::mock('DB\Query')
-			->shouldReceive('get')->andReturn(static::providerFluent());
-		$dbMock = \Mockery::mock('DB')
-			->shouldReceive('table')->andReturn($queryMock->getMock());
-		\Illuminate\Support\Facades\DB::swap($dbMock->getMock());
+		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		\Illuminate\Support\Facades\DB::swap($dbMock = \Mockery::mock('DB'));
+
+		$configMock->shouldReceive('get')
+			->once()->with('orchestra/memory::fluent.stub', array())
+			->andReturn(array('table' => 'orchestra_options'));
+
+		$dbMock->shouldReceive('table')->andReturn($queryMock = \Mockery::mock('DB\Query'));
+		$queryMock->shouldReceive('get')->andReturn(static::providerFluent());
 			
-		$stub = new \Orchestra\Memory\Drivers\Fluent('stub', array(
-			'table' => 'orchestra_options',
-		));
+		$stub = new \Orchestra\Memory\Drivers\Fluent($this->app, 'stub');
 
 		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub);
 		$this->assertEquals('foobar', $stub->get('foo'));
@@ -65,36 +77,34 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		$checkWithCountQueryMock = \Mockery::mock('DB\Query')
-			->shouldReceive('count')->andReturn(1);
-		$checkWithoutCountQueryMock = \Mockery::mock('DB\Query')
-			->shouldReceive('count')->andReturn(0);
+		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		\Illuminate\Support\Facades\DB::swap($dbMock = \Mockery::mock('DB'));
 
-		$selectQueryMock = \Mockery::mock('DB\Query')
-			->shouldReceive('update')
+		$configMock->shouldReceive('get')
+			->once()->with('orchestra/memory::fluent.stub', array())
+			->andReturn(array('table' => 'orchestra_options'));
+
+		$dbMock->shouldReceive('table')->andReturn($selectQueryMock = \Mockery::mock('DB\Query'));
+		$selectQueryMock->shouldReceive('update')
 				->with(array('value' => serialize('foobar is wicked')))
 				->once()->andReturn(true)
 			->shouldReceive('insert')
 				->once()->andReturn(true)
 			->shouldReceive('where')
-				->with('name', '=', 'foo')->andReturn($checkWithCountQueryMock->getMock())
+				->with('name', '=', 'foo')->andReturn($checkWithCountQueryMock = \Mockery::mock('DB\Query'))
 			->shouldReceive('where')
-				->with('name', '=', 'hello')->andReturn($checkWithCountQueryMock->getMock())
+				->with('name', '=', 'hello')->andReturn($checkWithCountQueryMock)
 			->shouldReceive('where')
-				->with('name', '=', 'stubbed')->andReturn($checkWithoutCountQueryMock->getMock())
+				->with('name', '=', 'stubbed')->andReturn($checkWithoutCountQueryMock = \Mockery::mock('DB\Query'))
 			->shouldReceive('get')
-				->andReturn(static::providerFluent());
+				->andReturn(static::providerFluent())
+			->shouldReceive('where')
+			->with('id', '=', 1)->andReturn($selectQueryMock);
 
-		$selectQueryMock->shouldReceive('where')
-			->with('id', '=', 1)->andReturn($selectQueryMock->getMock());
+		$checkWithCountQueryMock->shouldReceive('count')->andReturn(1);
+		$checkWithoutCountQueryMock->shouldReceive('count')->andReturn(0);
 
-		$dbMock = \Mockery::mock('DB')
-			->shouldReceive('table')->andReturn($selectQueryMock->getMock());
-		\Illuminate\Support\Facades\DB::swap($dbMock->getMock());
-
-		$stub = new \Orchestra\Memory\Drivers\Fluent('stub', array(
-			'table' => 'orchestra_options',
-		));
+		$stub = new \Orchestra\Memory\Drivers\Fluent($this->app, 'stub');
 
 		$stub->put('foo', 'foobar is wicked');
 		$stub->put('stubbed', 'Foobar was awesome');

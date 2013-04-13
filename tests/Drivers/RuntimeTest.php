@@ -3,6 +3,13 @@
 class RuntimeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
+	 * Application mock instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
+
+	/**
 	 * Stub instance.
 	 *
 	 * @var Orchestra\Memory\Drivers\Runtime
@@ -14,7 +21,19 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->stub = new \Orchestra\Memory\Drivers\Runtime('stub', array());
+		$this->app = \Mockery::mock('\Illuminate\Foundation\Application');
+		$this->app->shouldReceive('instance')
+				->andReturn(true);
+
+		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
+		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+
+		$configMock->shouldReceive('get')
+			->once()
+			->with('orchestra/memory::runtime.stub', array())
+			->andReturn(array());
+
+		$this->stub = new \Orchestra\Memory\Drivers\Runtime($this->app, 'stub');
 	}
 
 	/**
@@ -23,6 +42,8 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->stub);
+		unset($this->app);
+		\Mockery::close();
 	}
 
 	/**

@@ -3,10 +3,30 @@
 class EloquentTest extends \PHPUnit_Framework_TestCase {
 
 	/**
+	 * Application mock instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		$this->app = \Mockery::mock('\Illuminate\Foundation\Application');
+		$this->app->shouldReceive('instance')
+				->andReturn(true);
+
+		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
+	}
+
+	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
+		unset($this->app);
 		\Mockery::close();
 	}
 
@@ -31,12 +51,15 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInitiateMethod()
 	{
-		$mock = \Mockery::mock('EloquentModelMock')
-			->shouldReceive('all')->andReturn(static::providerEloquent());
+		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$configMock->shouldReceive('get')
+			->with('orchestra/memory::eloquent.stub', array())
+			->once()
+			->andReturn(array('model' => $eloquentMock = \Mockery::mock('EloquentModelMock')));
 
-		$stub = new \Orchestra\Memory\Drivers\Eloquent('stub', array(
-			'name' => $mock->getMock(),
-		));
+		$eloquentMock->shouldReceive('all')->andReturn(static::providerEloquent());
+
+		$stub = new \Orchestra\Memory\Drivers\Eloquent($this->app, 'stub');
 
 		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Eloquent', $stub);
 		$this->assertEquals('foobar', $stub->get('foo'));
@@ -51,35 +74,33 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		$fooEntityMock = \Mockery::mock('FooEntityMock')
-			->shouldReceive('fill')->once()->andReturn(true)
-			->shouldReceive('save')->once()->andReturn(true);
+		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$configMock->shouldReceive('get')
+			->with('orchestra/memory::eloquent.stub', array())
+			->once()
+			->andReturn(array('model' => $eloquentMock = \Mockery::mock('EloquentModelMock')));
 
-		$checkWithCountQueryMock = \Mockery::mock('DB\Query')
-			->shouldReceive('count')->andReturn(1)
-			->shouldReceive('first')->andReturn($fooEntityMock->getMock());
-		$checkWithoutCountQueryMock = \Mockery::mock('DB\Query')
-			->shouldReceive('count')->andReturn(0);
-
-		$mock = \Mockery::mock('EloquentModelMock')
-			->shouldReceive('all')
+		$eloquentMock->shouldReceive('all')
 				->andReturn(static::providerEloquent())
 			->shouldReceive('create')
 				->once()->andReturn(true)
 			->shouldReceive('where')
-				->with('name', '=', 'foo')->andReturn($checkWithCountQueryMock->getMock())
+				->with('name', '=', 'foo')->andReturn($checkWithCountQueryMock = \Mockery::mock('DB\Query'))
 			->shouldReceive('where')
-				->with('name', '=', 'hello')->andReturn($checkWithCountQueryMock->getMock())
+				->with('name', '=', 'hello')->andReturn($checkWithCountQueryMock)
 			->shouldReceive('where')
-				->with('name', '=', 'stubbed')->andReturn($checkWithoutCountQueryMock->getMock());
+				->with('name', '=', 'stubbed')->andReturn($checkWithoutCountQueryMock = \Mockery::mock('DB\Query'));
 
-		$stub = new \Orchestra\Memory\Drivers\Eloquent('stub', array(
-			'name' => $mock->getMock(),
-		));
+		$checkWithCountQueryMock->shouldReceive('count')->andReturn(1)
+			->shouldReceive('first')->andReturn($fooEntityMock = \Mockery::mock('FooEntityMock'));
+		$checkWithoutCountQueryMock->shouldReceive('count')->andReturn(0);
+		$fooEntityMock->shouldReceive('fill')->once()->andReturn(true)
+			->shouldReceive('save')->once()->andReturn(true);
+		
+		$stub = new \Orchestra\Memory\Drivers\Eloquent($this->app, 'stub');
 
 		$stub->put('foo', 'foobar is wicked');
 		$stub->put('stubbed', 'Foobar was awesome');
-		
 
 		$stub->shutdown();
 	}

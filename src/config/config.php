@@ -3,26 +3,53 @@
 return array(
 	
 	/*
-	|--------------------------------------------------------------------------
-	| Default Table for Memory with Fluent Driver
-	|--------------------------------------------------------------------------
+	|----------------------------------------------------------------------
+	| Default Driver
+	|----------------------------------------------------------------------
 	|
-	| Specify the default table name to be used when using 
-	| `Orchestra\Memory::make('fluent');`.
+	| Set default driver for Orchestra\Memory.
 	|
 	*/
 
-	'default_table' => 'orchestra_options',
+	'driver' => 'fluent.default',
 
 	/*
-	|--------------------------------------------------------------------------
-	| Default Model for Memory with Eloquent Driver
-	|--------------------------------------------------------------------------
-	|
-	| Specify the default model name to be used when using 
-	| `Orchestra\Memory::make('eloquent');`.
-	|
+	|----------------------------------------------------------------------
+	| Cache configuration
+	|----------------------------------------------------------------------
+	*/
+	
+	'cache'  => array(),
+	
+	/*
+	|----------------------------------------------------------------------
+	| Eloquent configuration
+	|----------------------------------------------------------------------
 	*/
 
-	'default_model' => 'Orchestra\Memory\Model',
+	'eloquent' => array(
+		'default' => array(
+			'model' => '\Orchestra\Memory\Model',
+		),
+	),
+	
+	/*
+	|----------------------------------------------------------------------
+	| Fluent configuration
+	|----------------------------------------------------------------------
+	*/
+
+	'fluent' => array(
+		'default' => array(
+			'table' => 'orchestra_options',
+		),
+	),
+
+	/*
+	|----------------------------------------------------------------------
+	| Runtime configuration
+	|----------------------------------------------------------------------
+	*/
+
+	'runtime' => array(),
 );

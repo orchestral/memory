@@ -1,6 +1,13 @@
 <?php namespace Orchestra\Memory\Tests\Drivers;
 
 class CacheTest extends \PHPUnit_Framework_TestCase {
+	
+	/**
+	 * Application mock instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
 
 	/**
 	 * Stub instance.
@@ -22,17 +29,25 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 			),
 		);
 
-		$appMock = \Mockery::mock('Application')
-			->shouldReceive('instance')->andReturn(true);
-		
-		$cacheMock = \Mockery::mock('Cache')
-			->shouldReceive('get')->andReturn($value);
-		\Illuminate\Support\Facades\Cache::setFacadeApplication(
-			$appMock->getMock()
-		);
-		\Illuminate\Support\Facades\Cache::swap($cacheMock->getMock());
+		$this->app = \Mockery::mock('Illuminate\Foundation\Application');
+		$this->app->shouldReceive('instance')
+			->andReturn(true);
 
-		$this->stub = new \Orchestra\Memory\Drivers\Cache('cachemock');
+		\Illuminate\Support\Facades\Cache::setFacadeApplication($this->app);
+		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
+		\Illuminate\Support\Facades\Cache::swap($cacheMock = \Mockery::mock('Cache'));
+		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+
+		$cacheMock->shouldReceive('get')
+				->once()
+				->andReturn($value);
+		
+		$configMock->shouldReceive('get')
+			->once()
+			->with('orchestra/memory::cache.cachemock', array())
+			->andReturn(array());
+
+		$this->stub = new \Orchestra\Memory\Drivers\Cache($this->app, 'cachemock');
 	}
 	
 	/**
@@ -40,6 +55,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		unset($this->app);
 		\Mockery::close();
 	}
 

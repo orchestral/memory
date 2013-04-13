@@ -1,7 +1,16 @@
 <?php namespace Orchestra\Memory\Drivers;
 
+use Illuminate\Support\Facades\Config;
+
 abstract class Driver {
 	
+	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
+
 	/**
 	 * Memory name
 	 *
@@ -37,13 +46,19 @@ abstract class Driver {
 	/**
 	 * Construct an instance.
 	 *
-	 * @access  public
-	 * @param   string  $storage    set storage configuration (default to 'runtime').
+	 * @access public								
+	 * @param  Illuminate\Foundation\Application    $app
+	 * @param  string                               $name
+	 * @return void
 	 */
-	public function __construct($name = 'default', $config = array()) 
+	public function __construct($app, $name = 'default') 
 	{
+		$this->app    = $app;
 		$this->name   = $name;
-		$this->config = is_array($config) ? $config : array(); 
+		$this->config = array_merge(
+			Config::get("orchestra/memory::{$this->storage}.{$name}", array()),
+			$this->config
+		);
 
 		$this->initiate();
 	}

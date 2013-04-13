@@ -11,9 +11,9 @@ class MemoryServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['orchestra.memory'] = $this->app->share(function()
+		$this->app['orchestra.memory'] = $this->app->share(function($app)
 		{
-			return new Environment;
+			return new MemoryManager($app);
 		});
 	}
 }

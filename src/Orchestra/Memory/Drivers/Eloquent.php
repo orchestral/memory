@@ -28,7 +28,7 @@ class Eloquent extends Driver {
 	 */
 	public function initiate() 
 	{
-		$this->name = isset($this->config['name']) ? $this->config['name'] : $this->name;
+		$this->name = isset($this->config['model']) ? $this->config['model'] : $this->name;
 		
 		$memories = call_user_func(array($this->name, 'all'));
 
