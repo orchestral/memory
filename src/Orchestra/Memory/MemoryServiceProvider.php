@@ -16,4 +16,14 @@ class MemoryServiceProvider extends ServiceProvider {
 			return new MemoryManager($app);
 		});
 	}
+
+	/**
+	 * Bootstrap the application events.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		$this->package('orchestra/memory', 'orchestra/memory');
+	}
 }
