@@ -163,14 +163,21 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethodForDefaultDriver()
 	{
-		$app['config']['orchestra/memory::driver'] = 'runtime.default';
-
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
 		
-		$configMock->shouldReceive('get')
+		$config->shouldReceive('get')
 				->with('orchestra/memory::runtime.default', array())
 				->once()
 				->andReturn(array());
+
+		$app = array(
+			'config' => ($appConfig = \Mockery::mock('Config')),
+		);
+		
+		$appConfig->shouldReceive('get')
+				->with('orchestra/memory::config.driver')
+				->once()
+				->andReturn('runtime.default');
 
 		$stub = new \Orchestra\Memory\MemoryManager($app);
 		$stub->make();
