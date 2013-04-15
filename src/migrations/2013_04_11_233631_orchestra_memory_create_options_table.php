@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionsTable extends Migration {
+class OrchestraMemoryCreateOptionsTable extends Migration {
 
 	/**
 	 * Run the migrations.
