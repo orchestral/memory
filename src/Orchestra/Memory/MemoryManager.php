@@ -64,7 +64,7 @@ class MemoryManager extends Manager {
 	 */
 	protected function getDefaultDriver()
 	{
-		return $this->app['config']['orchestra/memory::driver'];
+		return $this->app['config']->get('orchestra/memory::driver');
 	}
 
 	/**
