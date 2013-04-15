@@ -175,7 +175,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 		);
 		
 		$appConfig->shouldReceive('get')
-				->with('orchestra/memory::config.driver')
+				->with('orchestra/memory::config.driver', 'fluent.default')
 				->once()
 				->andReturn('runtime.default');
 
