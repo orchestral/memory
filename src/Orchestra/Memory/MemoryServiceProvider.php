@@ -43,4 +43,14 @@ class MemoryServiceProvider extends ServiceProvider {
 			$app->make('orchestra.memory')->shutdown();
 		});
 	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array('orchestra.memory');
+	}
 }
