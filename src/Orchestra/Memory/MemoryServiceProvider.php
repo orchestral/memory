@@ -15,8 +15,6 @@ class MemoryServiceProvider extends ServiceProvider {
 		{
 			return new MemoryManager($app);
 		});
-		
-		$this->package('orchestra/memory', 'orchestra/memory');
 	}
 
 	/**
@@ -26,16 +24,8 @@ class MemoryServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->registerMemoryEvents();
-	}
-
-	/**
-	 * Register the events needed for memory.
-	 *
-	 * @return void
-	 */
-	protected function registerMemoryEvents()
-	{
+		$this->package('orchestra/memory', 'orchestra/memory');
+		
 		$app = $this->app;
 
 		$app->after(function($request, $response) use ($app)
