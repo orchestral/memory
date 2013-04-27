@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Memory\Drivers;
 
-use Illuminate\Support\Facades\DB,
-	Orchestra\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Orchestra\Support\Str;
 
 class Fluent extends Driver {
 	

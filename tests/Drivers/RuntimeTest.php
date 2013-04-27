@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Memory\Tests\Drivers;
 
+use Mockery as m;
+use Orchestra\Memory\Drivers\Runtime;
+
 class RuntimeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,33 +10,31 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @var Illuminate\Foundation\Application
 	 */
-	protected $app = null;
+	private $app = null;
 
 	/**
 	 * Stub instance.
 	 *
 	 * @var Orchestra\Memory\Drivers\Runtime
 	 */
-	protected $stub = null;
+	private $stub = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$this->app = \Mockery::mock('\Illuminate\Foundation\Application');
-		$this->app->shouldReceive('instance')
-				->andReturn(true);
+		$this->app = m::mock('\Illuminate\Foundation\Application');
+		$config    = m::mock('Config');
+
+		$this->app->shouldReceive('instance')->andReturn(true);
+		$config->shouldReceive('get')
+			->once()->with('orchestra/memory::runtime.stub', array())->andReturn(array());
 
 		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		\Illuminate\Support\Facades\Config::swap($config);
 
-		$configMock->shouldReceive('get')
-			->once()
-			->with('orchestra/memory::runtime.stub', array())
-			->andReturn(array());
-
-		$this->stub = new \Orchestra\Memory\Drivers\Runtime($this->app, 'stub');
+		$this->stub = new Runtime($this->app, 'stub');
 	}
 
 	/**
@@ -43,14 +44,13 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	{
 		unset($this->stub);
 		unset($this->app);
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
 	 * Test Orchestra\Memory\Drivers\Runtime::__construct()
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testConstructMethod()
 	{
@@ -69,7 +69,6 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Runtime::initiate()
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testInitiateMethod()
 	{
@@ -80,7 +79,6 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Runtime::shutdown()
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testShutdownMethod()
 	{

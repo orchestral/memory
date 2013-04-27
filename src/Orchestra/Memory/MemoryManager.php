@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Memory;
 
-use Closure,
-	InvalidArgumentException,
-	Illuminate\Support\Facades\Config,
-	Orchestra\Support\Manager;
+use Closure;
+use InvalidArgumentException;
+use Illuminate\Support\Facades\Config;
+use Orchestra\Support\Manager;
 
 class MemoryManager extends Manager {
 	

@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Memory\Tests\Drivers;
 
+use Mockery as m;
+
 class DriverTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,16 +9,15 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @var Illuminate\Foundation\Application
 	 */
-	protected $app = null;
+	private $app = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$this->app = \Mockery::mock('\Illuminate\Foundation\Application');
-		$this->app->shouldReceive('instance')
-				->andReturn(true);
+		$this->app = m::mock('\Illuminate\Foundation\Application');
+		$this->app->shouldReceive('instance')->andReturn(true);
 
 		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
 	}
@@ -27,7 +28,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->app);
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -37,12 +38,12 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function getMockInstance1()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$config = m::mock('Config');
 
-		$configMock->shouldReceive('get')
-			->with('orchestra/memory::teststub.default', array())
-			->once()
-			->andReturn(array());
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$config->shouldReceive('get')
+			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
 		$mock = new MemoryDriverStub($this->app);
 		$mock->put('foo.bar', 'hello world');
@@ -58,12 +59,12 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function getMockInstance2()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$config = m::mock('Config');
 
-		$configMock->shouldReceive('get')
-			->with('orchestra/memory::teststub.default', array())
-			->once()
-			->andReturn(array());
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$config->shouldReceive('get')
+			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
 		$mock = new MemoryDriverStub($this->app);
 		$mock->put('foo.bar', 'hello world');
@@ -85,16 +86,15 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Driver::initiate()
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testInitiateMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$config = m::mock('Config');
 
-		$configMock->shouldReceive('get')
-			->with('orchestra/memory::teststub.default', array())
-			->once()
-			->andReturn(array());
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$config->shouldReceive('get')
+			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
 		$stub = new MemoryDriverStub($this->app);
 		$this->assertTrue($stub->initiated);
@@ -104,16 +104,15 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Driver::shutdown()
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testShutdownMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$config = m::mock('Config');
 
-		$configMock->shouldReceive('get')
-			->with('orchestra/memory::teststub.default', array())
-			->once()
-			->andReturn(array());
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$config->shouldReceive('get')
+			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
 		$stub = new MemoryDriverStub($this->app);
 		$this->assertFalse($stub->shutdown);
@@ -125,7 +124,6 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Driver::get() method.
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testGetMethod()
 	{
@@ -148,16 +146,15 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Driver::put() method.
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testPutMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
+		$config = m::mock('Config');
 
-		$configMock->shouldReceive('get')
-			->with('orchestra/memory::teststub.default', array())
-			->once()
-			->andReturn(array());
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$config->shouldReceive('get')
+			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
 		$stub = new MemoryDriverStub($this->app);
 
@@ -176,7 +173,6 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Memory\Drivers\Driver::forget() method.
 	 *
 	 * @test
-	 * @group support
 	 */
 	public function testForgetMethod()
 	{

@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Memory\Tests;
 
+use Mockery as m;
+use Orchestra\Memory\MemoryManager;
+
 class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,26 +10,26 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @var Illuminate\Foundation\Application
 	 */
-	protected $app = null;
+	private $app = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$this->app = \Mockery::mock('\Illuminate\Foundation\Application');
-		$this->app->shouldReceive('instance')
-				->andReturn(true);
+		$this->app = m::mock('\Illuminate\Foundation\Application');
+		$cache     = m::mock('Cache');
+
+		$this->app->shouldReceive('instance')->andReturn(true);
 
 		\Illuminate\Support\Facades\Cache::setFacadeApplication($this->app);
 		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
 		\Illuminate\Support\Facades\DB::setFacadeApplication($this->app);
 		
-		$cacheMock = \Mockery::mock('Cache')
-			->shouldReceive('get')->andReturn(array())
+		$cache->shouldReceive('get')->andReturn(array())
 			->shouldReceive('forever')->andReturn(true);
 
-		\Illuminate\Support\Facades\Cache::swap($cacheMock->getMock());
+		\Illuminate\Support\Facades\Cache::swap($cache);
 	}
 
 	/**
@@ -35,7 +38,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->app);
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -46,41 +49,28 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
-		\Illuminate\Support\Facades\DB::swap($dbMock = \Mockery::mock('DB'));
+		$config   = m::mock('Config');
+		$db       = m::mock('DB');
+		$eloquent = m::mock('EloquentModelMock');
+		$query    = m::mock('DB\Query');
 
-		$configMock->shouldReceive('get')
-				->with('orchestra/memory::cache.default', array())
-				->once()
-				->andReturn(array())
-			->shouldReceive('get')
-				->with('orchestra/memory::fluent.default', array())
-				->once()
-				->andReturn(array('table' => 'orchestra_options'))
-			->shouldReceive('get')
-				->with('orchestra/memory::eloquent.default', array())
-				->once()
-				->andReturn(array('model' => $eloquentMock = \Mockery::mock('EloquentModelMock')))
-			->shouldReceive('get')
-				->with('orchestra/memory::runtime.default', array())
-				->once()
-				->andReturn(array());
+		\Illuminate\Support\Facades\Config::swap($config);
+		\Illuminate\Support\Facades\DB::swap($db);
 
-		$eloquentMock->shouldReceive('all')->andReturn(array());
-		
-		$dbMock->shouldReceive('table')->andReturn($queryMock = \Mockery::mock('DB\Query'));
-		$queryMock->shouldReceive('get')->andReturn(array());
+		$config->shouldReceive('get')->with('orchestra/memory::cache.default', array())->once()->andReturn(array())
+			->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
+			->shouldReceive('get')->with('orchestra/memory::eloquent.default', array())->once()->andReturn(array('model' => $eloquent))
+			->shouldReceive('get')->with('orchestra/memory::runtime.default', array())->once()->andReturn(array());
+		$eloquent->shouldReceive('all')->andReturn(array());
+		$db->shouldReceive('table')->andReturn($query);
+		$query->shouldReceive('get')->andReturn(array());
 
-		$stub = new \Orchestra\Memory\MemoryManager($this->app);
+		$stub = new MemoryManager($this->app);
 
-		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Runtime', 
-			$stub->make('runtime')); 
-		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Cache', 
-			$stub->make('cache')); 
-		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Eloquent', 
-			$stub->make('eloquent')); 
-		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', 
-			$stub->make('fluent')); 
+		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Runtime', $stub->make('runtime')); 
+		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Cache', $stub->make('cache')); 
+		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Eloquent', $stub->make('eloquent')); 
+		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub->make('fluent')); 
 	}
 
 	/**
@@ -90,7 +80,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeExpectedException()
 	{
-		with(new \Orchestra\Memory\MemoryManager($this->app))->make('orm');
+		with(new MemoryManager($this->app))->make('orm');
 	}
 
 	/**
@@ -100,14 +90,13 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testStubMemory()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
-		
-		$configMock->shouldReceive('get')
-				->with('orchestra/memory::stub.mock', array())
-				->once()
-				->andReturn(array());
+		$config = m::mock('Config');
 
-		$stub = new \Orchestra\Memory\MemoryManager($this->app);
+		\Illuminate\Support\Facades\Config::swap($config);
+		
+		$config->shouldReceive('get')->with('orchestra/memory::stub.mock', array())->once()->andReturn(array());
+
+		$stub = new MemoryManager($this->app);
 
 		$stub->extend('stub', function($app, $name) 
 		{
@@ -139,14 +128,13 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($configMock = \Mockery::mock('Config'));
-		
-		$configMock->shouldReceive('get')
-				->with('orchestra/memory::runtime.fool', array())
-				->twice()
-				->andReturn(array());
+		$config = m::mock('Config');
 
-		$stub = new \Orchestra\Memory\MemoryManager($this->app);
+		\Illuminate\Support\Facades\Config::swap($config);
+		
+		$config->shouldReceive('get')->with('orchestra/memory::runtime.fool', array())->twice()->andReturn(array());
+
+		$stub = new MemoryManager($this->app);
 		$foo  = $stub->make('runtime.fool');
 
 		$this->assertTrue($foo === $stub->make('runtime.fool'));
@@ -163,23 +151,19 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethodForDefaultDriver()
 	{
-		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
-		
-		$config->shouldReceive('get')
-				->with('orchestra/memory::runtime.default', array())
-				->once()
-				->andReturn(array());
+		$config    = m::mock('Config');
+		$appConfig = m::mock('Config');
 
-		$app = array(
-			'config' => ($appConfig = \Mockery::mock('Config')),
-		);
+		\Illuminate\Support\Facades\Config::swap($config);
 		
-		$appConfig->shouldReceive('get')
-				->with('orchestra/memory::config.driver', 'fluent.default')
-				->once()
-				->andReturn('runtime.default');
+		$config->shouldReceive('get')->with('orchestra/memory::runtime.default', array())->once()->andReturn(array());
 
-		$stub = new \Orchestra\Memory\MemoryManager($app);
+		$app = array('config' => $appConfig);
+		
+		$appConfig->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')
+			->once()->andReturn('runtime.default');
+
+		$stub = new MemoryManager($app);
 		$stub->make();
 	}
 }
