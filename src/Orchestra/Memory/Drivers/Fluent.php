@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Memory\Drivers;
 
-use Illuminate\Support\Facades\DB;
 use Orchestra\Support\Str;
 
 class Fluent extends Driver {
@@ -22,14 +21,6 @@ class Fluent extends Driver {
 	protected $table   = null;
 
 	/**
-	 * Cached key value map with md5 checksum
-	 *
-	 * @access  protected
-	 * @var     array
-	 */
-	protected $keyMap = array();
-
-	/**
 	 * Load the data from database using Fluent Query Builder
 	 *
 	 * @access  public
@@ -39,7 +30,7 @@ class Fluent extends Driver {
 	{
 		$this->table = isset($this->config['table']) ? $this->config['table'] : $this->name;
 		
-		$memories = DB::table($this->table)->get();
+		$memories = $this->app['db']->table($this->table)->get();
 
 		foreach ($memories as $memory)
 		{
@@ -47,10 +38,10 @@ class Fluent extends Driver {
 
 			$this->put($memory->name, unserialize($value));
 
-			$this->keyMap[$memory->name] = array(
-				'id'       => $memory->id,
-				'checksum' => md5($value),
-			);
+			$this->addKey($memory->name, array(
+				'id'    => $memory->id,
+				'value' => $value,
+			));
 		}
 	}
 
@@ -64,42 +55,27 @@ class Fluent extends Driver {
 	{
 		foreach ($this->data as $key => $value)
 		{
-			$is_new   = true;
-			$id       = null;
-			$checksum = '';
-			
-			if (array_key_exists($key, $this->keyMap))
+			$isNew = $this->isNewKey($key);
+			$id    = $this->getKeyId($key);
+
+			$serializedValue = serialize($value);
+
+			if ($this->check($key, $serializedValue)) continue;
+
+			$count = $this->app['db']->table($this->table)->where('name', '=', $key)->count();
+
+			if (true === $isNew and $count < 1)
 			{
-				$is_new = false;
-				extract($this->keyMap[$key]);
-			}
-
-			$serialize = serialize($value);
-
-			if ($checksum === md5($serialize))
-			{
-				continue;
-			}
-
-			$count = DB::table($this->table)->where('name', '=', $key)->count();
-
-			if (true === $is_new and $count < 1)
-			{
-				// Insert the new key:value
-				DB::table($this->table)
-					->insert(array(
-						'name'  => $key,
-						'value' => $serialize,
-					));
+				$this->app['db']->table($this->table)->insert(array(
+					'name'  => $key,
+					'value' => $serializedValue,
+				));
 			}
 			else
 			{
-				// Update the key:value
-				DB::table($this->table)
-					->where('id', '=', $id)
-					->update(array(
-						'value' => $serialize,
-					)); 
+				$this->app['db']->table($this->table)->where('id', '=', $id)->update(array(
+					'value' => $serializedValue,
+				)); 
 			}
 		}
 	}

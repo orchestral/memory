@@ -5,29 +5,10 @@ use Mockery as m;
 class DriverTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Application mock instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
-
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$this->app = m::mock('\Illuminate\Foundation\Application');
-		$this->app->shouldReceive('instance')->andReturn(true);
-
-		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
-	}
-
-	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
-		unset($this->app);
 		m::close();
 	}
 
@@ -38,14 +19,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function getMockInstance1()
 	{
-		$config = m::mock('Config');
-
-		\Illuminate\Support\Facades\Config::swap($config);
+		$app = array(
+			'config' => $config = m::mock('Config')
+		);
 
 		$config->shouldReceive('get')
 			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
-		$mock = new MemoryDriverStub($this->app);
+		$mock = new MemoryDriverStub($app);
 		$mock->put('foo.bar', 'hello world');
 		$mock->put('username', 'laravel');
 
@@ -59,14 +40,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function getMockInstance2()
 	{
-		$config = m::mock('Config');
-
-		\Illuminate\Support\Facades\Config::swap($config);
+		$app = array(
+			'config' => $config = m::mock('Config')
+		);
 
 		$config->shouldReceive('get')
 			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
-		$mock = new MemoryDriverStub($this->app);
+		$mock = new MemoryDriverStub($app);
 		$mock->put('foo.bar', 'hello world');
 		$mock->put('username', 'laravel');
 		$mock->put('foobar', function ()
@@ -89,14 +70,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInitiateMethod()
 	{
-		$config = m::mock('Config');
-
-		\Illuminate\Support\Facades\Config::swap($config);
+		$app = array(
+			'config' => $config = m::mock('Config')
+		);
 
 		$config->shouldReceive('get')
 			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
-		$stub = new MemoryDriverStub($this->app);
+		$stub = new MemoryDriverStub($app);
 		$this->assertTrue($stub->initiated);
 	}
 
@@ -107,14 +88,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		$config = m::mock('Config');
-
-		\Illuminate\Support\Facades\Config::swap($config);
+		$app = array(
+			'config' => $config = m::mock('Config')
+		);
 
 		$config->shouldReceive('get')
 			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
-		$stub = new MemoryDriverStub($this->app);
+		$stub = new MemoryDriverStub($app);
 		$this->assertFalse($stub->shutdown);
 		$stub->shutdown();
 		$this->assertTrue($stub->shutdown);
@@ -149,14 +130,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testPutMethod()
 	{
-		$config = m::mock('Config');
-
-		\Illuminate\Support\Facades\Config::swap($config);
+		$app = array(
+			'config' => $config = m::mock('Config')
+		);
 
 		$config->shouldReceive('get')
 			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
-		$stub = new MemoryDriverStub($this->app);
+		$stub = new MemoryDriverStub($app);
 
 		$refl = new \ReflectionObject($stub);
 		$data = $refl->getProperty('data');

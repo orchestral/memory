@@ -6,13 +6,6 @@ use Orchestra\Memory\Drivers\Runtime;
 class RuntimeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Application mock instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
-
-	/**
 	 * Stub instance.
 	 *
 	 * @var Orchestra\Memory\Drivers\Runtime
@@ -24,17 +17,14 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->app = m::mock('\Illuminate\Foundation\Application');
-		$config    = m::mock('Config');
+		$app = array(
+			'config' => $config = m::mock('Config'),
+		);
 
-		$this->app->shouldReceive('instance')->andReturn(true);
 		$config->shouldReceive('get')
 			->once()->with('orchestra/memory::runtime.stub', array())->andReturn(array());
 
-		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
-		\Illuminate\Support\Facades\Config::swap($config);
-
-		$this->stub = new Runtime($this->app, 'stub');
+		$this->stub = new Runtime($app, 'stub');
 	}
 
 	/**
@@ -43,7 +33,6 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->stub);
-		unset($this->app);
 		m::close();
 	}
 

@@ -36,6 +36,14 @@ abstract class Driver {
 	protected $data = array();
 
 	/**
+	 * Cached key value map with md5 checksum
+	 *
+	 * @access  protected
+	 * @var     array
+	 */
+	protected $keyMap = array();
+
+	/**
 	 * Storage name
 	 * 
 	 * @access  protected
@@ -56,7 +64,7 @@ abstract class Driver {
 		$this->app    = $app;
 		$this->name   = $name;
 		$this->config = array_merge(
-			Config::get("orchestra/memory::{$this->storage}.{$name}", array()),
+			$app['config']->get("orchestra/memory::{$this->storage}.{$name}", array()),
 			$this->config
 		);
 
@@ -106,6 +114,58 @@ abstract class Driver {
 	public function forget($key = null)
 	{
 		return array_forget($this->data, $key);
+	}
+
+	/**
+	 * Add key with id and checksum.
+	 *
+	 * @access protected
+	 * @param  string   $name
+	 * @param  array    $option
+	 * @return void
+	 */
+	protected function addKey($name, $option)
+	{
+		$option['checksum']  = md5($option['value']);
+		$this->keyMap[$name] = $option;
+	}
+
+	/**
+	 * Is new key.
+	 *
+	 * @access protected
+	 * @param  string   $name
+	 * @return integer
+	 */
+	protected function getKeyId($name)
+	{
+		return array_get($this->keyMap, "{$name}.id");
+	}
+
+	/**
+	 * Get ID from key.
+	 *
+	 * 
+	 * @access protected
+	 * @param  string   $name
+	 * @return boolean
+	 */
+	protected function isNewKey($name)
+	{
+		return ! isset($this->keyMap[$name]);
+	}
+
+	/**
+	 * Verify checksum.
+	 * 
+	 * @access protected
+	 * @param  string   $name
+	 * @param  string   $check
+	 * @return void
+	 */
+	protected function check($name, $check = '')
+	{
+		return (array_get($this->keyMap, "{$name}.checksum") === md5($check));
 	}
 
 	/**

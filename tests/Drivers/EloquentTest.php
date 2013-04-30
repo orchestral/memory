@@ -6,29 +6,10 @@ use Orchestra\Memory\Drivers\Eloquent;
 class EloquentTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Application mock instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
-
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$this->app = m::mock('\Illuminate\Foundation\Application');
-		$this->app->shouldReceive('instance')->andReturn(true);
-
-		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
-	}
-
-	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
-		unset($this->app);
 		m::close();
 	}
 
@@ -52,17 +33,18 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInitiateMethod()
 	{
-		$config   = m::mock('Config');
-		$eloquent = m::mock('EloquentModelMock');
+		$app = array(
+			'config' => $config = m::mock('Config'),
+		);
 
-		\Illuminate\Support\Facades\Config::swap($config);
+		$eloquent = m::mock('EloquentModelMock');
 		
 		$config->shouldReceive('get')
 			->with('orchestra/memory::eloquent.stub', array())
 			->once()->andReturn(array('model' => $eloquent));
 		$eloquent->shouldReceive('all')->andReturn(static::providerEloquent());
 
-		$stub = new Eloquent($this->app, 'stub');
+		$stub = new Eloquent($app, 'stub');
 
 		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Eloquent', $stub);
 		$this->assertEquals('foobar', $stub->get('foo'));
@@ -76,14 +58,15 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		$config                 = m::mock('Config');
+		$app = array(
+			'config' => $config = m::mock('Config'),
+		);
+
 		$eloquent               = m::mock('EloquentModelMock');
 		$checkWithCountQuery    = m::mock('DB\Query');
 		$checkWithoutCountQuery = m::mock('DB\Query');
 		$fooEntity              = m::mock('FooEntityMock');
 
-		\Illuminate\Support\Facades\Config::swap($config);
-		
 		$config->shouldReceive('get')
 			->with('orchestra/memory::eloquent.stub', array())
 			->once()->andReturn(array('model' => $eloquent));
@@ -96,10 +79,9 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 		$checkWithCountQuery->shouldReceive('count')->andReturn(1)
 			->shouldReceive('first')->andReturn($fooEntity);
 		$checkWithoutCountQuery->shouldReceive('count')->andReturn(0);
-		$fooEntity->shouldReceive('fill')->once()->andReturn(true)
-			->shouldReceive('save')->once()->andReturn(true);
+		$fooEntity->shouldReceive('save')->once()->andReturn(true);
 		
-		$stub = new Eloquent($this->app, 'stub');
+		$stub = new Eloquent($app, 'stub');
 
 		$stub->put('foo', 'foobar is wicked');
 		$stub->put('stubbed', 'Foobar was awesome');

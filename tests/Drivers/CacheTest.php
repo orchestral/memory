@@ -4,7 +4,7 @@ use Mockery as m;
 use Orchestra\Memory\Drivers\Cache;
 
 class CacheTest extends \PHPUnit_Framework_TestCase {
-	
+
 	/**
 	 * Application mock instance.
 	 *
@@ -24,11 +24,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		
-
-		$this->app = m::mock('Illuminate\Foundation\Application');
-		$cache = m::mock('Cache');
-		$config = m::mock('Config');
+		$this->app = array(
+			'cache'  => $cache = m::mock('Cache'),
+			'config' => $config = m::mock('Config'),
+		);
 
 		$value = array(
 			'name' => 'Orchestra',
@@ -38,16 +37,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 			),
 		);
 
-		$this->app->shouldReceive('instance')->andReturn(true);
 		$cache->shouldReceive('get')->once()->andReturn($value);
 		$config->shouldReceive('get')->once()->with('orchestra/memory::cache.cachemock', array())->andReturn(array());
-
-		\Illuminate\Support\Facades\Cache::setFacadeApplication($this->app);
-		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
-		\Illuminate\Support\Facades\Cache::swap($cache);
-		\Illuminate\Support\Facades\Config::swap($config);
-
-		$this->stub = new Cache($this->app, 'cachemock');
 	}
 	
 	/**
@@ -56,7 +47,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		unset($this->app);
-		unset($this->stub);
 		m::close();
 	}
 
@@ -67,9 +57,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInitiateMethod()
 	{	
-		$this->assertEquals('Orchestra', $this->stub->get('name'));
-		$this->assertEquals('default', $this->stub->get('theme.backend'));
-		$this->assertEquals('default', $this->stub->get('theme.frontend'));
+		$stub = new Cache($this->app, 'cachemock');
+		$this->assertEquals('Orchestra', $stub->get('name'));
+		$this->assertEquals('default', $stub->get('theme.backend'));
+		$this->assertEquals('default', $stub->get('theme.frontend'));
 	}
 
 	/**
@@ -79,11 +70,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		$cache = m::mock('Cache');
+		$app = $this->app;
+		
+		$app['cache']->shouldReceive('forever')->once()->andReturn(true);
 
-		$cache->shouldReceive('forever')->once()->andReturn(true);
-		\Illuminate\Support\Facades\Cache::swap($cache);
-
-		$this->stub->shutdown();
+		with(new Cache($app, 'cachemock'))->shutdown();
 	}
 }

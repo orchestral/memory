@@ -38,10 +38,10 @@ class Eloquent extends Driver {
 
 			$this->put($memory->name, unserialize($value));
 
-			$this->keyMap[$memory->name] = array(
-				'id'       => $memory->id,
-				'checksum' => md5($value),
-			);
+			$this->addKey($memory->name, array(
+				'id'    => $memory->id,
+				'value' => $value,
+			));
 		}
 	}
 
@@ -55,38 +55,27 @@ class Eloquent extends Driver {
 	{
 		foreach ($this->data as $key => $value)
 		{
-			$is_new   = true;
-			$id       = null;
-			$checksum = '';
-			
-			if (array_key_exists($key, $this->keyMap))
-			{
-				$is_new = false;
-				extract($this->keyMap[$key]);
-			}
+			$isNew = $this->isNewKey($key);
+			$id    = $this->getKeyId($key);
 
-			$serialize = serialize($value);
+			$serializedValue = serialize($value);
 
-			if ($checksum === md5($serialize))
-			{
-				continue;
-			}
+			if ($this->check($key, $serializedValue)) continue;
 
-			$count = call_user_func(array($this->name, 'where'), 'name', '=', $key)->count();
+			$where = array('name', '=', $key);
+			$count = call_user_func_array(array($this->name, 'where'), $where)->count();
 
-			if (true === $is_new and $count < 1)
+			if (true === $isNew and $count < 1)
 			{
 				call_user_func(array($this->name, 'create'), array(
 					'name'  => $key,
-					'value' => $serialize,
+					'value' => $serializedValue,
 				));
 			}
 			else
 			{
-				$memory = call_user_func(array($this->name, 'where'), 'name', '=', $key)->first();
-				$memory->fill(array(
-					'value' => $serialize,
-				));
+				$memory = call_user_func_array(array($this->name, 'where'), $where)->first();
+				$memory->value = $serializedValue;
 
 				$memory->save();
 			}

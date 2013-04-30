@@ -6,30 +6,10 @@ use Orchestra\Memory\Drivers\Fluent;
 class FluentTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Application mock instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
-
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$this->app = m::mock('\Illuminate\Foundation\Application');
-		$this->app->shouldReceive('instance')->andReturn(true);
-
-		\Illuminate\Support\Facades\Config::setFacadeApplication($this->app);
-		\Illuminate\Support\Facades\DB::setFacadeApplication($this->app);
-	}
-
-	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
-		unset($this->app);
 		m::close();
 	}
 
@@ -53,12 +33,12 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInitiateMethod()
 	{
-		$db     = m::mock('DB');
-		$config = m::mock('Config');
-		$query  = m::mock('DB\Query');
-
-		\Illuminate\Support\Facades\Config::swap($config);
-		\Illuminate\Support\Facades\DB::swap($db);
+		$app = array(
+			'config' => $config = m::mock('Config'),
+			'db'     => $db = m::mock('DB'),
+		);
+		
+		$query = m::mock('DB\Query');
 
 		$config->shouldReceive('get')
 			->once()->with('orchestra/memory::fluent.stub', array())
@@ -67,7 +47,7 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 		$db->shouldReceive('table')->andReturn($query);
 		$query->shouldReceive('get')->andReturn(static::providerFluent());
 			
-		$stub = new Fluent($this->app, 'stub');
+		$stub = new Fluent($app, 'stub');
 
 		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub);
 		$this->assertEquals('foobar', $stub->get('foo'));
@@ -82,8 +62,11 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testShutdownMethod()
 	{
-		$config                 = m::mock('Config');
-		$db                     = m::mock('DB');
+		$app = array(
+			'config' => $config = m::mock('Config'),
+			'db'     => $db = m::mock('DB'),
+		);
+
 		$selectQuery            = m::mock('DB\Query');
 		$checkWithCountQuery    = m::mock('DB\Query');
 		$checkWithoutCountQuery = m::mock('DB\Query');
@@ -101,10 +84,7 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('where')->with('id', '=', 1)->andReturn($selectQuery);
 		$db->shouldReceive('table')->andReturn($selectQuery);
 
-		\Illuminate\Support\Facades\Config::swap($config);
-		\Illuminate\Support\Facades\DB::swap($db);
-
-		$stub = new Fluent($this->app, 'stub');
+		$stub = new Fluent($app, 'stub');
 
 		$stub->put('foo', 'foobar is wicked');
 		$stub->put('stubbed', 'Foobar was awesome');
