@@ -13,14 +13,6 @@ class Eloquent extends Driver {
 	protected $storage = 'eloquent';
 
 	/**
-	 * Cached key value map with md5 checksum
-	 *
-	 * @access  protected
-	 * @var     array
-	 */
-	protected $keyMap = array();
-
-	/**
 	 * Load the data from database using Eloquent ORM
 	 *
 	 * @access  public
