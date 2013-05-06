@@ -68,14 +68,14 @@ class MemoryManager extends Manager {
 	}
 
 	/**
-	 * Loop every instance and execute shutdown method (if available)
+	 * Loop every instance and execute finish method (if available)
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown()
+	public function finish()
 	{
-		foreach ($this->drivers as $class) $class->shutdown();
+		foreach ($this->drivers as $class) $class->finish();
 
 		$this->drivers = array();
 	}

@@ -55,12 +55,12 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Memory\Drivers\Fluent::shutdown() method.
+	 * Test Orchestra\Memory\Drivers\Fluent::finish() method.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testShutdownMethod()
+	public function testFinishMethod()
 	{
 		$app = array(
 			'config' => $config = m::mock('Config'),
@@ -88,6 +88,6 @@ class FluentTest extends \PHPUnit_Framework_TestCase {
 
 		$stub->put('foo', 'foobar is wicked');
 		$stub->put('stubbed', 'Foobar was awesome');
-		$stub->shutdown();
+		$stub->finish();
 	}
 }

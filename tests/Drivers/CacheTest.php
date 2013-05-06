@@ -64,16 +64,16 @@ class CacheTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Memory\Drivers\Cache::shutdown()
+	 * Test Orchestra\Memory\Drivers\Cache::finish()
 	 *
 	 * @test
 	 */
-	public function testShutdownMethod()
+	public function testFinishMethod()
 	{
 		$app = $this->app;
 		
 		$app['cache']->shouldReceive('forever')->once()->andReturn(true);
 
-		with(new Cache($app, 'cachemock'))->shutdown();
+		with(new Cache($app, 'cachemock'))->finish();
 	}
 }

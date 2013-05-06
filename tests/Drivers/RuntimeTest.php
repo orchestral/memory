@@ -65,12 +65,12 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Memory\Drivers\Runtime::shutdown()
+	 * Test Orchestra\Memory\Drivers\Runtime::finish()
 	 *
 	 * @test
 	 */
-	public function testShutdownMethod()
+	public function testFinishMethod()
 	{
-		$this->assertTrue($this->stub->shutdown());
+		$this->assertTrue($this->stub->finish());
 	}
 }

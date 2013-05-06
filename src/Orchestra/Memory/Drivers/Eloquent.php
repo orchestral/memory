@@ -38,12 +38,12 @@ class Eloquent extends Driver {
 	}
 
 	/**
-	 * Add a shutdown event using Eloquent ORM
+	 * Add a finish event using Eloquent ORM
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown() 
+	public function finish() 
 	{
 		foreach ($this->data as $key => $value)
 		{

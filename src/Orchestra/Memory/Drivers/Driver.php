@@ -184,5 +184,5 @@ abstract class Driver {
 	 * @access  public
 	 * @return  void
 	 */
-	public abstract function shutdown();
+	public abstract function finish();
 }

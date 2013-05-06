@@ -82,11 +82,11 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Memory\Drivers\Driver::shutdown()
+	 * Test Orchestra\Memory\Drivers\Driver::finish()
 	 *
 	 * @test
 	 */
-	public function testShutdownMethod()
+	public function testFinishMethod()
 	{
 		$app = array(
 			'config' => $config = m::mock('Config')
@@ -96,9 +96,9 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 			->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
 
 		$stub = new MemoryDriverStub($app);
-		$this->assertFalse($stub->shutdown);
-		$stub->shutdown();
-		$this->assertTrue($stub->shutdown);
+		$this->assertFalse($stub->finish);
+		$stub->finish();
+		$this->assertTrue($stub->finish);
 	}
 
 	/**
@@ -166,8 +166,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 
 class MemoryDriverStub extends \Orchestra\Memory\Drivers\Driver {
 
-	public $initiated = false;
-	public $shutdown  = false;
+	public $initiated  = false;
+	public $finish     = false;
 	protected $storage = 'teststub';
 
 	public function initiate() 
@@ -175,8 +175,8 @@ class MemoryDriverStub extends \Orchestra\Memory\Drivers\Driver {
 		$this->initiated = true;
 	}
 
-	public function shutdown() 
+	public function finish() 
 	{
-		$this->shutdown = true;
+		$this->finish = true;
 	}
 }

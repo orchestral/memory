@@ -112,11 +112,11 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Memory\MemoryManager::shutdown() method.
+	 * Test Orchestra\Memory\MemoryManager::finish() method.
 	 *
 	 * @test
 	 */
-	public function testShutdownMethod()
+	public function testFinishMethod()
 	{
 		$app           = $this->app;
 		$app['config'] = $config = m::mock('Config');
@@ -128,7 +128,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($foo === $stub->make('runtime.fool'));
 
-		$stub->shutdown();
+		$stub->finish();
 
 		$this->assertFalse($foo === $stub->make('runtime.fool'));
 	}
@@ -171,12 +171,12 @@ class MemoryStub extends \Orchestra\Memory\Drivers\Driver
 	public function initiate() {}
 
 	/**
-	 * No shutdown method for runtime
+	 * No finish method for runtime
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown() {}
+	public function finish() {}
 }
 
 class EloquentModelMock {

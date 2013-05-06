@@ -46,12 +46,12 @@ class Fluent extends Driver {
 	}
 
 	/**
-	 * Add a shutdown event using Fluent Query Builder
+	 * Add a finish event using Fluent Query Builder
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown() 
+	public function finish() 
 	{
 		foreach ($this->data as $key => $value)
 		{

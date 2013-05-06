@@ -22,12 +22,12 @@ class Cache extends Driver {
 	}
 	
 	/**
-	 * Add a shutdown event using Cache
+	 * Add a finish event using Cache
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown() 
+	public function finish() 
 	{
 		$this->app['cache']->forever('orchestra.memory.'.$this->name, $this->data);
 	}

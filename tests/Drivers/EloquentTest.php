@@ -52,11 +52,11 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Memory\Drivers\Eloquent::shutdown() method.
+	 * Test Orchestra\Memory\Drivers\Eloquent::finish() method.
 	 *
 	 * @test
 	 */
-	public function testShutdownMethod()
+	public function testFinishMethod()
 	{
 		$app = array(
 			'config' => $config = m::mock('Config'),
@@ -86,7 +86,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase {
 		$stub->put('foo', 'foobar is wicked');
 		$stub->put('stubbed', 'Foobar was awesome');
 
-		$stub->shutdown();
+		$stub->finish();
 	}
 }
 

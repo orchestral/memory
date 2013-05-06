@@ -22,12 +22,12 @@ class Runtime extends Driver {
 	}
 
 	/**
-	 * No shutdown method for runtime
+	 * No finish method for runtime
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown() 
+	public function finish() 
 	{
 		return true;
 	}
