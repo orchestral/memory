@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Closure;
+use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Manager;
@@ -60,11 +61,29 @@ class MemoryManager extends Manager {
 	 * 
 	 * @access protected
 	 * @param  string   $name
-	 * @return Orchestra\Widget\Drivers\Placeholder
+	 * @return Orchestra\Widget\Drivers\Fluent
 	 */
 	protected function getDefaultDriver()
 	{
 		return $this->app['config']->get('orchestra/memory::config.driver', 'fluent.default');
+	}
+
+	/**
+	 * Make default driver or fallback to runtime.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function makeOrFallback($fallbackName = 'orchestra')
+	{
+		try 
+		{
+			return $this->make();
+		} 
+		catch (Exception $e) 
+		{
+			return $this->driver("runtime.{$fallbackName}");
+		}
 	}
 
 	/**
