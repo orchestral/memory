@@ -29,17 +29,6 @@ Next add the service provider in `app/config/app.php`.
 ),
 ```
 
-You might want to add `Orchestra\Memory` to class aliases in `app/config/app.php`:
-
-```php
-'aliases' => array(
-
-	// ...
-
-	'Orchestra\Memory' => 'Orchestra\Support\Facades\Memory',
-),
-```
-
 ## Resources
 
 * [Documentation](http://docs.orchestraplatform.com/pages/components/memory)
