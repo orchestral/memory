@@ -66,6 +66,55 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test that Orchestra\Memory\MemoryManager::makeOrFallback() method.
+	 * 
+	 * @test
+	 */
+	public function testMakeOrFallbackMethodReturnFluent()
+	{
+		$app           = $this->app;
+		$app['config'] = $config = m::mock('Config');
+		$app['db']     = $db = m::mock('DB');
+		
+		$eloquent = m::mock('EloquentModelMock');
+		$query    = m::mock('DB\Query');
+
+		$config->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')->once()->andReturn('fluent.default')
+			->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
+			->shouldReceive('get')->with('orchestra/memory::runtime.orchestra', array())->never()->andReturn(array());
+		$db->shouldReceive('table')->once()->with('orchestra_options')->andReturn($query);
+		$query->shouldReceive('get')->once()->andReturn(array());
+
+		$stub = new MemoryManager($app);
+
+		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub->makeOrFallback());
+	}
+
+	/**
+	 * Test that Orchestra\Memory\MemoryManager::makeOrFallback() method.
+	 * 
+	 * @test
+	 */
+	public function testMakeOrFallbackMethodReturnRuntime()
+	{
+		$app           = $this->app;
+		$app['config'] = $config = m::mock('Config');
+		$app['db']     = $db = m::mock('DB');
+		
+		$eloquent = m::mock('EloquentModelMock');
+		$query    = m::mock('DB\Query');
+
+		$config->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')->once()->andReturn('fluent.default')
+			->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
+			->shouldReceive('get')->with('orchestra/memory::runtime.orchestra', array())->once()->andReturn(array());
+		$db->shouldReceive('table')->once()->with('orchestra_options')->andThrow('Exception');
+
+		$stub = new MemoryManager($app);
+
+		$this->assertInstanceOf('\Orchestra\Memory\Drivers\Runtime', $stub->makeOrFallback());
+	}
+
+	/**
 	 * Test that Orchestra\Memory\MemoryManager::make() return exception when given invalid driver
 	 *
 	 * @expectedException \InvalidArgumentException
