@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 class MemoryServiceProvider extends ServiceProvider {
 
@@ -25,6 +26,12 @@ class MemoryServiceProvider extends ServiceProvider {
 		$this->app['orchestra.memory'] = $this->app->share(function($app)
 		{
 			return new MemoryManager($app);
+		});
+
+		$this->app->booting(function()
+		{
+			$loader = AliasLoader::getInstance();
+			$loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
 		});
 	}
 
