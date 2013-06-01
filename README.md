@@ -31,5 +31,5 @@ Next add the service provider in `app/config/app.php`.
 
 ## Resources
 
-* [Documentation](http://docs.orchestraplatform.com/pages/components/memory)
+* [Documentation](http://orchestraplatform.com/docs/2.0/components/memory)
 * [Change Logs](https://github.com/orchestral/memory/wiki/Change-Logs)
