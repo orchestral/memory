@@ -3,7 +3,7 @@ Orchestra Platform Memory Component
 
 Orchestra\Memory handles runtime configuration either using 'in memory' Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Orchestra\Memory allow those configuration to be persistent in between request by utilizing multiple data storage option either through cache or database.
 
-[![Build Status](https://travis-ci.org/orchestral/memory.png?branch=master)](https://travis-ci.org/orchestral/memory)
+[![Build Status](https://travis-ci.org/orchestral/memory.png?branch=2.0)](https://travis-ci.org/orchestral/memory) [![Coverage Status](https://coveralls.io/repos/orchestral/memory/badge.png?branch=2.0)](https://coveralls.io/r/orchestral/memory?branch=2.0)
 
 ## Quick Installation
 
