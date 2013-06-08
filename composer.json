@@ -1,12 +1,14 @@
 {
 	"name": "orchestra/memory",
 	"description": "Orchestra Platform Memory Component",
-	"keywords": ["orchestra-platform", "laravel"],
 	"license": "MIT",
+	"homepage": "http://orchestraplatform.com/docs/2.0/components/memory/",
+	"keywords": ["orchestra-platform", "orchestral", "laravel"],
 	"authors": [
 		{
 			"name": "Mior Muhammad Zaki",
-			"email": "crynobone@gmail.com"
+			"email": "crynobone@gmail.com",
+			"homepage": "https://github.com/crynobone"
 		}
 	],
 	"autoload": {
@@ -16,7 +18,7 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"orchestra/support": "2.0.*"
+		"orchestra/support": "self.version"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0",
