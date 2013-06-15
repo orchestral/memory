@@ -1,61 +1,54 @@
 <?php namespace Orchestra\Memory\Drivers;
 
-use Illuminate\Support\Facades\Config;
-
 abstract class Driver {
 	
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 
 	/**
-	 * Memory name
+	 * Memory name.
 	 *
-	 * @access  protected
-	 * @var     string
+	 * @var string
 	 */
 	protected $name = null;
 
 	/**
-	 * Memory configuration
+	 * Memory configuration.
 	 *
-	 * @access  protected
-	 * @var     array
+	 * @var array
 	 */
 	protected $config = array();
 
 	/**
-	 * Collection of key-value pair of either configuration or data
+	 * Collection of key-value pair of either configuration or data.
 	 * 
-	 * @access  protected
-	 * @var     array
+	 * @var array
 	 */
 	protected $data = array();
 
 	/**
-	 * Cached key value map with md5 checksum
-	 *
-	 * @access  protected
-	 * @var     array
+	 * Cached key value map with md5 checksum.
+	 * 
+	 * @var array
 	 */
 	protected $keyMap = array();
 
 	/**
-	 * Storage name
+	 * Storage name.
 	 * 
-	 * @access  protected
-	 * @var     string  
+	 * @var string  
 	 */
 	protected $storage;
 
 	/**
 	 * Construct an instance.
 	 *
-	 * @access public								
-	 * @param  Illuminate\Foundation\Application    $app
+	 * @access public	
+	 * @param  \Illuminate\Foundation\Application   $app
 	 * @param  string                               $name
 	 * @return void
 	 */
@@ -72,12 +65,12 @@ abstract class Driver {
 	}
 
 	/**
-	 * Get value of a key
+	 * Get value of a key.
 	 *
-	 * @access  public
-	 * @param   string  $key        A string of key to search.
-	 * @param   mixed   $default    Default value if key doesn't exist.
-	 * @return  mixed
+	 * @access public
+	 * @param  string   $key        A string of key to search.
+	 * @param  mixed    $default    Default value if key doesn't exist.
+	 * @return mixed
 	 */
 	public function get($key = null, $default = null)
 	{
@@ -89,12 +82,12 @@ abstract class Driver {
 	}
 
 	/**
-	 * Set a value from a key
+	 * Set a value from a key.
 	 *
-	 * @access  public
-	 * @param   string  $key        A string of key to add the value.
-	 * @param   mixed   $value      The value.
-	 * @return  mixed
+	 * @access public
+	 * @param  string   $key    A string of key to add the value.
+	 * @param  mixed    $value  The value.
+	 * @return mixed
 	 */
 	public function put($key, $value = '')
 	{
@@ -105,11 +98,11 @@ abstract class Driver {
 	}
 
 	/**
-	 * Delete value of a key
+	 * Delete value of a key.
 	 *
-	 * @access  public
-	 * @param   string  $key        A string of key to delete.
-	 * @return  bool
+	 * @access public	
+	 * @param  string   $key    A string of key to delete.
+	 * @return boolean
 	 */
 	public function forget($key = null)
 	{
@@ -145,7 +138,6 @@ abstract class Driver {
 	/**
 	 * Get ID from key.
 	 *
-	 * 
 	 * @access protected
 	 * @param  string   $name
 	 * @return boolean
@@ -161,7 +153,7 @@ abstract class Driver {
 	 * @access protected
 	 * @param  string   $name
 	 * @param  string   $check
-	 * @return void
+	 * @return boolean
 	 */
 	protected function check($name, $check = '')
 	{
@@ -169,20 +161,20 @@ abstract class Driver {
 	}
 
 	/**
-	 * Initialize method
+	 * Initialize method.
 	 *
 	 * @abstract
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public abstract function initiate();
 	
 	/**
-	 * Shutdown method
+	 * Shutdown method.
 	 *
 	 * @abstract
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public abstract function finish();
 }

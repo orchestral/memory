@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Memory;
 
-class Model extends \Illuminate\Database\Eloquent\Model {
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+class Model extends Eloquent {
 	
 	/**
 	 * The table associated with the model.

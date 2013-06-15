@@ -5,18 +5,17 @@ use Orchestra\Support\Str;
 class Eloquent extends Driver {
 
 	/**
-	 * Storage name
+	 * Storage name.
 	 * 
-	 * @access  protected
-	 * @var     string  
+	 * @var string  
 	 */
 	protected $storage = 'eloquent';
 
 	/**
-	 * Load the data from database using Eloquent ORM
+	 * Load the data from database using Eloquent ORM.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public function initiate() 
 	{
@@ -38,10 +37,10 @@ class Eloquent extends Driver {
 	}
 
 	/**
-	 * Add a finish event using Eloquent ORM
+	 * Add a finish event using Eloquent ORM.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public function finish() 
 	{

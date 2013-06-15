@@ -5,26 +5,24 @@ use Orchestra\Support\Str;
 class Fluent extends Driver {
 	
 	/**
-	 * Storage name
+	 * Storage name.
 	 * 
-	 * @access  protected
-	 * @var     string  
+	 * @var string  
 	 */
 	protected $storage = 'fluent';
 
 	/**
-	 * Database table name
-	 *
-	 * @access  protected
-	 * @var     string
+	 * Database table name.
+	 * 
+	 * @var string
 	 */
-	protected $table   = null;
+	protected $table = null;
 
 	/**
-	 * Load the data from database using Fluent Query Builder
+	 * Load the data from database using Fluent Query Builder.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public function initiate() 
 	{
@@ -46,10 +44,10 @@ class Fluent extends Driver {
 	}
 
 	/**
-	 * Add a finish event using Fluent Query Builder
+	 * Add a finish event using Fluent Query Builder.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public function finish() 
 	{
