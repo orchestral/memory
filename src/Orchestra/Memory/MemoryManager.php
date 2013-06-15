@@ -9,11 +9,11 @@ use Orchestra\Support\Manager;
 class MemoryManager extends Manager {
 	
 	/**
-	 * Create Fluent Driver
+	 * Create Fluent driver.
 	 *
 	 * @access protected
 	 * @param  string   $name
-	 * @return Orchestra\Memory\Drivers\Fluent
+	 * @return \Orchestra\Memory\Drivers\Fluent
 	 */
 	protected function createFluentDriver($name)
 	{
@@ -21,11 +21,11 @@ class MemoryManager extends Manager {
 	}
 
 	/**
-	 * Create Eloquent Driver
+	 * Create Eloquent driver.
 	 *
 	 * @access protected
 	 * @param  string   $name
-	 * @return Orchestra\Memory\Drivers\Eloquent
+	 * @return \Orchestra\Memory\Drivers\Eloquent
 	 */
 	protected function createEloquentDriver($name)
 	{
@@ -33,11 +33,11 @@ class MemoryManager extends Manager {
 	}
 
 	/**
-	 * Create Cache Driver
+	 * Create Cache driver.
 	 *
 	 * @access protected
 	 * @param  string   $name
-	 * @return Orchestra\Memory\Drivers\Cache
+	 * @return \Orchestra\Memory\Drivers\Cache
 	 */
 	protected function createCacheDriver($name)
 	{
@@ -45,11 +45,11 @@ class MemoryManager extends Manager {
 	}
 
 	/**
-	 * Create Runtime Driver
+	 * Create Runtime driver.
 	 *
 	 * @access protected
 	 * @param  string   $name
-	 * @return Orchestra\Memory\Drivers\Runtime
+	 * @return \Orchestra\Memory\Drivers\Runtime
 	 */
 	protected function createRuntimeDriver($name)
 	{
@@ -61,7 +61,7 @@ class MemoryManager extends Manager {
 	 * 
 	 * @access protected
 	 * @param  string   $name
-	 * @return Orchestra\Widget\Drivers\Fluent
+	 * @return \Orchestra\Memory\Drivers\Driver
 	 */
 	protected function getDefaultDriver()
 	{
@@ -72,7 +72,8 @@ class MemoryManager extends Manager {
 	 * Make default driver or fallback to runtime.
 	 *
 	 * @access public
-	 * @return mixed
+	 * @param  string   $fallbackName
+	 * @return \Orchestra\Memory\Drivers\Driver
 	 */
 	public function makeOrFallback($fallbackName = 'orchestra')
 	{

@@ -3,18 +3,17 @@
 class Runtime extends Driver {
 
 	/**
-	 * Storage name
+	 * Storage name.
 	 * 
-	 * @access  protected
-	 * @var     string  
+	 * @var string  
 	 */
 	protected $storage = 'runtime';
 
 	/**
-	 * No initialize method for runtime
+	 * No initialize method for runtime.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return return
 	 */
 	public function initiate() 
 	{
@@ -22,10 +21,10 @@ class Runtime extends Driver {
 	}
 
 	/**
-	 * No finish method for runtime
+	 * No finish method for runtime.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return return
 	 */
 	public function finish() 
 	{
