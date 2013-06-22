@@ -40,6 +40,7 @@ class MemoryCommand extends Command {
 		switch ($action = $this->argument('action'))
 		{
 			case 'install' :
+				# pasthru;
 			case 'upgrade' :
 				$this->fireMigration();
 				$this->info('orchestra/memory has been migrated');
