@@ -18,7 +18,7 @@ class Cache extends Driver {
 	public function initiate() 
 	{
 		$this->name = isset($this->config['name']) ? $this->config['name'] : $this->name;
-		$this->data = $this->app['cache']->get('orchestra.memory.'.$this->name, array());
+		$this->data = $this->app['cache']->get("orchestra.memory.{$this->name}", array());
 	}
 	
 	/**
@@ -29,6 +29,6 @@ class Cache extends Driver {
 	 */
 	public function finish() 
 	{
-		$this->app['cache']->forever('orchestra.memory.'.$this->name, $this->data);
+		$this->app['cache']->forever("orchestra.memory.{$this->name}", $this->data);
 	}
 }
