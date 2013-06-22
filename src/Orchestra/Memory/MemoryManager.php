@@ -61,7 +61,7 @@ class MemoryManager extends Manager {
 	 * 
 	 * @access protected
 	 * @param  string   $name
-	 * @return \Orchestra\Memory\Drivers\Driver
+	 * @return string
 	 */
 	protected function getDefaultDriver()
 	{
