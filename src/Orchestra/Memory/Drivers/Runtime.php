@@ -12,8 +12,7 @@ class Runtime extends Driver {
 	/**
 	 * No initialize method for runtime.
 	 *
-	 * @access public
-	 * @return return
+	 * @return boolean
 	 */
 	public function initiate() 
 	{
@@ -23,8 +22,7 @@ class Runtime extends Driver {
 	/**
 	 * No finish method for runtime.
 	 *
-	 * @access public
-	 * @return return
+	 * @return boolean
 	 */
 	public function finish() 
 	{

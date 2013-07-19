@@ -21,7 +21,6 @@ class Fluent extends Driver {
 	/**
 	 * Load the data from database using Fluent Query Builder.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function initiate() 
@@ -46,7 +45,6 @@ class Fluent extends Driver {
 	/**
 	 * Add a finish event using Fluent Query Builder.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function finish() 

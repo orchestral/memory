@@ -11,7 +11,6 @@ class MemoryManager extends Manager {
 	/**
 	 * Create Fluent driver.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @return \Orchestra\Memory\Drivers\Fluent
 	 */
@@ -23,7 +22,6 @@ class MemoryManager extends Manager {
 	/**
 	 * Create Eloquent driver.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @return \Orchestra\Memory\Drivers\Eloquent
 	 */
@@ -35,7 +33,6 @@ class MemoryManager extends Manager {
 	/**
 	 * Create Cache driver.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @return \Orchestra\Memory\Drivers\Cache
 	 */
@@ -47,7 +44,6 @@ class MemoryManager extends Manager {
 	/**
 	 * Create Runtime driver.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @return \Orchestra\Memory\Drivers\Runtime
 	 */
@@ -59,7 +55,6 @@ class MemoryManager extends Manager {
 	/**
 	 * Create Default driver.
 	 * 
-	 * @access protected
 	 * @param  string   $name
 	 * @return string
 	 */
@@ -71,7 +66,6 @@ class MemoryManager extends Manager {
 	/**
 	 * Make default driver or fallback to runtime.
 	 *
-	 * @access public
 	 * @param  string   $fallbackName
 	 * @return \Orchestra\Memory\Drivers\Driver
 	 */
@@ -90,8 +84,7 @@ class MemoryManager extends Manager {
 	/**
 	 * Loop every instance and execute finish method (if available)
 	 *
-	 * @access  public
-	 * @return  void
+	 * @return void
 	 */
 	public function finish()
 	{

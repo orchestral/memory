@@ -14,7 +14,6 @@ class Eloquent extends Driver {
 	/**
 	 * Load the data from database using Eloquent ORM.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function initiate() 
@@ -39,7 +38,6 @@ class Eloquent extends Driver {
 	/**
 	 * Add a finish event using Eloquent ORM.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function finish() 

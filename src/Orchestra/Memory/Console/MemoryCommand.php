@@ -53,7 +53,6 @@ class MemoryCommand extends Command {
 	/**
 	 * Fire migration process.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function fireMigration()
