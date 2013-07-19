@@ -12,7 +12,6 @@ class Cache extends Driver {
 	/**
 	 * Load the data from database using Cache.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function initiate() 
@@ -24,7 +23,6 @@ class Cache extends Driver {
 	/**
 	 * Add a finish event using Cache.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function finish() 

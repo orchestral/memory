@@ -47,7 +47,6 @@ abstract class Driver {
 	/**
 	 * Construct an instance.
 	 *
-	 * @access public	
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @param  string                               $name
 	 * @return void
@@ -67,7 +66,6 @@ abstract class Driver {
 	/**
 	 * Get value of a key.
 	 *
-	 * @access public
 	 * @param  string   $key        A string of key to search.
 	 * @param  mixed    $default    Default value if key doesn't exist.
 	 * @return mixed
@@ -84,7 +82,6 @@ abstract class Driver {
 	/**
 	 * Set a value from a key.
 	 *
-	 * @access public
 	 * @param  string   $key    A string of key to add the value.
 	 * @param  mixed    $value  The value.
 	 * @return mixed
@@ -100,7 +97,6 @@ abstract class Driver {
 	/**
 	 * Delete value of a key.
 	 *
-	 * @access public	
 	 * @param  string   $key    A string of key to delete.
 	 * @return boolean
 	 */
@@ -112,7 +108,6 @@ abstract class Driver {
 	/**
 	 * Add key with id and checksum.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @param  array    $option
 	 * @return void
@@ -126,7 +121,6 @@ abstract class Driver {
 	/**
 	 * Is new key.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @return integer
 	 */
@@ -138,7 +132,6 @@ abstract class Driver {
 	/**
 	 * Get ID from key.
 	 *
-	 * @access protected
 	 * @param  string   $name
 	 * @return boolean
 	 */
@@ -150,7 +143,6 @@ abstract class Driver {
 	/**
 	 * Verify checksum.
 	 * 
-	 * @access protected
 	 * @param  string   $name
 	 * @param  string   $check
 	 * @return boolean
@@ -163,8 +155,6 @@ abstract class Driver {
 	/**
 	 * Initialize method.
 	 *
-	 * @abstract
-	 * @access public
 	 * @return void
 	 */
 	public abstract function initiate();
@@ -172,8 +162,6 @@ abstract class Driver {
 	/**
 	 * Shutdown method.
 	 *
-	 * @abstract
-	 * @access public
 	 * @return void
 	 */
 	public abstract function finish();
