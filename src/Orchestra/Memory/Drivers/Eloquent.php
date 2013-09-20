@@ -45,7 +45,6 @@ class Eloquent extends Driver {
 		foreach ($this->data as $key => $value)
 		{
 			$isNew = $this->isNewKey($key);
-			$id    = $this->getKeyId($key);
 
 			$serializedValue = serialize($value);
 
