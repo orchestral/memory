@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Memory\Tests;
+<?php namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
 use Orchestra\Memory\MemoryManager;
@@ -145,7 +145,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase {
 
 		$stub = $stub->make('stub.mock');
 
-		$this->assertInstanceOf('\Orchestra\Memory\Tests\MemoryStub', $stub);
+		$this->assertInstanceOf(__NAMESPACE__.'\MemoryStub', $stub);
 
 		$refl    = new \ReflectionObject($stub);
 		$app     = $refl->getProperty('app');

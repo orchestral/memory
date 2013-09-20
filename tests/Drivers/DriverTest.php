@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Memory\Tests\Drivers;
+<?php namespace Orchestra\Memory\Drivers\TestCase;
 
 use Mockery as m;
 
