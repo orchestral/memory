@@ -42,7 +42,7 @@ class MemoryServiceProvider extends ServiceProvider {
 	 */
 	protected function registerMemoryCommand()
 	{
-		$this->app['orchestra.commands.memory'] = $this->app->share(function($app)
+		$this->app['orchestra.commands.memory'] = $this->app->share(function()
 		{
 			return new Console\MemoryCommand;
 		});
@@ -70,7 +70,7 @@ class MemoryServiceProvider extends ServiceProvider {
 	{
 		$app = $this->app;
 
-		$app->after(function($request, $response) use ($app)
+		$app->after(function() use ($app)
 		{
 			$app['orchestra.memory']->finish();
 		});
