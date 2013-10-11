@@ -57,7 +57,7 @@ class MemoryServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$path = realpath(dirname(__DIR__).'/../../');
+		$path = realpath(__DIR__.'/../../');
 
 		$this->package('orchestra/memory', 'orchestra/memory', $path);
 
