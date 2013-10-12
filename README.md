@@ -32,6 +32,8 @@ Next add the service provider in `app/config/app.php`.
 ),
 ```
 
+> `CommandServiceProvider` are optional, useful for interaction using the Artisan command line tool.
+
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/2.0/components/memory)
