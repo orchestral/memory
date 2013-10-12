@@ -12,17 +12,6 @@ class MemoryServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->registerMemory();
-		$this->registerMemoryCommand();
-	}
-
-	/**
-	 * Register the service provider for Memory.
-	 *
-	 * @return void
-	 */
-	protected function registerMemory()
-	{
 		$this->app['orchestra.memory'] = $this->app->share(function($app)
 		{
 			return new MemoryManager($app);
@@ -33,21 +22,6 @@ class MemoryServiceProvider extends ServiceProvider {
 			$loader = AliasLoader::getInstance();
 			$loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
 		});
-	}
-
-	/**
-	 * Register the service provider for Memory command.
-	 *
-	 * @return void
-	 */
-	protected function registerMemoryCommand()
-	{
-		$this->app['orchestra.commands.memory'] = $this->app->share(function()
-		{
-			return new Console\MemoryCommand;
-		});
-
-		$this->commands('orchestra.commands.memory');
 	}
 
 	/**

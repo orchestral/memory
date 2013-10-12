@@ -28,6 +28,7 @@ Next add the service provider in `app/config/app.php`.
 	// ...
 	
 	'Orchestra\Memory\MemoryServiceProvider',
+	'Orchestra\Memory\CommandServiceProvider',
 ),
 ```
 
