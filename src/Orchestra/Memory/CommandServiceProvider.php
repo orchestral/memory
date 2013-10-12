@@ -3,6 +3,13 @@
 use Illuminate\Support\ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider {
+	
+	/**
+	 * Indicates if loading of the provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = true;
 
 	/**
 	 * Register the service provider.
@@ -17,5 +24,15 @@ class CommandServiceProvider extends ServiceProvider {
 		});
 
 		$this->commands('orchestra.commands.memory');
+	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array('orchestra.commands.memory');
 	}
 }
