@@ -82,7 +82,7 @@ class MemoryManager extends Manager {
 	}
 
 	/**
-	 * Loop every instance and execute finish method (if available)
+	 * Loop every instance and execute finish method (if available).
 	 *
 	 * @return void
 	 */
