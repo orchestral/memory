@@ -1,6 +1,13 @@
 Memory Change Log
 ==============
 
+## Version 2.1
+
+### v2.1.0@dev
+
+* Add `Orchestra\Memory\Abstractable\Container`.
+* Predefined package path to avoid additional overhead to guest package path.
+
 ## Version 2.0
 
 ### v2.0.4@dev
