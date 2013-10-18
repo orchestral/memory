@@ -18,6 +18,7 @@
         <exec executable="composer.phar">
             <arg value="update"/>
             <arg value="--dev"/>
+            <arg value="--prefer-dist"/>
         </exec>
     </target>
 
@@ -113,9 +114,19 @@
         <exec executable="phpunit" failonerror="true" />
     </target>
 
-    <target name="build"
-     depends="clean,composer-update,composer-dumpautoload,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb"/>
-     
-    <target name="quick-build"
-       depends="clean,composer-dumpautoload,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb"/>
+    <target name="phpdoc" description="Run build phpdoc">
+        <exec executable="phpdoc">
+            <arg value="-d"/>
+            <arg value="src/,vendor/orchestra,vendor/illuminate"/>
+            <arg value="-i"/>
+            <arg value="*tests*"/>
+            <arg value="-t"/>
+            <arg value="${basedir}/build/docs"/>
+        </exec>
+    </target>
+
+    <target name="build" depends="update,generate"/>
+    <target name="generate" depends="clean,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb,phpdoc"/>
+    <target name="update" depends="composer-update,composer-dumpautoload"/>
+    <target name="quick-build" depends="composer-dumpautoload,generate"/>
 </project>

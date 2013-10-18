@@ -4,6 +4,7 @@ vendor/*
 
 # Code Coverage
 build/code-browser/*
+build/docs/*
 build/coverage/*
 build/logs/*
 build/pdepend/*
