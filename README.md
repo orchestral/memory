@@ -1,7 +1,7 @@
 Orchestra Platform Memory Component
 ==============
 
-Orchestra\Memory handles runtime configuration either using 'in memory' Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Orchestra\Memory allow those configuration to be persistent in between request by utilizing multiple data storage option either through cache or database.
+`Orchestra\Memory` handles runtime configuration either using 'in memory' Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Orchestra\Memory allow those configuration to be persistent in between request by utilizing multiple data storage option either through cache or database.
 
 [![Latest Stable Version](https://poser.pugx.org/orchestra/memory/v/stable.png)](https://packagist.org/packages/orchestra/memory) 
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads.png)](https://packagist.org/packages/orchestra/memory) 
@@ -28,11 +28,20 @@ Next add the service provider in `app/config/app.php`.
 	// ...
 	
 	'Orchestra\Memory\MemoryServiceProvider',
+
 	'Orchestra\Memory\CommandServiceProvider',
 ),
 ```
 
-> `CommandServiceProvider` are optional, useful for interaction using the Artisan command line tool.
+### Migrations
+
+Before we can start using `Orchestra\Memory`, please run the following:
+
+```bash
+php artisan orchestra:memory install
+```
+
+> The command utility is enabled via `Orchestra\Memory\CommandServiceProvider`.
 
 ## Resources
 
