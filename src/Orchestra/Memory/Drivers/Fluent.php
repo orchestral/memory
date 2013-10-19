@@ -2,77 +2,74 @@
 
 use Orchestra\Support\Str;
 
-class Fluent extends Driver {
-	
-	/**
-	 * Storage name.
-	 * 
-	 * @var string  
-	 */
-	protected $storage = 'fluent';
+class Fluent extends Driver
+{
+    /**
+     * Storage name.
+     *
+     * @var string
+     */
+    protected $storage = 'fluent';
 
-	/**
-	 * Database table name.
-	 * 
-	 * @var string
-	 */
-	protected $table = null;
+    /**
+     * Database table name.
+     *
+     * @var string
+     */
+    protected $table = null;
 
-	/**
-	 * Load the data from database using Fluent Query Builder.
-	 *
-	 * @return void
-	 */
-	public function initiate() 
-	{
-		$this->table = isset($this->config['table']) ? $this->config['table'] : $this->name;
-		
-		$memories = $this->app['db']->table($this->table)->get();
+    /**
+     * Load the data from database using Fluent Query Builder.
+     *
+     * @return void
+     */
+    public function initiate()
+    {
+        $this->table = isset($this->config['table']) ? $this->config['table'] : $this->name;
 
-		foreach ($memories as $memory)
-		{
-			$value = Str::streamGetContents($memory->value);
+        $memories = $this->app['db']->table($this->table)->get();
 
-			$this->put($memory->name, unserialize($value));
+        foreach ($memories as $memory) {
+            $value = Str::streamGetContents($memory->value);
 
-			$this->addKey($memory->name, array(
-				'id'    => $memory->id,
-				'value' => $value,
-			));
-		}
-	}
+            $this->put($memory->name, unserialize($value));
 
-	/**
-	 * Add a finish event using Fluent Query Builder.
-	 *
-	 * @return void
-	 */
-	public function finish() 
-	{
-		foreach ($this->data as $key => $value)
-		{
-			$isNew = $this->isNewKey($key);
-			$id    = $this->getKeyId($key);
+            $this->addKey($memory->name, array(
+                'id'    => $memory->id,
+                'value' => $value,
+            ));
+        }
+    }
 
-			$serializedValue = serialize($value);
+    /**
+     * Add a finish event using Fluent Query Builder.
+     *
+     * @return void
+     */
+    public function finish()
+    {
+        foreach ($this->data as $key => $value) {
+            $isNew = $this->isNewKey($key);
+            $id    = $this->getKeyId($key);
 
-			if ($this->check($key, $serializedValue)) continue;
+            $serializedValue = serialize($value);
 
-			$count = $this->app['db']->table($this->table)->where('name', '=', $key)->count();
+            if ($this->check($key, $serializedValue)) {
+                continue;
+            }
 
-			if (true === $isNew and $count < 1)
-			{
-				$this->app['db']->table($this->table)->insert(array(
-					'name'  => $key,
-					'value' => $serializedValue,
-				));
-			}
-			else
-			{
-				$this->app['db']->table($this->table)->where('id', '=', $id)->update(array(
-					'value' => $serializedValue,
-				)); 
-			}
-		}
-	}
+            $count = $this->app['db']->table($this->table)->where('name', '=', $key)->count();
+
+            if (true === $isNew and $count < 1) {
+                $this->app['db']->table($this->table)->insert(array(
+                    'name'  => $key,
+                    'value' => $serializedValue,
+                ));
+            } else {
+                $this->app['db']->table($this->table)->where('id', '=', $id)->update(array(
+                    'value' => $serializedValue,
+                ));
+            }
+        }
+    }
 }
