@@ -3,74 +3,74 @@
 use Mockery as m;
 use Orchestra\Memory\Drivers\Runtime;
 
-class RuntimeTest extends \PHPUnit_Framework_TestCase {
+class RuntimeTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Stub instance.
+     *
+     * @var Orchestra\Memory\Drivers\Runtime
+     */
+    private $stub = null;
 
-	/**
-	 * Stub instance.
-	 *
-	 * @var Orchestra\Memory\Drivers\Runtime
-	 */
-	private $stub = null;
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        $app = array(
+            'config' => $config = m::mock('Config'),
+        );
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$app = array(
-			'config' => $config = m::mock('Config'),
-		);
+        $config->shouldReceive('get')
+            ->once()->with('orchestra/memory::runtime.stub', array())->andReturn(array());
 
-		$config->shouldReceive('get')
-			->once()->with('orchestra/memory::runtime.stub', array())->andReturn(array());
+        $this->stub = new Runtime($app, 'stub');
+    }
 
-		$this->stub = new Runtime($app, 'stub');
-	}
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        unset($this->stub);
+        m::close();
+    }
 
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		unset($this->stub);
-		m::close();
-	}
+    /**
+     * Test Orchestra\Memory\Drivers\Runtime::__construct()
+     *
+     * @test
+     */
+    public function testConstructMethod()
+    {
+        $refl    = new \ReflectionObject($this->stub);
+        $name    = $refl->getProperty('name');
+        $storage = $refl->getProperty('storage');
 
-	/**
-	 * Test Orchestra\Memory\Drivers\Runtime::__construct()
-	 *
-	 * @test
-	 */
-	public function testConstructMethod()
-	{
-		$refl    = new \ReflectionObject($this->stub);
-		$name    = $refl->getProperty('name');
-		$storage = $refl->getProperty('storage');
+        $name->setAccessible(true);
+        $storage->setAccessible(true);
 
-		$name->setAccessible(true);
-		$storage->setAccessible(true);
+        $this->assertEquals('runtime', $storage->getValue($this->stub));
+        $this->assertEquals('stub', $name->getValue($this->stub));
+    }
 
-		$this->assertEquals('runtime', $storage->getValue($this->stub));
-		$this->assertEquals('stub', $name->getValue($this->stub));
-	}
+    /**
+     * Test Orchestra\Memory\Drivers\Runtime::initiate()
+     *
+     * @test
+     */
+    public function testInitiateMethod()
+    {
+        $this->assertTrue($this->stub->initiate());
+    }
 
-	/**
-	 * Test Orchestra\Memory\Drivers\Runtime::initiate()
-	 *
-	 * @test
-	 */
-	public function testInitiateMethod()
-	{
-		$this->assertTrue($this->stub->initiate());
-	}
-
-	/**
-	 * Test Orchestra\Memory\Drivers\Runtime::finish()
-	 *
-	 * @test
-	 */
-	public function testFinishMethod()
-	{
-		$this->assertTrue($this->stub->finish());
-	}
+    /**
+     * Test Orchestra\Memory\Drivers\Runtime::finish()
+     *
+     * @test
+     */
+    public function testFinishMethod()
+    {
+        $this->assertTrue($this->stub->finish());
+    }
 }
