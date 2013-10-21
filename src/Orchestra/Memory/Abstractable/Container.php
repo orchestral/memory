@@ -24,7 +24,7 @@ abstract class Container
     /**
      * Attach memory provider.
      *
-     * @return self
+     * @return object
      */
     public function attach(MemoryDriver $memory)
     {
@@ -36,8 +36,8 @@ abstract class Container
     /**
      * Set memory provider.
      *
-     * @param  \Orchestra\Memory\Drivers\Driver
-     * @return self
+     * @param  \Orchestra\Memory\Drivers\Driver    $memory
+     * @return object
      */
     public function setMemoryProvider(MemoryDriver $memory)
     {

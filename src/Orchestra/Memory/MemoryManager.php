@@ -55,7 +55,6 @@ class MemoryManager extends Manager
     /**
      * Create Default driver.
      *
-     * @param  string   $name
      * @return string
      */
     protected function getDefaultDriver()
