@@ -3,9 +3,10 @@ Memory Change Log
 
 ## Version 2.0
 
-### v2.0.4@dev
+### v2.0.4
 
 * Move commands to it's own service provider.
+* Implement [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) coding standard.
 
 ### v2.0.3
 
