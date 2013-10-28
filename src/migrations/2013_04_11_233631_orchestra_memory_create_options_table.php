@@ -14,7 +14,7 @@ class OrchestraMemoryCreateOptionsTable extends Migration
         Schema::create('orchestra_options', function ($table) {
             $table->increments('id');
             $table->string('name', 64);
-            $table->binary('value');
+            $table->longText('value');
 
             $table->unique('name');
         });
