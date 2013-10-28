@@ -3,6 +3,10 @@ Memory Change Log
 
 ## Version 2.0
 
+### v2.0.5@dev
+
+* Convert database schema to use `longText()` instead of `binary()`.
+
 ### v2.0.4
 
 * Move commands to it's own service provider.
