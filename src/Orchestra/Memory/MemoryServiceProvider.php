@@ -12,7 +12,7 @@ class MemoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['orchestra.memory'] = $this->app->share(function ($app) {
+        $this->app->bindShared('orchestra.memory', function ($app) {
             return new MemoryManager($app);
         });
 
