@@ -18,7 +18,7 @@ class MemoryCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Orchestra\Memory Command';
+    protected $description = 'Run migration for orchestra/memory package.';
 
     /**
      * Execute the console command.
