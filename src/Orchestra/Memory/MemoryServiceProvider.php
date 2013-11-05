@@ -15,11 +15,6 @@ class MemoryServiceProvider extends ServiceProvider
         $this->app->bindShared('orchestra.memory', function ($app) {
             return new MemoryManager($app);
         });
-
-        $this->app->booting(function () {
-            $loader = AliasLoader::getInstance();
-            $loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
-        });
     }
 
     /**
