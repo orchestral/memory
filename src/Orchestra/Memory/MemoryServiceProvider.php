@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\AliasLoader;
 
 class MemoryServiceProvider extends ServiceProvider
 {
