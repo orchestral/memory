@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Memory\Console;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 class MemoryCommand extends Command
@@ -67,15 +66,5 @@ class MemoryCommand extends Command
         return array(
             array('action', InputArgument::REQUIRED, "Type of action, e.g: 'install', 'upgrade'."),
         );
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return array();
     }
 }
