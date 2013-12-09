@@ -33,11 +33,12 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitiateMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config'),
-        );
-
+        $app = m::mock('\Illuminate\Container\Container');
+        $config = m::mock('Config');
         $eloquent = m::mock('EloquentModelMock');
+
+        $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
+        $app->shouldReceive('make')->once()->with('EloquentModelMock')->andReturn($eloquent);
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::eloquent.stub', array())
@@ -58,14 +59,16 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config'),
-        );
+        $app = m::mock('\Illuminate\Container\Container');
+        $config = m::mock('Config');
 
         $eloquent               = m::mock('EloquentModelMock');
         $checkWithCountQuery    = m::mock('DB\Query');
         $checkWithoutCountQuery = m::mock('DB\Query');
         $fooEntity              = m::mock('FooEntityMock');
+
+        $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
+        $app->shouldReceive('make')->once()->with('EloquentModelMock')->andReturn($eloquent);
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::eloquent.stub', array())
