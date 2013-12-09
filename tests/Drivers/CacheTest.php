@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory\Drivers\TestCase;
 
 use Mockery as m;
+use Illuminate\Container\Container;
 use Orchestra\Memory\Drivers\Cache;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
@@ -17,10 +18,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = array(
-            'cache'  => $cache = m::mock('Cache'),
-            'config' => $config = m::mock('Config'),
-        );
+        $this->app = new Container();
+
+        $this->app['cache'] = $cache = m::mock('Cache');
+        $this->app['config'] = $config = m::mock('Config');
 
         $value = array(
             'name' => 'Orchestra',
