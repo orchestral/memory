@@ -20,7 +20,7 @@ class Eloquent extends Driver
     {
         $this->name = isset($this->config['model']) ? $this->config['model'] : $this->name;
 
-        $memories = call_user_func(array($this->name, 'all'));
+        $memories = $this->app->make($this->name)->all();
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);

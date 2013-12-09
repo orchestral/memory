@@ -17,12 +17,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = array(
-            'cache' => $cache = m::mock('Cache'),
-        );
-
-        $cache->shouldReceive('get')->andReturn(array())
-            ->shouldReceive('forever')->andReturn(true);
+        $this->app = m::mock('\Illuminate\Container\Container');
     }
 
     /**
@@ -42,12 +37,20 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethod()
     {
-        $app           = $this->app;
-        $app['config'] = $config = m::mock('Config');
-        $app['db']     = $db = m::mock('DB');
+        $app = $this->app;
 
+        $config   = m::mock('Config');
+        $cache    = m::mock('Cache');
+        $db       = m::mock('DB');
         $eloquent = m::mock('EloquentModelMock');
         $query    = m::mock('DB\Query');
+
+        $app->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
+            ->shouldReceive('offsetGet')->times(4)->with('config')->andReturn($config)
+            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db)
+            ->shouldReceive('make')->once()->with('EloquentModelMock')->andReturn($eloquent);
+
+        $cache->shouldReceive('get')->andReturn(array())->shouldReceive('forever')->andReturn(true);
 
         $config->shouldReceive('get')->with('orchestra/memory::cache.default', array())->once()->andReturn(array())
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
@@ -72,12 +75,15 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeOrFallbackMethodReturnFluent()
     {
-        $app           = $this->app;
-        $app['config'] = $config = m::mock('Config');
-        $app['db']     = $db = m::mock('DB');
+        $app = $this->app;
 
+        $config   = m::mock('Config');
+        $db       = m::mock('DB');
         $eloquent = m::mock('EloquentModelMock');
         $query    = m::mock('DB\Query');
+
+        $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config)
+            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $config->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')->once()->andReturn('fluent.default')
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
@@ -97,12 +103,15 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeOrFallbackMethodReturnRuntime()
     {
-        $app           = $this->app;
-        $app['config'] = $config = m::mock('Config');
-        $app['db']     = $db = m::mock('DB');
+        $app = $this->app;
 
+        $config   = m::mock('Config');
+        $db       = m::mock('DB');
         $eloquent = m::mock('EloquentModelMock');
         $query    = m::mock('DB\Query');
+
+        $app->shouldReceive('offsetGet')->times(3)->with('config')->andReturn($config)
+            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $config->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')->once()->andReturn('fluent.default')
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
@@ -131,8 +140,10 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testStubMemory()
     {
-        $app           = $this->app;
-        $app['config'] = $config = m::mock('Config');
+        $app = $this->app;
+        $config = m::mock('Config');
+
+        $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
 
         $config->shouldReceive('get')->with('orchestra/memory::stub.mock', array())->once()->andReturn(array());
 
@@ -166,8 +177,10 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $app           = $this->app;
-        $app['config'] = $config = m::mock('Config');
+        $app = $this->app;
+        $config = m::mock('Config');
+
+        $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
         $config->shouldReceive('get')->with('orchestra/memory::runtime.fool', array())->twice()->andReturn(array());
 
@@ -188,8 +201,10 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethodForDefaultDriver()
     {
-        $app           = $this->app;
-        $app['config'] = $config = m::mock('Config');
+        $app = $this->app;
+        $config = m::mock('Config');
+
+        $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
         $config->shouldReceive('get')->with('orchestra/memory::runtime.default', array())->once()->andReturn(array())
             ->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')
