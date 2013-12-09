@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory\Drivers\TestCase;
 
 use Mockery as m;
+use Illuminate\Container\Container;
 use Orchestra\Memory\Drivers\Fluent;
 
 class FluentTest extends \PHPUnit_Framework_TestCase
@@ -33,10 +34,10 @@ class FluentTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitiateMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config'),
-            'db'     => $db = m::mock('DB'),
-        );
+        $app = new Container;
+
+        $app['config'] = $config = m::mock('Config');
+        $app['db'] = $db = m::mock('DB');
 
         $query = m::mock('DB\Query');
 
@@ -62,10 +63,10 @@ class FluentTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config'),
-            'db'     => $db = m::mock('DB'),
-        );
+        $app = new Container;
+
+        $app['config'] = $config = m::mock('Config');
+        $app['db'] = $db = m::mock('DB');
 
         $selectQuery            = m::mock('DB\Query');
         $checkWithCountQuery    = m::mock('DB\Query');

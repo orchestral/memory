@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory\Drivers\TestCase;
 
 use Mockery as m;
+use Illuminate\Container\Container;
 use Orchestra\Memory\Drivers\Runtime;
 
 class RuntimeTest extends \PHPUnit_Framework_TestCase
@@ -17,9 +18,8 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $app = array(
-            'config' => $config = m::mock('Config'),
-        );
+        $app = new Container;
+        $app['config'] = $config = m::mock('Config');
 
         $config->shouldReceive('get')
             ->once()->with('orchestra/memory::runtime.stub', array())->andReturn(array());

@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Memory\Drivers;
 
+use Illuminate\Container\Container;
+
 abstract class Driver
 {
     /**
@@ -51,7 +53,7 @@ abstract class Driver
      * @param  string                               $name
      * @return void
      */
-    public function __construct($app, $name = 'default')
+    public function __construct(Container $app, $name = 'default')
     {
         $this->app    = $app;
         $this->name   = $name;

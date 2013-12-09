@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory\Drivers\TestCase;
 
 use Mockery as m;
+use Illuminate\Container\Container;
 
 class DriverTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,9 +20,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockInstance1()
     {
-        $app = array(
-            'config' => $config = m::mock('Config')
-        );
+        $app = new Container;
+        $app['config'] = $config = m::mock('Config');
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
@@ -40,9 +40,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockInstance2()
     {
-        $app = array(
-            'config' => $config = m::mock('Config')
-        );
+        $app = new Container;
+        $app['config'] = $config = m::mock('Config');
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
@@ -68,9 +67,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitiateMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config')
-        );
+        $app = new Container;
+        $app['config'] = $config = m::mock('Config');
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
@@ -86,9 +84,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config')
-        );
+        $app = new Container;
+        $app['config'] = $config = m::mock('Config');
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
@@ -128,9 +125,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testPutMethod()
     {
-        $app = array(
-            'config' => $config = m::mock('Config')
-        );
+        $app = new Container;
+        $app['config'] = $config = m::mock('Config');
 
         $config->shouldReceive('get')
             ->with('orchestra/memory::teststub.default', array())->once()->andReturn(array());
