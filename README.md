@@ -46,5 +46,5 @@ php artisan memory:migrate
 
 ## Resources
 
-* [Documentation](http://orchestraplatform.com/docs/2.0/components/memory)
-* [Change Log](http://orchestraplatform.com/docs/2.0/components/memory/changes#v2.1)
+* [Documentation](http://orchestraplatform.com/docs/latest/components/memory)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-1)

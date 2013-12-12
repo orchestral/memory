@@ -2,7 +2,7 @@
 	"name": "orchestra/memory",
 	"description": "Orchestra Platform 2 Memory Component",
 	"license": "MIT",
-	"homepage": "http://orchestraplatform.com/docs/2.0/components/memory/",
+	"homepage": "http://orchestraplatform.com/docs/latest/components/memory/",
 	"keywords": ["orchestra-platform", "orchestral", "laravel"],
 	"authors": [
 		{
