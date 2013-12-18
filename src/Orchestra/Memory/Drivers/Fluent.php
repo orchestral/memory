@@ -27,7 +27,7 @@ class Fluent extends Driver
     {
         $this->table = isset($this->config['table']) ? $this->config['table'] : $this->name;
 
-        $memories = $this->app['db']->table($this->table)->get();
+        $memories = $this->app['db']->table($this->table)->remember(60, $this->cacheKey)->get();
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
@@ -48,6 +48,8 @@ class Fluent extends Driver
      */
     public function finish()
     {
+        $changed = false;
+
         foreach ($this->data as $key => $value) {
             $isNew = $this->isNewKey($key);
             $id    = $this->getKeyId($key);
@@ -57,6 +59,8 @@ class Fluent extends Driver
             if ($this->check($key, $serializedValue)) {
                 continue;
             }
+
+            $changed = true;
 
             $count = $this->app['db']->table($this->table)->where('name', '=', $key)->count();
 
@@ -71,5 +75,7 @@ class Fluent extends Driver
                 ));
             }
         }
+
+        $changed and $this->app['cache']->forget($this->cacheKey);
     }
 }

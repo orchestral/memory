@@ -40,10 +40,11 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
         $app->shouldReceive('make')->once()->with('EloquentModelMock')->andReturn($eloquent);
 
-        $config->shouldReceive('get')
+        $config->shouldReceive('get')->once()
             ->with('orchestra/memory::eloquent.stub', array())
-            ->once()->andReturn(array('model' => $eloquent));
-        $eloquent->shouldReceive('all')->andReturn(static::providerEloquent());
+            ->andReturn(array('model' => $eloquent));
+        $eloquent->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
+            ->shouldReceive('all')->andReturn(static::providerEloquent());
 
         $stub = new Eloquent($app, 'stub');
 
@@ -60,6 +61,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
     public function testFinishMethod()
     {
         $app = m::mock('\Illuminate\Container\Container');
+        $cache = m::mock('Cache');
         $config = m::mock('Config');
 
         $eloquent               = m::mock('EloquentModelMock');
@@ -68,13 +70,14 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $fooEntity              = m::mock('FooEntityMock');
 
         $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
+        $app->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache);
         $app->shouldReceive('make')->once()->with('EloquentModelMock')->andReturn($eloquent);
 
-        $config->shouldReceive('get')
-            ->with('orchestra/memory::eloquent.stub', array())
-            ->once()->andReturn(array('model' => $eloquent));
-
-        $eloquent->shouldReceive('all')->andReturn(static::providerEloquent())
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/memory::eloquent.stub', array())->andReturn(array('model' => $eloquent));
+        $cache->shouldReceive('forget')->once()->with('db-memory:eloquent-stub')->andReturn(null);
+        $eloquent->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
+            ->shouldReceive('all')->once()->andReturn(static::providerEloquent())
             ->shouldReceive('create')->once()->andReturn(true)
             ->shouldReceive('where')->with('name', '=', 'foo')->andReturn($checkWithCountQuery)
             ->shouldReceive('where')->with('name', '=', 'hello')->andReturn($checkWithCountQuery)

@@ -56,9 +56,11 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
             ->shouldReceive('get')->with('orchestra/memory::eloquent.default', array())->once()->andReturn(array('model' => $eloquent))
             ->shouldReceive('get')->with('orchestra/memory::runtime.default', array())->once()->andReturn(array());
-        $eloquent->shouldReceive('all')->andReturn(array());
+        $eloquent->shouldReceive('remember')->once()->with(60, 'db-memory:eloquent-default')->andReturn($eloquent)
+            ->shouldReceive('all')->andReturn(array());
         $db->shouldReceive('table')->andReturn($query);
-        $query->shouldReceive('get')->andReturn(array());
+        $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-default')->andReturn($query)
+            ->shouldReceive('get')->andReturn(array());
 
         $stub = new MemoryManager($app);
 
@@ -89,7 +91,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
             ->shouldReceive('get')->with('orchestra/memory::runtime.orchestra', array())->never()->andReturn(array());
         $db->shouldReceive('table')->once()->with('orchestra_options')->andReturn($query);
-        $query->shouldReceive('get')->once()->andReturn(array());
+        $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-default')->andReturn($query)
+            ->shouldReceive('get')->once()->andReturn(array());
 
         $stub = new MemoryManager($app);
 

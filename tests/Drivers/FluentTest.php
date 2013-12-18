@@ -41,12 +41,13 @@ class FluentTest extends \PHPUnit_Framework_TestCase
 
         $query = m::mock('DB\Query');
 
-        $config->shouldReceive('get')
-            ->once()->with('orchestra/memory::fluent.stub', array())
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/memory::fluent.stub', array())
             ->andReturn(array('table' => 'orchestra_options'));
 
-        $db->shouldReceive('table')->andReturn($query);
-        $query->shouldReceive('get')->andReturn(static::providerFluent());
+        $db->shouldReceive('table')->once()->andReturn($query);
+        $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-stub')->andReturn($query)
+            ->shouldReceive('get')->andReturn(static::providerFluent());
 
         $stub = new Fluent($app, 'stub');
 
@@ -64,7 +65,7 @@ class FluentTest extends \PHPUnit_Framework_TestCase
     public function testFinishMethod()
     {
         $app = new Container;
-
+        $app['cache'] = $cache = m::mock('Cache');
         $app['config'] = $config = m::mock('Config');
         $app['db'] = $db = m::mock('DB');
 
@@ -72,8 +73,9 @@ class FluentTest extends \PHPUnit_Framework_TestCase
         $checkWithCountQuery    = m::mock('DB\Query');
         $checkWithoutCountQuery = m::mock('DB\Query');
 
-        $config->shouldReceive('get')
-            ->once()->with('orchestra/memory::fluent.stub', array())->andReturn(array('table' => 'orchestra_options'));
+        $cache->shouldReceive('forget')->once()->with('db-memory:fluent-stub')->andReturn(null);
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/memory::fluent.stub', array())->andReturn(array('table' => 'orchestra_options'));
         $checkWithCountQuery->shouldReceive('count')->andReturn(1);
         $checkWithoutCountQuery->shouldReceive('count')->andReturn(0);
         $selectQuery->shouldReceive('update')->with(array('value' => serialize('foobar is wicked')))->once()->andReturn(true)
@@ -82,8 +84,9 @@ class FluentTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('where')->with('name', '=', 'hello')->andReturn($checkWithCountQuery)
             ->shouldReceive('where')->with('name', '=', 'stubbed')->andReturn($checkWithoutCountQuery)
             ->shouldReceive('get')->andReturn(static::providerFluent())
-            ->shouldReceive('where')->with('id', '=', 1)->andReturn($selectQuery);
-        $db->shouldReceive('table')->andReturn($selectQuery);
+            ->shouldReceive('where')->with('id', '=', 1)->andReturn($selectQuery)
+            ->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-stub')->andReturn($selectQuery);
+        $db->shouldReceive('table')->times(5)->andReturn($selectQuery);
 
         $stub = new Fluent($app, 'stub');
 

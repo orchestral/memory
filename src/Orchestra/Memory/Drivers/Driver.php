@@ -55,9 +55,11 @@ abstract class Driver
      */
     public function __construct(Container $app, $name = 'default')
     {
-        $this->app    = $app;
-        $this->name   = $name;
-        $this->config = array_merge(
+        $this->app  = $app;
+        $this->name = $name;
+
+        $this->cacheKey = "db-memory:{$this->storage}-{$this->name}";
+        $this->config   = array_merge(
             $app['config']->get("orchestra/memory::{$this->storage}.{$name}", array()),
             $this->config
         );

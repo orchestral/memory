@@ -20,7 +20,7 @@ class Eloquent extends Driver
     {
         $this->name = isset($this->config['model']) ? $this->config['model'] : $this->name;
 
-        $memories = $this->app->make($this->name)->all();
+        $memories = $this->app->make($this->name)->remember(60, $this->cacheKey)->all();
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
@@ -41,6 +41,8 @@ class Eloquent extends Driver
      */
     public function finish()
     {
+        $changed = false;
+
         foreach ($this->data as $key => $value) {
             $isNew = $this->isNewKey($key);
 
@@ -49,6 +51,8 @@ class Eloquent extends Driver
             if ($this->check($key, $serializedValue)) {
                 continue;
             }
+
+            $changed = true;
 
             $where = array('name', '=', $key);
             $count = call_user_func_array(array($this->name, 'where'), $where)->count();
@@ -65,5 +69,7 @@ class Eloquent extends Driver
                 $memory->save();
             }
         }
+
+        $changed and $this->app['cache']->forget($this->cacheKey);
     }
 }
