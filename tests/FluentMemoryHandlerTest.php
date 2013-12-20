@@ -3,7 +3,7 @@
 use Mockery as m;
 use Orchestra\Memory\FluentMemoryHandler;
 
-class FluentTest extends \PHPUnit_Framework_TestCase
+class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -33,10 +33,10 @@ class FluentTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitiateMethod()
     {
-        $cache = m::mock('\Illuminate\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\CacheManager');
         $db = m::mock('\Illuminate\Database\DatabaseManager');
 
-        $config = array('table' => 'orchestra_options');
+        $config = array('table' => 'orchestra_options', 'cache' => true);
         $items  = static::providerFluent();
 
         $query = m::mock('DB\Query');
@@ -64,10 +64,10 @@ class FluentTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $cache = m::mock('\Illuminate\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\CacheManager');
         $db = m::mock('\Illuminate\Database\DatabaseManager');
 
-        $config = array('table' => 'orchestra_options');
+        $config = array('table' => 'orchestra_options', 'cache' => true);
 
         $selectQuery            = m::mock('DB\Query');
         $checkWithCountQuery    = m::mock('DB\Query');

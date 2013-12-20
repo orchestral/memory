@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Memory;
 
-use Illuminate\Cache\Repository;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Database\DatabaseManager;
-use Orchestra\Support\Str;
+use Orchestra\Memory\Abstractable\DatabaseHandler;
 
-class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
+class FluentMemoryHandler extends DatabaseHandler
 {
     /**
      * Storage name.
@@ -14,11 +14,13 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
     protected $storage = 'fluent';
 
     /**
-     * Database table name.
+     * Memory configuration.
      *
-     * @var string
+     * @var array
      */
-    protected $table = null;
+    protected $config = array(
+        'cache' => false,
+    );
 
     /**
      * Setup a new memory handler.
@@ -26,79 +28,51 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
      * @param  string                                 $name
      * @param  array                                  $config
      * @param  \Illuminate\Database\DatabaseManager   $repository
-     * @param  \Illuminate\Cache\Repository           $cache
+     * @param  \Illuminate\Cache\CacheManager         $cache
      */
-    public function __construct($name, array $config, DatabaseManager $repository, Repository $cache)
+    public function __construct($name, array $config, DatabaseManager $repository, CacheManager $cache)
     {
-        $this->repository = $repository;
-        $this->cache      = $cache;
-        $this->table      = array_get($config, 'table', $name);
-
         parent::__construct($name, $config);
-    }
 
-    /**
-     * Load the data from database using Fluent Query Builder.
-     *
-     * @return void
-     */
-    public function initiate()
-    {
-        $items    = array();
-        $memories = $this->repository->table($this->table)->remember(60, $this->cacheKey)->get();
+        $this->repository = $repository;
 
-        foreach ($memories as $memory) {
-            $value = Str::streamGetContents($memory->value);
-
-            array_set($items, $memory->name, unserialize($value));
-
-            $this->addKey($memory->name, array(
-                'id'    => $memory->id,
-                'value' => $value,
-            ));
+        if (array_get($this->config, 'cache', false)) {
+            $this->cache = $cache;
         }
-
-        return $items;
     }
 
     /**
-     * Add a finish event using Fluent Query Builder.
+     * Create/insert data to database.
      *
      * @param  array   $items
      * @return boolean
      */
-    public function finish(array $items = array())
+    protected function save($key, $value, $isNew = false)
     {
-        $changed = false;
+        $count = $this->resolver()->where('name', '=', $key)->count();
+        $id    = $this->getKeyId($key);
 
-        foreach ($items as $key => $value) {
-            $isNew = $this->isNewKey($key);
-            $id    = $this->getKeyId($key);
-
-            $serializedValue = serialize($value);
-
-            if ($this->check($key, $serializedValue)) {
-                continue;
-            }
-
-            $changed = true;
-
-            $count = $this->repository->table($this->table)->where('name', '=', $key)->count();
-
-            if (true === $isNew and $count < 1) {
-                $this->repository->table($this->table)->insert(array(
-                    'name'  => $key,
-                    'value' => $serializedValue,
-                ));
-            } else {
-                $this->repository->table($this->table)->where('id', '=', $id)->update(array(
-                    'value' => $serializedValue,
-                ));
-            }
+        if (true === $isNew and $count < 1) {
+            $this->resolver()->insert(array(
+                'name'  => $key,
+                'value' => $value,
+            ));
+        } else {
+            $this->resolver()->where('id', '=', $id)->update(array(
+                'value' => $value,
+            ));
         }
+    }
 
-        $changed and $this->cache->forget($this->cacheKey);
+    /**
+     * Get resolver instance.
+     *
+     * @return object
+     */
+    protected function resolver()
+    {
+        $table = array_get($this->config, 'table', $this->name);
 
-        return true;
+        return $this->repository->table($table);
     }
 }

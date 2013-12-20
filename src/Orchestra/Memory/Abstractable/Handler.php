@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
-class Handler
+abstract class Handler
 {
     /**
      * Memory name.
@@ -60,7 +60,7 @@ class Handler
     public function __construct($name, array $config)
     {
         $this->name     = $name;
-        $this->config   = $config;
+        $this->config   = array_merge($this->config, $config);
         $this->cacheKey = "db-memory:{$this->storage}-{$this->name}";
     }
 

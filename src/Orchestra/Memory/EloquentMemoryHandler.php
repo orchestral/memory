@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Container\Container;
-use Illuminate\Cache\Repository;
-use Orchestra\Support\Str;
+use Illuminate\Cache\CacheManager;
+use Orchestra\Memory\Abstractable\DatabaseHandler;
 
-class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
+class EloquentMemoryHandler extends DatabaseHandler
 {
     /**
      * Storage name.
@@ -14,47 +14,35 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
     protected $storage = 'eloquent';
 
     /**
+     * Memory configuration.
+     *
+     * @var array
+     */
+    protected $config = array(
+        'cache' => false,
+    );
+
+    /**
      * Setup a new memory handler.
      *
      * @param  string                           $name
      * @param  array                            $config
      * @param  \Illuminate\Container\Container  $repository
-     * @param  \Illuminate\Cache\Repository     $cache
+     * @param  \Illuminate\Cache\CacheManager   $cache
      */
-    public function __construct($name, array $config, Container $repository, Repository $cache)
+    public function __construct($name, array $config, Container $repository, CacheManager $cache)
     {
-        $this->repository = $repository;
-        $this->cache      = $cache;
-
         parent::__construct($name, $config);
-    }
 
-    /**
-     * Load the data from database using Eloquent ORM.
-     *
-     * @return array
-     */
-    public function initiate()
-    {
-        $items    = array();
-        $memories = $this->getModel()->remember(60, $this->cacheKey)->all();
+        $this->repository = $repository;
 
-        foreach ($memories as $memory) {
-            $value = Str::streamGetContents($memory->value);
-
-            array_set($items, $memory->name, unserialize($value));
-
-            $this->addKey($memory->name, array(
-                'id'    => $memory->id,
-                'value' => $value,
-            ));
+        if (array_get($this->config, 'cache', false)) {
+            $this->cache = $cache;
         }
-
-        return $items;
     }
 
     /**
-     * Save data to database using Eloquent ORM.
+     * Save data to database.
      *
      * @param  array   $items
      * @return boolean
@@ -66,42 +54,55 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
         foreach ($items as $key => $value) {
             $isNew = $this->isNewKey($key);
 
-            $serializedValue = serialize($value);
+            $value = serialize($value);
 
-            if ($this->check($key, $serializedValue)) {
+            if ($this->check($key, $value)) {
                 continue;
             }
 
             $changed = true;
 
-            $model = $this->getModel()->where('name', '=', $key)->first();
-
-            if (true === $isNew and is_null($model)) {
-                $this->getModel()->create(array(
-                    'name'  => $key,
-                    'value' => $serializedValue,
-                ));
-            } else {
-                $model->value = $serializedValue;
-
-                $model->save();
-            }
+            $this->save($key, $value, $isNew);
         }
 
-        $changed and $this->cache->forget($this->cacheKey);
+        if ($changed and $this->cache instanceof CacheManager) {
+            $this->cache->forget($this->cacheKey);
+        }
 
         return true;
     }
 
     /**
-     * Get model instance.
+     * Create/insert data to database.
+     *
+     * @param  array   $items
+     * @return boolean
+     */
+    protected function save($key, $value, $isNew = false)
+    {
+        $model = $this->resolver()->where('name', '=', $key)->first();
+
+        if (true === $isNew and is_null($model)) {
+            $this->resolver()->create(array(
+                'name'  => $key,
+                'value' => $value,
+            ));
+        } else {
+            $model->value = $value;
+
+            $model->save();
+        }
+    }
+
+    /**
+     * Get resolver instance.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function getModel()
+    protected function resolver()
     {
-        $name = array_get($this->config, 'model', $this->name);
+        $model = array_get($this->config, 'model', $this->name);
 
-        return $this->repository->make($name)->newInstance();
+        return $this->repository->make($model)->newInstance();
     }
 }

@@ -45,7 +45,6 @@ class Provider extends Relic
      */
     public function put($key, $value = '')
     {
-        $value = value($value);
         $this->set($key, $value);
 
         return $value;
