@@ -14,6 +14,15 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
     protected $storage = 'eloquent';
 
     /**
+     * Memory configuration.
+     *
+     * @var array
+     */
+    protected $config = array(
+        'cache' => false,
+    );
+
+    /**
      * Setup a new memory handler.
      *
      * @param  string                           $name
@@ -23,10 +32,13 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
      */
     public function __construct($name, array $config, Container $repository, CacheManager $cache)
     {
-        $this->repository = $repository;
-        $this->cache      = $cache;
-
         parent::__construct($name, $config);
+
+        $this->repository = $repository;
+
+        if (array_get($this->config, 'cache', false)) {
+            $this->cache = $cache;
+        }
     }
 
     /**
@@ -36,8 +48,14 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
      */
     public function initiate()
     {
-        $items    = array();
-        $memories = $this->getModel()->remember(60, $this->cacheKey)->all();
+        $items = array();
+        $query = $this->getModel();
+
+        if ($this->cache instanceof CacheManager) {
+            $query->remember(60, $this->cacheKey);
+        }
+
+        $memories = $query->get();
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
@@ -88,7 +106,9 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
             }
         }
 
-        $changed and $this->cache->forget($this->cacheKey);
+        if ($changed and $this->cache instanceof CacheManager) {
+            $this->cache->forget($this->cacheKey);
+        }
 
         return true;
     }

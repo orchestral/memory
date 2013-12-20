@@ -14,11 +14,13 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
     protected $storage = 'fluent';
 
     /**
-     * Database table name.
+     * Memory configuration.
      *
-     * @var string
+     * @var array
      */
-    protected $table = null;
+    protected $config = array(
+        'cache' => false,
+    );
 
     /**
      * Setup a new memory handler.
@@ -30,11 +32,13 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
      */
     public function __construct($name, array $config, DatabaseManager $repository, CacheManager $cache)
     {
-        $this->repository = $repository;
-        $this->cache      = $cache;
-        $this->table      = array_get($config, 'table', $name);
-
         parent::__construct($name, $config);
+
+        $this->repository = $repository;
+
+        if (array_get($this->config, 'cache', false)) {
+            $this->cache = $cache;
+        }
     }
 
     /**
@@ -44,8 +48,14 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
      */
     public function initiate()
     {
-        $items    = array();
-        $memories = $this->repository->table($this->table)->remember(60, $this->cacheKey)->get();
+        $items = array();
+        $query = $this->getTable();
+
+        if ($this->cache instanceof CacheManager) {
+            $query->remember(60, $this->cacheKey);
+        }
+
+        $memories = $query->get();
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
@@ -83,22 +93,36 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
 
             $changed = true;
 
-            $count = $this->repository->table($this->table)->where('name', '=', $key)->count();
+            $count = $this->getTable()->where('name', '=', $key)->count();
 
             if (true === $isNew and $count < 1) {
-                $this->repository->table($this->table)->insert(array(
+                $this->getTable()->insert(array(
                     'name'  => $key,
                     'value' => $serializedValue,
                 ));
             } else {
-                $this->repository->table($this->table)->where('id', '=', $id)->update(array(
+                $this->getTable()->where('id', '=', $id)->update(array(
                     'value' => $serializedValue,
                 ));
             }
         }
 
-        $changed and $this->cache->forget($this->cacheKey);
+        if ($changed and $this->cache instanceof CacheManager) {
+            $this->cache->forget($this->cacheKey);
+        }
 
         return true;
+    }
+
+     /**
+     * Get model instance.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function getTable()
+    {
+        $table = array_get($this->config, 'table', $this->name);
+
+        return $this->repository->table($table);
     }
 }

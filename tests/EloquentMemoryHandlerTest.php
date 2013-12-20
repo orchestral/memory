@@ -37,12 +37,12 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
         $cache    = m::mock('\Illuminate\Cache\CacheManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
-        $config = array('model' => $eloquent);
+        $config = array('model' => $eloquent, 'cache' => true);
 
         $app->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
         $eloquent->shouldReceive('newInstance')->once()->andReturn($eloquent)
             ->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
-            ->shouldReceive('all')->andReturn(static::providerEloquent());
+            ->shouldReceive('get')->andReturn(static::providerEloquent());
 
         $stub = new EloquentMemoryHandler('stub', $config, $app, $cache);
 
@@ -66,7 +66,7 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
         $cache    = m::mock('\Illuminate\Cache\CacheManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
-        $config = array('model' => $eloquent);
+        $config = array('model' => $eloquent, 'cache' => true);
 
         $checkWithCountQuery    = m::mock('DB\Query');
         $checkWithoutCountQuery = m::mock('DB\Query');
@@ -76,7 +76,7 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
         $cache->shouldReceive('forget')->once()->with('db-memory:eloquent-stub')->andReturn(null);
         $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
             ->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
-            ->shouldReceive('all')->once()->andReturn(static::providerEloquent())
+            ->shouldReceive('get')->once()->andReturn(static::providerEloquent())
             ->shouldReceive('create')->once()->andReturn(true)
             ->shouldReceive('where')->with('name', '=', 'foo')->andReturn($checkWithCountQuery)
             ->shouldReceive('where')->with('name', '=', 'hello')->andReturn($checkWithCountQuery)

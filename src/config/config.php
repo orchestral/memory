@@ -30,6 +30,7 @@ return array(
     'eloquent' => array(
         'default' => array(
             'model' => '\Orchestra\Memory\Model',
+            'cache' => false,
         ),
     ),
 
@@ -42,6 +43,7 @@ return array(
     'fluent' => array(
         'default' => array(
             'table' => 'orchestra_options',
+            'cache' => false,
         ),
     ),
 
