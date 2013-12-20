@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
-class Handler
+abstract class Handler
 {
     /**
      * Memory name.

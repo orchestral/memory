@@ -2,9 +2,9 @@
 
 use Illuminate\Container\Container;
 use Illuminate\Cache\CacheManager;
-use Orchestra\Support\Str;
+use Orchestra\Memory\Abstractable\DatabaseHandler;
 
-class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
+class EloquentMemoryHandler extends DatabaseHandler
 {
     /**
      * Storage name.
@@ -42,37 +42,7 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
     }
 
     /**
-     * Load the data from database using Eloquent ORM.
-     *
-     * @return array
-     */
-    public function initiate()
-    {
-        $items = array();
-        $query = $this->getModel();
-
-        if ($this->cache instanceof CacheManager) {
-            $query->remember(60, $this->cacheKey);
-        }
-
-        $memories = $query->get();
-
-        foreach ($memories as $memory) {
-            $value = Str::streamGetContents($memory->value);
-
-            array_set($items, $memory->name, unserialize($value));
-
-            $this->addKey($memory->name, array(
-                'id'    => $memory->id,
-                'value' => $value,
-            ));
-        }
-
-        return $items;
-    }
-
-    /**
-     * Save data to database using Eloquent ORM.
+     * Save data to database.
      *
      * @param  array   $items
      * @return boolean
@@ -84,26 +54,15 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
         foreach ($items as $key => $value) {
             $isNew = $this->isNewKey($key);
 
-            $serializedValue = serialize($value);
+            $value = serialize($value);
 
-            if ($this->check($key, $serializedValue)) {
+            if ($this->check($key, $value)) {
                 continue;
             }
 
             $changed = true;
 
-            $model = $this->getModel()->where('name', '=', $key)->first();
-
-            if (true === $isNew and is_null($model)) {
-                $this->getModel()->create(array(
-                    'name'  => $key,
-                    'value' => $serializedValue,
-                ));
-            } else {
-                $model->value = $serializedValue;
-
-                $model->save();
-            }
+            $this->save($key, $value, $isNew);
         }
 
         if ($changed and $this->cache instanceof CacheManager) {
@@ -114,14 +73,36 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
     }
 
     /**
-     * Get model instance.
+     * Create/insert data to database.
+     *
+     * @param  array   $items
+     * @return boolean
+     */
+    protected function save($key, $value, $isNew = false)
+    {
+        $model = $this->resolver()->where('name', '=', $key)->first();
+
+        if (true === $isNew and is_null($model)) {
+            $this->resolver()->create(array(
+                'name'  => $key,
+                'value' => $value,
+            ));
+        } else {
+            $model->value = $value;
+
+            $model->save();
+        }
+    }
+
+    /**
+     * Get resolver instance.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function getModel()
+    protected function resolver()
     {
-        $name = array_get($this->config, 'model', $this->name);
+        $model = array_get($this->config, 'model', $this->name);
 
-        return $this->repository->make($name)->newInstance();
+        return $this->repository->make($model)->newInstance();
     }
 }

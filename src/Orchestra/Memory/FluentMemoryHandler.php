@@ -2,9 +2,9 @@
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Database\DatabaseManager;
-use Orchestra\Support\Str;
+use Orchestra\Memory\Abstractable\DatabaseHandler;
 
-class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
+class FluentMemoryHandler extends DatabaseHandler
 {
     /**
      * Storage name.
@@ -42,84 +42,34 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
     }
 
     /**
-     * Load the data from database using Fluent Query Builder.
-     *
-     * @return void
-     */
-    public function initiate()
-    {
-        $items = array();
-        $query = $this->getTable();
-
-        if ($this->cache instanceof CacheManager) {
-            $query->remember(60, $this->cacheKey);
-        }
-
-        $memories = $query->get();
-
-        foreach ($memories as $memory) {
-            $value = Str::streamGetContents($memory->value);
-
-            array_set($items, $memory->name, unserialize($value));
-
-            $this->addKey($memory->name, array(
-                'id'    => $memory->id,
-                'value' => $value,
-            ));
-        }
-
-        return $items;
-    }
-
-    /**
-     * Add a finish event using Fluent Query Builder.
+     * Create/insert data to database.
      *
      * @param  array   $items
      * @return boolean
      */
-    public function finish(array $items = array())
+    protected function save($key, $value, $isNew = false)
     {
-        $changed = false;
+        $count = $this->resolver()->where('name', '=', $key)->count();
+        $id    = $this->getKeyId($key);
 
-        foreach ($items as $key => $value) {
-            $isNew = $this->isNewKey($key);
-            $id    = $this->getKeyId($key);
-
-            $serializedValue = serialize($value);
-
-            if ($this->check($key, $serializedValue)) {
-                continue;
-            }
-
-            $changed = true;
-
-            $count = $this->getTable()->where('name', '=', $key)->count();
-
-            if (true === $isNew and $count < 1) {
-                $this->getTable()->insert(array(
-                    'name'  => $key,
-                    'value' => $serializedValue,
-                ));
-            } else {
-                $this->getTable()->where('id', '=', $id)->update(array(
-                    'value' => $serializedValue,
-                ));
-            }
+        if (true === $isNew and $count < 1) {
+            $this->resolver()->insert(array(
+                'name'  => $key,
+                'value' => $value,
+            ));
+        } else {
+            $this->resolver()->where('id', '=', $id)->update(array(
+                'value' => $value,
+            ));
         }
-
-        if ($changed and $this->cache instanceof CacheManager) {
-            $this->cache->forget($this->cacheKey);
-        }
-
-        return true;
     }
 
-     /**
-     * Get model instance.
+    /**
+     * Get resolver instance.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return object
      */
-    protected function getTable()
+    protected function resolver()
     {
         $table = array_get($this->config, 'table', $this->name);
 

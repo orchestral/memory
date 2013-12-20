@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Cache\CacheManager;
+use Orchestra\Memory\Abstractable\Handler;
 
-class CacheMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
+class CacheMemoryHandler extends Handler implements MemoryHandlerInterface
 {
     /**
      * Storage name.

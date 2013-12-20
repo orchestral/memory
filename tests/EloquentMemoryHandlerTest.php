@@ -37,7 +37,7 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
         $cache    = m::mock('\Illuminate\Cache\CacheManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
-        $config = array('model' => $eloquent, 'cache' => true);
+        $config = array('model' => 'EloquentHandlerModelMock', 'cache' => true);
 
         $app->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
         $eloquent->shouldReceive('newInstance')->once()->andReturn($eloquent)

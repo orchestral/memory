@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Memory;
 
-class RuntimeMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
+use Orchestra\Memory\Abstractable\Handler;
+
+class RuntimeMemoryHandler extends Handler implements MemoryHandlerInterface
 {
     /**
      * Storage name.
