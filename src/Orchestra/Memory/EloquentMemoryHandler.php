@@ -42,37 +42,6 @@ class EloquentMemoryHandler extends DatabaseHandler
     }
 
     /**
-     * Save data to database.
-     *
-     * @param  array   $items
-     * @return boolean
-     */
-    public function finish(array $items = array())
-    {
-        $changed = false;
-
-        foreach ($items as $key => $value) {
-            $isNew = $this->isNewKey($key);
-
-            $value = serialize($value);
-
-            if ($this->check($key, $value)) {
-                continue;
-            }
-
-            $changed = true;
-
-            $this->save($key, $value, $isNew);
-        }
-
-        if ($changed and $this->cache instanceof CacheManager) {
-            $this->cache->forget($this->cacheKey);
-        }
-
-        return true;
-    }
-
-    /**
      * Create/insert data to database.
      *
      * @param  array   $items
