@@ -43,7 +43,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
 
         $config   = m::mock('\Illuminate\Config\Repository');
-        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $cache    = m::mock('\Illuminate\Cache\CacheManager');
         $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
         $query    = m::mock('DB\Query');
@@ -84,7 +84,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
 
         $config   = m::mock('\Illuminate\Config\Repository');
-        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $cache    = m::mock('\Illuminate\Cache\CacheManager');
         $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
         $query    = m::mock('DB\Query');
@@ -115,7 +115,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
 
         $config   = m::mock('\Illuminate\Config\Repository');
-        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $cache    = m::mock('\Illuminate\Cache\CacheManager');
         $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $query    = m::mock('DB\Query');
 

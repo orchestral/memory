@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-use Illuminate\Cache\Repository;
+use Illuminate\Cache\CacheManager;
 
 class CacheMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
 {
@@ -14,11 +14,11 @@ class CacheMemoryHandler extends Abstractable\Handler implements MemoryHandlerIn
     /**
      * Setup a new memory handler.
      *
-     * @param  string                       $name
-     * @param  array                        $config
-     * @param  \Illuminate\Cache\Repository $cache
+     * @param  string                          $name
+     * @param  array                           $config
+     * @param  \Illuminate\Cache\CacheManager  $cache
      */
-    public function __construct($name, array $config, Repository $cache)
+    public function __construct($name, array $config, CacheManager $cache)
     {
         $this->cache = $cache;
 

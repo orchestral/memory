@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-use Illuminate\Cache\Repository;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Database\DatabaseManager;
 use Orchestra\Support\Str;
 
@@ -26,9 +26,9 @@ class FluentMemoryHandler extends Abstractable\Handler implements MemoryHandlerI
      * @param  string                                 $name
      * @param  array                                  $config
      * @param  \Illuminate\Database\DatabaseManager   $repository
-     * @param  \Illuminate\Cache\Repository           $cache
+     * @param  \Illuminate\Cache\CacheManager         $cache
      */
-    public function __construct($name, array $config, DatabaseManager $repository, Repository $cache)
+    public function __construct($name, array $config, DatabaseManager $repository, CacheManager $cache)
     {
         $this->repository = $repository;
         $this->cache      = $cache;

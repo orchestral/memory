@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Container\Container;
-use Illuminate\Cache\Repository;
+use Illuminate\Cache\CacheManager;
 use Orchestra\Support\Str;
 
 class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandlerInterface
@@ -19,9 +19,9 @@ class EloquentMemoryHandler extends Abstractable\Handler implements MemoryHandle
      * @param  string                           $name
      * @param  array                            $config
      * @param  \Illuminate\Container\Container  $repository
-     * @param  \Illuminate\Cache\Repository     $cache
+     * @param  \Illuminate\Cache\CacheManager   $cache
      */
-    public function __construct($name, array $config, Container $repository, Repository $cache)
+    public function __construct($name, array $config, Container $repository, CacheManager $cache)
     {
         $this->repository = $repository;
         $this->cache      = $cache;
