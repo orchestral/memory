@@ -1,13 +1,13 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
-use Orchestra\Memory\Drivers\Driver as MemoryDriver;
+use Orchestra\Memory\Provider;
 
 abstract class Container
 {
     /**
      * Memory instance.
      *
-     * @var \Orchestra\Memory\Drivers\Driver
+     * @var \Orchestra\Memory\Provider
      */
     protected $memory = null;
 
@@ -24,9 +24,10 @@ abstract class Container
     /**
      * Attach memory provider.
      *
+     * @param  \Orchestra\Memory\Provider  $memory
      * @return object
      */
-    public function attach(MemoryDriver $memory)
+    public function attach(Provider $memory)
     {
         $this->setMemoryProvider($memory);
 
@@ -36,10 +37,10 @@ abstract class Container
     /**
      * Set memory provider.
      *
-     * @param  \Orchestra\Memory\Drivers\Driver    $memory
+     * @param  \Orchestra\Memory\Provider  $memory
      * @return object
      */
-    public function setMemoryProvider(MemoryDriver $memory)
+    public function setMemoryProvider(Provider $memory)
     {
         $this->memory = $memory;
 
@@ -49,7 +50,7 @@ abstract class Container
     /**
      * Set memory provider.
      *
-     * @return \Orchestra\Memory\Drivers\Driver
+     * @return \Orchestra\Memory\Provider
      */
     public function getMemoryProvider()
     {

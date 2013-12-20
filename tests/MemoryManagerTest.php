@@ -2,6 +2,9 @@
 
 use Mockery as m;
 use Orchestra\Memory\MemoryManager;
+use Orchestra\Memory\Provider;
+use Orchestra\Memory\Abstractable\Handler;
+use Orchestra\Memory\MemoryHandlerInterface;
 
 class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,16 +42,16 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config   = m::mock('Config');
-        $cache    = m::mock('Cache');
-        $db       = m::mock('DB');
-        $eloquent = m::mock('EloquentModelMock');
+        $config   = m::mock('\Illuminate\Config\Repository');
+        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $db       = m::mock('\Illuminate\Database\DatabaseManager');
+        $eloquent = m::mock('EloquentHandlerModelMock');
         $query    = m::mock('DB\Query');
 
-        $app->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
+        $app->shouldReceive('offsetGet')->times(3)->with('cache')->andReturn($cache)
             ->shouldReceive('offsetGet')->times(4)->with('config')->andReturn($config)
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db)
-            ->shouldReceive('make')->once()->with('EloquentModelMock')->andReturn($eloquent);
+            ->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
 
         $cache->shouldReceive('get')->andReturn(array())->shouldReceive('forever')->andReturn(true);
 
@@ -56,16 +59,19 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
             ->shouldReceive('get')->with('orchestra/memory::eloquent.default', array())->once()->andReturn(array('model' => $eloquent))
             ->shouldReceive('get')->with('orchestra/memory::runtime.default', array())->once()->andReturn(array());
-        $eloquent->shouldReceive('all')->andReturn(array());
+        $eloquent->shouldReceive('newInstance')->once()->andReturn($eloquent)
+            ->shouldReceive('remember')->once()->with(60, 'db-memory:eloquent-default')->andReturn($eloquent)
+            ->shouldReceive('all')->andReturn(array());
         $db->shouldReceive('table')->andReturn($query);
-        $query->shouldReceive('get')->andReturn(array());
+        $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-default')->andReturn($query)
+            ->shouldReceive('get')->andReturn(array());
 
         $stub = new MemoryManager($app);
 
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Runtime', $stub->make('runtime'));
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Cache', $stub->make('cache'));
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Eloquent', $stub->make('eloquent'));
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub->make('fluent'));
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub->make('runtime'));
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub->make('cache'));
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub->make('eloquent'));
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub->make('fluent'));
     }
 
     /**
@@ -77,23 +83,26 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config   = m::mock('Config');
-        $db       = m::mock('DB');
-        $eloquent = m::mock('EloquentModelMock');
+        $config   = m::mock('\Illuminate\Config\Repository');
+        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $db       = m::mock('\Illuminate\Database\DatabaseManager');
+        $eloquent = m::mock('EloquentHandlerModelMock');
         $query    = m::mock('DB\Query');
 
-        $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config)
+        $app->shouldReceive('offsetGet')->times(2)->with('config')->andReturn($config)
+            ->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $config->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')->once()->andReturn('fluent.default')
             ->shouldReceive('get')->with('orchestra/memory::fluent.default', array())->once()->andReturn(array('table' => 'orchestra_options'))
             ->shouldReceive('get')->with('orchestra/memory::runtime.orchestra', array())->never()->andReturn(array());
         $db->shouldReceive('table')->once()->with('orchestra_options')->andReturn($query);
-        $query->shouldReceive('get')->once()->andReturn(array());
+        $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-default')->andReturn($query)
+            ->shouldReceive('get')->once()->andReturn(array());
 
         $stub = new MemoryManager($app);
 
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub->makeOrFallback());
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub->makeOrFallback());
     }
 
     /**
@@ -105,12 +114,13 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config   = m::mock('Config');
-        $db       = m::mock('DB');
-        $eloquent = m::mock('EloquentModelMock');
+        $config   = m::mock('\Illuminate\Config\Repository');
+        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $query    = m::mock('DB\Query');
 
         $app->shouldReceive('offsetGet')->times(3)->with('config')->andReturn($config)
+            ->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $config->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')->once()->andReturn('fluent.default')
@@ -120,7 +130,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 
         $stub = new MemoryManager($app);
 
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Runtime', $stub->makeOrFallback());
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub->makeOrFallback());
     }
 
     /**
@@ -140,34 +150,26 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testStubMemory()
     {
-        $app = $this->app;
-        $config = m::mock('Config');
-
-        $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
-
-        $config->shouldReceive('get')->with('orchestra/memory::stub.mock', array())->once()->andReturn(array());
+        $app    = $this->app;
 
         $stub = new MemoryManager($app);
 
         $stub->extend('stub', function ($app, $name) {
-            return new MemoryStub($app, $name);
+            $handler = new StubMemoryHandler($name, array());
+
+            return new Provider($handler);
         });
 
         $stub = $stub->make('stub.mock');
 
-        $this->assertInstanceOf(__NAMESPACE__.'\MemoryStub', $stub);
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub);
 
         $refl    = new \ReflectionObject($stub);
-        $app     = $refl->getProperty('app');
-        $name    = $refl->getProperty('name');
-        $storage = $refl->getProperty('storage');
+        $handler = $refl->getProperty('handler');
 
-        $app->setAccessible(true);
-        $name->setAccessible(true);
-        $storage->setAccessible(true);
+        $handler->setAccessible(true);
 
-        $this->assertEquals('mock', $name->getValue($stub));
-        $this->assertEquals('stub', $storage->getValue($stub));
+        $this->assertInstanceOf(__NAMESPACE__.'\StubMemoryHandler', $handler->getValue($stub));
     }
 
     /**
@@ -177,8 +179,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $app = $this->app;
-        $config = m::mock('Config');
+        $app    = $this->app;
+        $config = m::mock('\Illuminate\Config\Repository');
 
         $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
@@ -201,62 +203,32 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethodForDefaultDriver()
     {
-        $app = $this->app;
-        $config = m::mock('Config');
+        $app    = $this->app;
+        $config = m::mock('\Illuminate\Config\Repository');
 
         $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
-        $config->shouldReceive('get')->with('orchestra/memory::runtime.default', array())->once()->andReturn(array())
-            ->shouldReceive('get')->with('orchestra/memory::config.driver', 'fluent.default')
-                ->once()->andReturn('runtime.default');
+        $config->shouldReceive('get')->once()
+                ->with('orchestra/memory::runtime.default', array())->andReturn(array())
+            ->shouldReceive('get')->once()
+                ->with('orchestra/memory::config.driver', 'fluent.default')->andReturn('runtime.default');
 
         $stub = new MemoryManager($app);
         $stub->make();
     }
 }
 
-class MemoryStub extends \Orchestra\Memory\Drivers\Driver
+class StubMemoryHandler extends Handler implements MemoryHandlerInterface
 {
-    /**
-     * Storage name
-     *
-     * @access  protected
-     * @var     string
-     */
     protected $storage = 'stub';
 
-    /**
-     * No initialize method for runtime
-     *
-     * @access  public
-     * @return  void
-     */
     public function initiate()
     {
-        //
+        return array();
     }
 
-    /**
-     * No finish method for runtime
-     *
-     * @access  public
-     * @return  void
-     */
-    public function finish()
+    public function finish(array $items = array())
     {
-        //
-    }
-}
-
-class EloquentModelMock
-{
-    public function all()
-    {
-        //
-    }
-
-    public function where($key, $condition, $value)
-    {
-        //
+        return true;
     }
 }
