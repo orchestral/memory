@@ -1,8 +1,7 @@
-<?php namespace Orchestra\Memory\Drivers\TestCase;
+<?php namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
-use Illuminate\Container\Container;
-use Orchestra\Memory\Drivers\Fluent;
+use Orchestra\Memory\FluentMemoryHandler;
 
 class FluentTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,54 +27,53 @@ class FluentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\Drivers\Fluent::initiate() method.
+     * Test Orchestra\Memory\FluentMemoryHandler::initiate() method.
      *
      * @test
      */
     public function testInitiateMethod()
     {
-        $app = new Container;
+        $cache = m::mock('\Illuminate\Cache\Repository');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
 
-        $app['config'] = $config = m::mock('Config');
-        $app['db'] = $db = m::mock('DB');
+        $config = array('table' => 'orchestra_options');
+        $items  = static::providerFluent();
 
         $query = m::mock('DB\Query');
 
-        $config->shouldReceive('get')->once()
-            ->with('orchestra/memory::fluent.stub', array())
-            ->andReturn(array('table' => 'orchestra_options'));
-
         $db->shouldReceive('table')->once()->andReturn($query);
         $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-stub')->andReturn($query)
-            ->shouldReceive('get')->andReturn(static::providerFluent());
+            ->shouldReceive('get')->andReturn($items);
 
-        $stub = new Fluent($app, 'stub');
+        $stub = new FluentMemoryHandler('stub', $config, $db, $cache);
 
-        $this->assertInstanceOf('\Orchestra\Memory\Drivers\Fluent', $stub);
-        $this->assertEquals('foobar', $stub->get('foo'));
-        $this->assertEquals('world', $stub->get('hello'));
+        $expected = array(
+            'foo'   => 'foobar',
+            'hello' => 'world',
+        );
+
+        $this->assertInstanceOf('\Orchestra\Memory\FluentMemoryHandler', $stub);
+        $this->assertEquals($expected, $stub->initiate());
     }
 
     /**
-     * Test Orchestra\Memory\Drivers\Fluent::finish() method.
+     * Test Orchestra\Memory\FluentMemoryHandler::finish() method.
      *
      * @test
      * @group support
      */
     public function testFinishMethod()
     {
-        $app = new Container;
-        $app['cache'] = $cache = m::mock('Cache');
-        $app['config'] = $config = m::mock('Config');
-        $app['db'] = $db = m::mock('DB');
+        $cache = m::mock('\Illuminate\Cache\Repository');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
+
+        $config = array('table' => 'orchestra_options');
 
         $selectQuery            = m::mock('DB\Query');
         $checkWithCountQuery    = m::mock('DB\Query');
         $checkWithoutCountQuery = m::mock('DB\Query');
 
         $cache->shouldReceive('forget')->once()->with('db-memory:fluent-stub')->andReturn(null);
-        $config->shouldReceive('get')->once()
-            ->with('orchestra/memory::fluent.stub', array())->andReturn(array('table' => 'orchestra_options'));
         $checkWithCountQuery->shouldReceive('count')->andReturn(1);
         $checkWithoutCountQuery->shouldReceive('count')->andReturn(0);
         $selectQuery->shouldReceive('update')->with(array('value' => serialize('foobar is wicked')))->once()->andReturn(true)
@@ -88,10 +86,15 @@ class FluentTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-stub')->andReturn($selectQuery);
         $db->shouldReceive('table')->times(5)->andReturn($selectQuery);
 
-        $stub = new Fluent($app, 'stub');
+        $stub = new FluentMemoryHandler('stub', $config, $db, $cache);
+        $stub->initiate();
 
-        $stub->put('foo', 'foobar is wicked');
-        $stub->put('stubbed', 'Foobar was awesome');
-        $stub->finish();
+        $items = array(
+            'foo' => 'foobar is wicked',
+            'hello' => 'world',
+            'stubbed' => 'Foobar was awesome',
+        );
+
+        $this->assertTrue($stub->finish($items));
     }
 }

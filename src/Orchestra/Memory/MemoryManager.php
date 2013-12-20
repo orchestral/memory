@@ -9,44 +9,56 @@ class MemoryManager extends Manager
      * Create Fluent driver.
      *
      * @param  string   $name
-     * @return \Orchestra\Memory\Drivers\Fluent
+     * @return \Orchestra\Memory\FluentMemoryHandler
      */
     protected function createFluentDriver($name)
     {
-        return new Drivers\Fluent($this->app, $name);
+        $config  = $this->app['config']->get("orchestra/memory::fluent.{$name}", array());
+        $handler = new FluentMemoryHandler($name, $config, $this->app['db'], $this->app['cache']);
+
+        return new Provider($handler);
     }
 
     /**
      * Create Eloquent driver.
      *
      * @param  string   $name
-     * @return \Orchestra\Memory\Drivers\Eloquent
+     * @return \Orchestra\Memory\EloquentMemoryHandler
      */
     protected function createEloquentDriver($name)
     {
-        return new Drivers\Eloquent($this->app, $name);
+        $config  = $this->app['config']->get("orchestra/memory::eloquent.{$name}", array());
+        $handler = new EloquentMemoryHandler($name, $config, $this->app, $this->app['cache']);
+
+        return new Provider($handler);
     }
 
     /**
      * Create Cache driver.
      *
      * @param  string   $name
-     * @return \Orchestra\Memory\Drivers\Cache
+     * @return \Orchestra\Memory\Provider
      */
     protected function createCacheDriver($name)
     {
-        return new Drivers\Cache($this->app, $name);
+        $config  = $this->app['config']->get("orchestra/memory::cache.{$name}", array());
+        $handler = new CacheMemoryHandler($name, $config, $this->app['cache']);
+
+        return new Provider($handler);
     }
 
     /**
      * Create Runtime driver.
      *
      * @param  string   $name
-     * @return \Orchestra\Memory\Drivers\Runtime
+     * @return \Orchestra\Memory\Provider
      */
     protected function createRuntimeDriver($name)
     {
-        return new Drivers\Runtime($this->app, $name);
+        $config  = $this->app['config']->get("orchestra/memory::runtime.{$name}", array());
+        $handler = new RuntimeMemoryHandler($name, $config);
+
+        return new Provider($handler);
     }
 
     /**

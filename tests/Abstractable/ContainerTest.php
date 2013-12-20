@@ -12,7 +12,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testAttachingMemoryProviders()
     {
         $stub = new ContainerStub;
-        $mock = m::mock('\Orchestra\Memory\Drivers\Driver');
+        $mock = m::mock('\Orchestra\Memory\Provider');
 
         $this->assertFalse($stub->attached());
 

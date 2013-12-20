@@ -1,15 +1,14 @@
-<?php namespace Orchestra\Memory\Drivers\TestCase;
+<?php namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
-use Illuminate\Container\Container;
-use Orchestra\Memory\Drivers\Runtime;
+use Orchestra\Memory\RuntimeMemoryHandler;
 
-class RuntimeTest extends \PHPUnit_Framework_TestCase
+class RuntimeMemoryHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Stub instance.
      *
-     * @var Orchestra\Memory\Drivers\Runtime
+     * @var Orchestra\Memory\RuntimeMemoryHandler
      */
     private $stub = null;
 
@@ -18,13 +17,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $app = new Container;
-        $app['config'] = $config = m::mock('Config');
-
-        $config->shouldReceive('get')
-            ->once()->with('orchestra/memory::runtime.stub', array())->andReturn(array());
-
-        $this->stub = new Runtime($app, 'stub');
+        $this->stub = new RuntimeMemoryHandler('stub', array());
     }
 
     /**
@@ -37,7 +30,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\Drivers\Runtime::__construct()
+     * Test Orchestra\Memory\RuntimeMemoryHandler::__construct()
      *
      * @test
      */
@@ -55,17 +48,17 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\Drivers\Runtime::initiate()
+     * Test Orchestra\Memory\RuntimeMemoryHandler::initiate()
      *
      * @test
      */
     public function testInitiateMethod()
     {
-        $this->assertTrue($this->stub->initiate());
+        $this->assertEquals(array(), $this->stub->initiate());
     }
 
     /**
-     * Test Orchestra\Memory\Drivers\Runtime::finish()
+     * Test Orchestra\Memory\RuntimeMemoryHandler::finish()
      *
      * @test
      */
