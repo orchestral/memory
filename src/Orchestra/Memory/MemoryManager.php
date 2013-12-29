@@ -62,13 +62,24 @@ class MemoryManager extends Manager
     }
 
     /**
-     * Create Default driver.
+     * Get the default driver.
      *
      * @return string
      */
-    protected function getDefaultDriver()
+    public function getDefaultDriver()
     {
-        return $this->app['config']->get('orchestra/memory::config.driver', 'fluent.default');
+        return $this->app['config']->get('orchestra/memory::driver', 'fluent.default');
+    }
+
+    /**
+     * Set the default driver.
+     *
+     * @param  string   $name
+     * @return void
+     */
+    public function setDefaultDriver($name)
+    {
+        $this->app['config']->set('orchestra/memory::driver', $name);
     }
 
     /**

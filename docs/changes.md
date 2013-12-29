@@ -11,6 +11,7 @@ title: Memory Change Log
 * Predefined package path to avoid additional overhead to guest package path.
 * Rename command to `php artisan memory:migrate`.
 * Implement caching for both eloquent and fluent driver.
+* Add `Orchestra\Memory\MemoryManager::setDefaultDriver()` method.
 
 ## Version 2.0 {#v2-0}
 
