@@ -100,7 +100,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $config->shouldReceive('get')->once()
-                ->with('orchestra/memory::config.driver', 'fluent.default')
+                ->with('orchestra/memory::driver', 'fluent.default')
                 ->andReturn('fluent.default')
             ->shouldReceive('get')->once()
                 ->with('orchestra/memory::fluent.default', array())
@@ -136,7 +136,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $config->shouldReceive('get')->once()
-                ->with('orchestra/memory::config.driver', 'fluent.default')
+                ->with('orchestra/memory::driver', 'fluent.default')
                 ->andReturn('fluent.default')
             ->shouldReceive('get')->once()
                 ->with('orchestra/memory::fluent.default', array())
@@ -228,10 +228,29 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $config->shouldReceive('get')->once()
                 ->with('orchestra/memory::runtime.default', array())->andReturn(array())
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::config.driver', 'fluent.default')->andReturn('runtime.default');
+                ->with('orchestra/memory::driver', 'fluent.default')->andReturn('runtime.default');
 
         $stub = new MemoryManager($app);
         $stub->make();
+    }
+
+    /**
+     * Test Orchestra\Memory\MemoryManager::setDefaultDriver() method.
+     *
+     * @rest
+     */
+    public function testSetDefaultDriverMethod()
+    {
+        $app    = $this->app;
+        $config = m::mock('\Illuminate\Config\Repository');
+
+        $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
+
+        $config->shouldReceive('set')->once()
+                ->with('orchestra/memory::driver', 'foo')->andReturnNull();
+
+        $stub = new MemoryManager($app);
+        $stub->setDefaultDriver('foo');
     }
 }
 
