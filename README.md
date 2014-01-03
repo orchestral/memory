@@ -16,7 +16,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/memory": "2.1.*@dev"
+		"orchestra/memory": "2.1.*"
 	}
 }
 ```
