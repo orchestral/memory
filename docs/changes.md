@@ -5,10 +5,12 @@ title: Memory Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.0@dev {#v2-1-0}
+### v2.1.0 {#v2-1-0}
 
 * Add `Orchestra\Memory\Abstractable\Container`.
 * Predefined package path to avoid additional overhead to guest package path.
+* Convert database schema to use `longText()` instead of `binary()`.
+* Implement [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) coding standard.
 * Rename command to `php artisan memory:migrate`.
 * Implement caching for both eloquent and fluent driver.
 * Add `Orchestra\Memory\MemoryManager::setDefaultDriver()` method.
