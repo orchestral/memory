@@ -73,7 +73,7 @@ abstract class Handler
      */
     protected function addKey($name, $option)
     {
-        $option['checksum']  = md5($option['value']);
+        $option['checksum']  = $this->generateNewChecksum($option['value']);
         $this->keyMap[$name] = $option;
     }
 
@@ -108,6 +108,19 @@ abstract class Handler
      */
     protected function check($name, $check = '')
     {
-        return (array_get($this->keyMap, "{$name}.checksum") === md5($check));
+        return (array_get($this->keyMap, "{$name}.checksum") === $this->generateNewChecksum($check));
+    }
+
+    /**
+     * Generate a checksum from given value.
+     *
+     * @param  mixed   $value
+     * @return string
+     */
+    protected function generateNewChecksum($value)
+    {
+        $value = is_object($value) ? spl_object_hash($value) : serialize($value);
+
+        return md5($value);
     }
 }
