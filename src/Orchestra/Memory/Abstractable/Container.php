@@ -18,7 +18,7 @@ abstract class Container
      */
     public function attached()
     {
-        return ( ! is_null($this->memory));
+        return ($this->memory instanceof Provider);
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class Container
     /**
      * Set memory provider.
      *
-     * @return \Orchestra\Memory\Provider
+     * @return \Orchestra\Memory\Provider|null
      */
     public function getMemoryProvider()
     {

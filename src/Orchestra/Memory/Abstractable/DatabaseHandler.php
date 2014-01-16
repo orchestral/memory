@@ -48,16 +48,13 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
 
         foreach ($items as $key => $value) {
             $isNew = $this->isNewKey($key);
-
             $value = serialize($value);
 
-            if ($this->check($key, $value)) {
-                continue;
+            if (! $this->check($key, $value)) {
+                $changed = true;
+
+                $this->save($key, $value, $isNew);
             }
-
-            $changed = true;
-
-            $this->save($key, $value, $isNew);
         }
 
         if ($changed and $this->cache instanceof CacheManager) {
