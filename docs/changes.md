@@ -8,6 +8,7 @@ title: Memory Change Log
 ### v2.1.2@dev {#v2-1-2}
 
 * Improve type checking for `Orchestra\Memory\Abstractable\Container::attached()` and fixes docblock.
+* Avoid generating checksum from serializing an already serialized string.
 
 ### v2.1.1 {#v2-1-1}
 
