@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.3@dev {#v2-1-3}
+
+* Replace `array_set()` with `array_add()` when loading value from storage.
+
 ### v2.1.2 {#v2-1-2}
 
 * Improve type checking for `Orchestra\Memory\Abstractable\Container::attached()` and fixes docblock.
