@@ -73,8 +73,10 @@ abstract class Handler
      */
     protected function addKey($name, $option)
     {
-        $option['checksum']  = $this->generateNewChecksum($option['value']);
-        $this->keyMap[$name] = $option;
+        $option['checksum'] = $this->generateNewChecksum($option['value']);
+        unset($option['value']);
+
+        $this->keyMap = array_add($this->keyMap, $name, $option);
     }
 
     /**
@@ -134,13 +136,13 @@ abstract class Handler
     }
 
     /**
-     * Get ID from key.
+     * Get if from content is new.
      *
      * @param  string   $name
      * @return boolean
      */
     protected function isNewKey($name)
     {
-        return ! isset($this->keyMap[$name]);
+        return is_null($this->getKeyId($name));
     }
 }

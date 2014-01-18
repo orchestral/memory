@@ -11,6 +11,7 @@ title: Memory Change Log
 * Avoid caching fallback instance since this could cause multiple redundant insertion to the database.
 * Allow to get handler instance using `Orchestra\Memory\Provider::getHandler()`.
 * Add `Orchestra\Memory\Abstractable\Handler::getStorageName()` and `Orchestra\Memory\Abstractable\Handler::getName()` helper method.
+* Tweak the way `Orchestra\Memory\Abstractable\Handler::isNewKey()` is detected.
 
 ### v2.1.2 {#v2-1-2}
 

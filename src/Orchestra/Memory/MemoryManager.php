@@ -108,8 +108,9 @@ class MemoryManager extends Manager
      */
     public function finish()
     {
-        foreach ($this->drivers as $class) {
+        foreach ($this->drivers as $name => $class) {
             $class->finish();
+            unset($this->drivers[$name]);
         }
 
         $this->drivers = array();
