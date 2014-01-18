@@ -51,7 +51,7 @@ class EloquentMemoryHandler extends DatabaseHandler
     {
         $model = $this->resolver()->where('name', '=', $key)->first();
 
-        if (true === $isNew and is_null($model)) {
+        if (true === $isNew && is_null($model)) {
             $this->resolver()->create(array(
                 'name'  => $key,
                 'value' => $value,

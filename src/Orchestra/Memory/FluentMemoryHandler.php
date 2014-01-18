@@ -52,7 +52,7 @@ class FluentMemoryHandler extends DatabaseHandler
         $count = $this->resolver()->where('name', '=', $key)->count();
         $id    = $this->getKeyId($key);
 
-        if (true === $isNew and $count < 1) {
+        if (true === $isNew && $count < 1) {
             $this->resolver()->insert(array(
                 'name'  => $key,
                 'value' => $value,

@@ -57,7 +57,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
             }
         }
 
-        if ($changed and $this->cache instanceof CacheManager) {
+        if ($changed && $this->cache instanceof CacheManager) {
             $this->cache->forget($this->cacheKey);
         }
 

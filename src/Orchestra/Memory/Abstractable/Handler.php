@@ -99,7 +99,7 @@ abstract class Handler
      */
     protected function generateNewChecksum($value)
     {
-        ! is_string($value) and $value = (is_object($value) ? spl_object_hash($value) : serialize($value));
+        ! is_string($value) && $value = (is_object($value) ? spl_object_hash($value) : serialize($value));
 
         return md5($value);
     }
