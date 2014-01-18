@@ -27,6 +27,16 @@ class Provider extends Relic
     }
 
     /**
+     * Get handler instance.
+     *
+     * @return Abstractable\Handler
+     */
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
      * Shutdown/finish method.
      *
      * @return void
