@@ -8,6 +8,7 @@ title: Memory Change Log
 ### v2.1.3@dev {#v2-1-3}
 
 * Replace `array_set()` with `array_add()` when loading value from storage.
+* Avoid caching fallback instance since this could cause multiple redundant insertion to the database.
 
 ### v2.1.2 {#v2-1-2}
 

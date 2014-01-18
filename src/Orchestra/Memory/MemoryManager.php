@@ -90,15 +90,15 @@ class MemoryManager extends Manager
      */
     public function makeOrFallback($fallbackName = 'orchestra')
     {
-        if (! isset($this->drivers['fallback'])) {
-            try {
-                $this->drivers['fallback'] = $this->make();
-            } catch (Exception $e) {
-                $this->drivers['fallback'] = $this->driver("runtime.{$fallbackName}");
-            }
+        $fallback = null;
+
+        try {
+            $fallback = $this->make();
+        } catch (Exception $e) {
+            $fallback = $this->driver("runtime.{$fallbackName}");
         }
 
-        return $this->drivers['fallback'];
+        return $fallback;
     }
 
     /**
