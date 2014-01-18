@@ -77,6 +77,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
         $stub = new Provider($handler);
 
         $this->assertEquals('foobar', $stub->get('foo'));
+        $this->assertEquals($handler, $stub->getHandler());
     }
 
     /**

@@ -5,10 +5,18 @@ title: Memory Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.2@dev {#v2-1-2}
+### v2.1.3@dev {#v2-1-3}
+
+* Replace `array_set()` with `array_add()` when loading value from storage.
+* Avoid caching fallback instance since this could cause multiple redundant insertion to the database.
+* Allow to get handler instance using `Orchestra\Memory\Provider::getHandler()`.
+* Add `Orchestra\Memory\Abstractable\Handler::getStorageName()` and `Orchestra\Memory\Abstractable\Handler::getName()` helper method.
+* Tweak the way `Orchestra\Memory\Abstractable\Handler::isNewKey()` is detected.
+
+### v2.1.2 {#v2-1-2}
 
 * Improve type checking for `Orchestra\Memory\Abstractable\Container::attached()` and fixes docblock.
-* Avoid generating checksum from serializing an already serialized string.
+* Avoid generating checksum from running `serialize()` on an already serialized string.
 * Avoid using `continue` in `foreach`.
 
 ### v2.1.1 {#v2-1-1}

@@ -25,7 +25,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
 
-            array_set($items, $memory->name, unserialize($value));
+            $items = array_add($items, $memory->name, unserialize($value));
 
             $this->addKey($memory->name, array(
                 'id'    => $memory->id,
@@ -57,7 +57,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
             }
         }
 
-        if ($changed and $this->cache instanceof CacheManager) {
+        if ($changed && $this->cache instanceof CacheManager) {
             $this->cache->forget($this->cacheKey);
         }
 

@@ -73,30 +73,10 @@ abstract class Handler
      */
     protected function addKey($name, $option)
     {
-        $option['checksum']  = $this->generateNewChecksum($option['value']);
-        $this->keyMap[$name] = $option;
-    }
+        $option['checksum'] = $this->generateNewChecksum($option['value']);
+        unset($option['value']);
 
-    /**
-     * Is new key.
-     *
-     * @param  string   $name
-     * @return integer
-     */
-    protected function getKeyId($name)
-    {
-        return array_get($this->keyMap, "{$name}.id");
-    }
-
-    /**
-     * Get ID from key.
-     *
-     * @param  string   $name
-     * @return boolean
-     */
-    protected function isNewKey($name)
-    {
-        return ! isset($this->keyMap[$name]);
+        $this->keyMap = array_add($this->keyMap, $name, $option);
     }
 
     /**
@@ -119,8 +99,50 @@ abstract class Handler
      */
     protected function generateNewChecksum($value)
     {
-        ! is_string($value) and $value = (is_object($value) ? spl_object_hash($value) : serialize($value));
+        ! is_string($value) && $value = (is_object($value) ? spl_object_hash($value) : serialize($value));
 
         return md5($value);
+    }
+
+    /**
+     * Is given key a new content.
+     *
+     * @param  string   $name
+     * @return integer
+     */
+    protected function getKeyId($name)
+    {
+        return array_get($this->keyMap, "{$name}.id");
+    }
+
+    /**
+     * Get storage name.
+     *
+     * @return string
+     */
+    public function getStorageName()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * Get handler name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get if from content is new.
+     *
+     * @param  string   $name
+     * @return boolean
+     */
+    protected function isNewKey($name)
+    {
+        return is_null($this->getKeyId($name));
     }
 }
