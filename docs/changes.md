@@ -5,10 +5,10 @@ title: Memory Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.3@dev {#v2-1-3}
+### v2.1.3 {#v2-1-3}
 
 * Replace `array_set()` with `array_add()` when loading value from storage.
-* Avoid caching fallback instance since this could cause multiple redundant insertion to the database.
+* Avoid caching fallback instance since this could cause redundant insertion to the database.
 * Allow to get handler instance using `Orchestra\Memory\Provider::getHandler()`.
 * Add `Orchestra\Memory\Abstractable\Handler::getStorageName()` and `Orchestra\Memory\Abstractable\Handler::getName()` helper method.
 * Tweak the way `Orchestra\Memory\Abstractable\Handler::isNewKey()` is detected.
