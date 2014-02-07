@@ -3,6 +3,13 @@ title: Memory Change Log
 
 ---
 
+## Version 2.2 {#v2-2}
+
+### v2.2.0@dev {#v2-2-0}
+
+* Add `Orchestra\Memory\ContainerTrait`.
+* Deprecate `Orchestra\Memory\Abstractable\Container`.
+
 ## Version 2.1 {#v2-1}
 
 ### v2.1.3 {#v2-1-3}
