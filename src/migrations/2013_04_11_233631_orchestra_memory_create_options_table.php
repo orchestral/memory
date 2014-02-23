@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class OrchestraMemoryCreateOptionsTable extends Migration
 {
@@ -11,7 +12,7 @@ class OrchestraMemoryCreateOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('orchestra_options', function ($table) {
+        Schema::create('orchestra_options', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 64);
             $table->longText('value');
