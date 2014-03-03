@@ -12,8 +12,8 @@
 		}
 	],
 	"autoload": {
-		"psr-0": {
-			"Orchestra\\Memory" : "src/"
+		"psr-4": {
+			"Orchestra\\Memory\\" : "src/Memory/"
 		}
 	},
 	"require": {
