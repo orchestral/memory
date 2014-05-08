@@ -5,8 +5,8 @@ Orchestra Platform Memory Component
 
 [![Latest Stable Version](https://poser.pugx.org/orchestra/memory/v/stable.png)](https://packagist.org/packages/orchestra/memory) 
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads.png)](https://packagist.org/packages/orchestra/memory) 
-[![Build Status](https://travis-ci.org/orchestral/memory.png?branch=master)](https://travis-ci.org/orchestral/memory) 
-[![Coverage Status](https://coveralls.io/repos/orchestral/memory/badge.png?branch=master)](https://coveralls.io/r/orchestral/memory?branch=master) 
+[![Build Status](https://travis-ci.org/orchestral/memory.png?branch=2.2)](https://travis-ci.org/orchestral/memory) 
+[![Coverage Status](https://coveralls.io/repos/orchestral/memory/badge.png?branch=2.2)](https://coveralls.io/r/orchestral/memory?branch=2.2) 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/memory/badges/quality-score.png?s=1f4d932ad48712a5dd811bbd33a0602966d3ff2b)](https://scrutinizer-ci.com/g/orchestral/memory/) 
 
 ## Quick Installation
@@ -16,7 +16,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/memory": "2.1.*"
+		"orchestra/memory": "2.2.*"
 	}
 }
 ```
@@ -47,4 +47,4 @@ php artisan memory:migrate
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/latest/components/memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-1)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-2)
