@@ -16,7 +16,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/memory": "2.1.*"
+		"orchestra/memory": "2.2.*"
 	}
 }
 ```
@@ -47,4 +47,4 @@ php artisan memory:migrate
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/latest/components/memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-1)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-2)
