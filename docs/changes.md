@@ -5,10 +5,18 @@ title: Memory Change Log
 
 ## Version 2.2 {#v2-2}
 
-### v2.2.0@dev {#v2-2-0}
+### v2.2.0 {#v2-2-0}
 
+* Bump minimum version to PHP v5.4.0.
 * Add `Orchestra\Memory\ContainerTrait`.
 * Deprecate `Orchestra\Memory\Abstractable\Container`.
+* Replace `array_set()` with `array_add()` when loading value from storage.
+* Allow to get handler instance using `Orchestra\Memory\Provider::getHandler()`.
+* Add `Orchestra\Memory\Abstractable\Handler::getStorageName()` and `Orchestra\Memory\Abstractable\Handler::getName()` helper method.
+* Tweak the way `Orchestra\Memory\Abstractable\Handler::isNewKey()` is detected.
+* Improve type checking for `Orchestra\Memory\Abstractable\Container::attached()` and fixes docblock.
+* Avoid generating checksum from running `serialize()` on an already serialized string.
+* Avoid using `continue` in `foreach`.
 
 ## Version 2.1 {#v2-1}
 
