@@ -25,6 +25,7 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
+		"illuminate/cache": "4.1.*",
 		"illuminate/container": "4.1.*",
 		"illuminate/support": "4.1.*"
 	},
