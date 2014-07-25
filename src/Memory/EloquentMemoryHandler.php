@@ -2,7 +2,6 @@
 
 use Illuminate\Cache\Repository;
 use Illuminate\Container\Container;
-use Illuminate\Cache\CacheManager;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
 class EloquentMemoryHandler extends DatabaseHandler
