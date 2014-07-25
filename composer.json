@@ -1,6 +1,6 @@
 {
 	"name": "orchestra/memory",
-	"description": "Orchestra Platform 2 Memory Component",
+	"description": "Memory Component for Orchestra Platform 2",
 	"license": "MIT",
 	"homepage": "http://orchestraplatform.com/docs/latest/components/memory/",
 	"keywords": ["orchestra-platform", "orchestral", "laravel", "config", "database-config"],
