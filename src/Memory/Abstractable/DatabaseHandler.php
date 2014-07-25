@@ -9,7 +9,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
     /**
      * Load the data from database.
      *
-     * @return void
+     * @return array
      */
     public function initiate()
     {
@@ -40,7 +40,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
      * Save data to database.
      *
      * @param  array   $items
-     * @return boolean
+     * @return bool
      */
     public function finish(array $items = array())
     {
@@ -67,8 +67,10 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
     /**
      * Create/insert data to database.
      *
-     * @param  array   $items
-     * @return boolean
+     * @param  string   $key
+     * @param  mixed    $value
+     * @param  bool     $isNew
+     * @return bool
      */
     abstract protected function save($key, $value, $isNew = false);
 

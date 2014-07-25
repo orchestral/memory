@@ -44,8 +44,10 @@ class EloquentMemoryHandler extends DatabaseHandler
     /**
      * Create/insert data to database.
      *
-     * @param  array   $items
-     * @return boolean
+     * @param  string   $key
+     * @param  mixed    $value
+     * @param  bool     $isNew
+     * @return bool
      */
     protected function save($key, $value, $isNew = false)
     {
