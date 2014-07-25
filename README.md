@@ -1,15 +1,22 @@
-Orchestra Platform Memory Component
+Memory Component for Orchestra Platform 2
 ==============
 
-`Orchestra\Memory` handles runtime configuration either using 'in memory' Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Orchestra\Memory allow those configuration to be persistent in between request by utilizing multiple data storage option either through cache or database.
+Memory Component handles runtime configuration either using "in memory" Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Memory Component allow those configuration to be persistent in between request by utilising multiple data storage option either through cache or database.
 
 [![Latest Stable Version](https://poser.pugx.org/orchestra/memory/v/stable.png)](https://packagist.org/packages/orchestra/memory) 
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads.png)](https://packagist.org/packages/orchestra/memory) 
 [![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=2.1)](https://travis-ci.org/orchestral/memory) 
 [![Coverage Status](https://coveralls.io/repos/orchestral/memory/badge.png?branch=2.1)](https://coveralls.io/r/orchestral/memory?branch=2.1) 
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/memory/badges/quality-score.png?s=1f4d932ad48712a5dd811bbd33a0602966d3ff2b)](https://scrutinizer-ci.com/g/orchestral/memory/) 
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/memory/badges/quality-score.png?b=2.1)](https://scrutinizer-ci.com/g/orchestral/memory/) 
 
-## Quick Installation
+## Version Compatibility
+
+Laravel    | Memory
+:----------|:----------
+ 4.0.x     | 2.0.x
+ 4.1.x     | 2.1.x
+
+## Installation
 
 To install through composer, simply put the following in your `composer.json` file:
 
@@ -21,6 +28,18 @@ To install through composer, simply put the following in your `composer.json` fi
 }
 ```
 
+And then run `composer install` from the terminal.
+
+### Quick Installation
+
+Above installation can also be simplify by using the following command:
+
+```
+composer require "orchestra/memory=2.1.*"
+```
+
+## Configuration
+
 Next add the service provider in `app/config/app.php`.
 
 ```php
@@ -31,6 +50,19 @@ Next add the service provider in `app/config/app.php`.
 	'Orchestra\Memory\MemoryServiceProvider',
 
 	'Orchestra\Memory\CommandServiceProvider',
+),
+```
+
+### Aliases
+
+You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `app/config/app.php`:
+
+```php
+'aliases' => array(
+
+	// ...
+
+	'Orchestra\Memory' => 'Orchestra\Support\Facades\Memory',
 ),
 ```
 
