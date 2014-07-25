@@ -13,7 +13,7 @@ interface MemoryHandlerInterface
      * Shutdown method.
      *
      * @param  array   $items
-     * @return boolean
+     * @return bool
      */
     public function finish(array $items = array());
 }

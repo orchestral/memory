@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Support\ServiceProvider;
+use Orchestra\Memory\Console\MemoryCommand;
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -18,8 +19,8 @@ class CommandServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['orchestra.commands.memory'] = $this->app->share(function () {
-            return new Console\MemoryCommand;
+        $this->app->bindShared('orchestra.commands.memory', function () {
+            return new MemoryCommand;
         });
 
         $this->commands('orchestra.commands.memory');

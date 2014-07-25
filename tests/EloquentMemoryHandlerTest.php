@@ -34,7 +34,7 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     public function testInitiateMethod()
     {
         $app      = m::mock('\Illuminate\Container\Container');
-        $cache    = m::mock('\Illuminate\Cache\CacheManager');
+        $cache    = m::mock('\Illuminate\Cache\Repository');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $config = array('model' => 'EloquentHandlerModelMock', 'cache' => true);
@@ -63,7 +63,7 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     public function testFinishMethod()
     {
         $app      = m::mock('\Illuminate\Container\Container');
-        $cache    = m::mock('\Illuminate\Cache\CacheManager');
+        $cache    = m::mock('\Illuminate\Cache\Repository');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $config = array('model' => $eloquent, 'cache' => true);

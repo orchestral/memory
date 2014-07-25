@@ -27,6 +27,7 @@
 		"mockery/mockery": "0.9.*",
 		"illuminate/cache": "4.3.*",
 		"illuminate/container": "4.3.*",
+		"illuminate/database": "4.3.*",
 		"illuminate/support": "4.3.*"
 	},
 	"suggest": {
