@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
-use Illuminate\Cache\CacheManager;
+use Illuminate\Cache\Repository;
 use Orchestra\Memory\MemoryHandlerInterface;
 use Orchestra\Support\Str;
 
@@ -16,7 +16,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
         $items = array();
         $query = $this->resolver();
 
-        if ($this->cache instanceof CacheManager) {
+        if ($this->cache instanceof Repository) {
             $query->remember(60, $this->cacheKey);
         }
 
@@ -57,7 +57,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
             }
         }
 
-        if ($changed && $this->cache instanceof CacheManager) {
+        if ($changed && $this->cache instanceof Repository) {
             $this->cache->forget($this->cacheKey);
         }
 

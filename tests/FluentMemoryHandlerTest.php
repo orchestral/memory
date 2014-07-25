@@ -33,7 +33,7 @@ class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitiateMethod()
     {
-        $cache = m::mock('\Illuminate\Cache\CacheManager');
+        $cache = m::mock('\Illuminate\Cache\Repository');
         $db = m::mock('\Illuminate\Database\DatabaseManager');
 
         $config = array('table' => 'orchestra_options', 'cache' => true);
@@ -64,7 +64,7 @@ class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $cache = m::mock('\Illuminate\Cache\CacheManager');
+        $cache = m::mock('\Illuminate\Cache\Repository');
         $db = m::mock('\Illuminate\Database\DatabaseManager');
 
         $config = array('table' => 'orchestra_options', 'cache' => true);

@@ -14,7 +14,8 @@ class MemoryManager extends Manager
     protected function createFluentDriver($name)
     {
         $config  = $this->app['config']->get("orchestra/memory::fluent.{$name}", array());
-        $handler = new FluentMemoryHandler($name, $config, $this->app['db'], $this->app['cache']);
+        $cache   = $this->getCacheRepository($config);
+        $handler = new FluentMemoryHandler($name, $config, $this->app['db'], $cache);
 
         return new Provider($handler);
     }
@@ -28,7 +29,8 @@ class MemoryManager extends Manager
     protected function createEloquentDriver($name)
     {
         $config  = $this->app['config']->get("orchestra/memory::eloquent.{$name}", array());
-        $handler = new EloquentMemoryHandler($name, $config, $this->app, $this->app['cache']);
+        $cache   = $this->getCacheRepository($config);
+        $handler = new EloquentMemoryHandler($name, $config, $this->app, $cache);
 
         return new Provider($handler);
     }
@@ -42,7 +44,8 @@ class MemoryManager extends Manager
     protected function createCacheDriver($name)
     {
         $config  = $this->app['config']->get("orchestra/memory::cache.{$name}", array());
-        $handler = new CacheMemoryHandler($name, $config, $this->app['cache']);
+        $cache   = $this->getCacheRepository($config);
+        $handler = new CacheMemoryHandler($name, $config, $cache);
 
         return new Provider($handler);
     }
@@ -114,5 +117,18 @@ class MemoryManager extends Manager
         }
 
         $this->drivers = array();
+    }
+
+    /**
+     * Get cache repository.
+     *
+     * @param  array    $config
+     * @return \Illuminate\Cache\Repository
+     */
+    protected function getCacheRepository(array $config)
+    {
+        $connection = array_get($config, 'connections.cache');
+
+        return $this->app['cache']->driver($connection);
     }
 }

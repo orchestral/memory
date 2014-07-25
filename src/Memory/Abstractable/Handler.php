@@ -26,7 +26,7 @@ abstract class Handler
     /**
      * Cache instance.
      *
-     * @var \Illuminate\Cache\CacheManager
+     * @var \Illuminate\Cache\Repository
      */
     protected $cache;
 

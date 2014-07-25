@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Memory;
 
+use Illuminate\Cache\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Cache\CacheManager;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
@@ -28,9 +29,9 @@ class EloquentMemoryHandler extends DatabaseHandler
      * @param  string                           $name
      * @param  array                            $config
      * @param  \Illuminate\Container\Container  $repository
-     * @param  \Illuminate\Cache\CacheManager   $cache
+     * @param  \Illuminate\Cache\Repository     $cache
      */
-    public function __construct($name, array $config, Container $repository, CacheManager $cache)
+    public function __construct($name, array $config, Container $repository, Repository $cache)
     {
         parent::__construct($name, $config);
 
