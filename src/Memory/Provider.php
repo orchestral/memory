@@ -15,9 +15,6 @@ class Provider extends Relic
      * Construct an instance.
      *
      * @param  MemoryHandlerInterface   $handler
-     * @param  string                   $name
-     * @param  array                    $config
-     * @return void
      */
     public function __construct(MemoryHandlerInterface $handler)
     {
@@ -39,7 +36,7 @@ class Provider extends Relic
     /**
      * Shutdown/finish method.
      *
-     * @return void
+     * @return bool
      */
     public function finish()
     {

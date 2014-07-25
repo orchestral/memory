@@ -12,7 +12,7 @@ trait ContainerTrait
     /**
      * Check whether a Memory instance is already attached to the container.
      *
-     * @return boolean
+     * @return bool
      */
     public function attached()
     {

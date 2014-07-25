@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
-use Illuminate\Cache\CacheManager;
+use Illuminate\Cache\Repository;
 use Orchestra\Memory\MemoryHandlerInterface;
 use Orchestra\Support\Str;
 
@@ -9,14 +9,14 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
     /**
      * Load the data from database.
      *
-     * @return void
+     * @return array
      */
     public function initiate()
     {
         $items = array();
         $query = $this->resolver();
 
-        if ($this->cache instanceof CacheManager) {
+        if ($this->cache instanceof Repository) {
             $query->remember(60, $this->cacheKey);
         }
 
@@ -40,7 +40,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
      * Save data to database.
      *
      * @param  array   $items
-     * @return boolean
+     * @return bool
      */
     public function finish(array $items = array())
     {
@@ -57,7 +57,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
             }
         }
 
-        if ($changed && $this->cache instanceof CacheManager) {
+        if ($changed && $this->cache instanceof Repository) {
             $this->cache->forget($this->cacheKey);
         }
 
@@ -67,8 +67,10 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
     /**
      * Create/insert data to database.
      *
-     * @param  array   $items
-     * @return boolean
+     * @param  string   $key
+     * @param  mixed    $value
+     * @param  bool     $isNew
+     * @return bool
      */
     abstract protected function save($key, $value, $isNew = false);
 

@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-use Illuminate\Cache\CacheManager;
+use Illuminate\Cache\Repository;
 use Illuminate\Database\DatabaseManager;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
@@ -28,9 +28,9 @@ class FluentMemoryHandler extends DatabaseHandler
      * @param  string                                 $name
      * @param  array                                  $config
      * @param  \Illuminate\Database\DatabaseManager   $repository
-     * @param  \Illuminate\Cache\CacheManager         $cache
+     * @param  \Illuminate\Cache\Repository           $cache
      */
-    public function __construct($name, array $config, DatabaseManager $repository, CacheManager $cache)
+    public function __construct($name, array $config, DatabaseManager $repository, Repository $cache)
     {
         parent::__construct($name, $config);
 
@@ -44,8 +44,10 @@ class FluentMemoryHandler extends DatabaseHandler
     /**
      * Create/insert data to database.
      *
-     * @param  array   $items
-     * @return boolean
+     * @param  string   $key
+     * @param  mixed    $value
+     * @param  bool     $isNew
+     * @return bool
      */
     protected function save($key, $value, $isNew = false)
     {
