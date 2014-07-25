@@ -9,6 +9,19 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
 [![Coverage Status](https://coveralls.io/repos/orchestral/memory/badge.png?branch=2.2)](https://coveralls.io/r/orchestral/memory?branch=2.2) 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/memory/badges/quality-score.png?b=2.2)](https://scrutinizer-ci.com/g/orchestral/memory/) 
 
+## Table of Content
+
+* [Version Compatibility](#version-compatibility)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+  - [Creating Instance](#creating-instance)
+  - [Storing Items]
+  - [Retrieving Items]
+  - [Removing Items]
+  - [Extending Memory]
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-2)
+
 ## Version Compatibility
 
 Laravel    | Memory
@@ -178,4 +191,3 @@ $acme = Orchestra\Memory::make('acme.default');
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/latest/components/memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-2)
