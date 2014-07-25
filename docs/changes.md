@@ -5,6 +5,11 @@ title: Memory Change Log
 
 ## Version 2.2 {#v2-2}
 
+### v2.2.1 {#v2-2-1}
+
+* Swap type-hint from `Illuminate\Cache\CacheManager` to `Illuminate\Cache\Repository` to slightly reduce tight-coupling to Laravel app.
+* Utilize `Illuminate\Support\Arr`.
+
 ### v2.2.0 {#v2-2-0}
 
 * Bump minimum version to PHP v5.4.0.
@@ -19,6 +24,10 @@ title: Memory Change Log
 * Avoid using `continue` in `foreach`.
 
 ## Version 2.1 {#v2-1}
+
+### v2.1.5 {#v2-1-5}
+
+* Swap type-hint from `Illuminate\Cache\CacheManager` to `Illuminate\Cache\Repository` to slightly reduce tight-coupling to Laravel app.
 
 ### v2.1.4 {#v2-1-4}
 
