@@ -19,8 +19,8 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
   - [Storing Items](#storing-items)
   - [Retrieving Items](#retrieving-items)
   - [Removing Items](#removing-items)
-  - [Extending Memory](##extending-memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-2)
+  - [Extending Memory](#extending-memory)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-3)
 
 ## Version Compatibility
 
