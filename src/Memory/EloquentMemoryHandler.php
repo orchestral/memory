@@ -3,6 +3,7 @@
 use Illuminate\Cache\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Cache\CacheManager;
+use Illuminate\Support\Arr;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
 class EloquentMemoryHandler extends DatabaseHandler
@@ -37,7 +38,7 @@ class EloquentMemoryHandler extends DatabaseHandler
 
         $this->repository = $repository;
 
-        if (array_get($this->config, 'cache', false)) {
+        if (Arr::get($this->config, 'cache', false)) {
             $this->cache = $cache;
         }
     }
@@ -73,7 +74,7 @@ class EloquentMemoryHandler extends DatabaseHandler
      */
     protected function resolver()
     {
-        $model = array_get($this->config, 'model', $this->name);
+        $model = Arr::get($this->config, 'model', $this->name);
 
         return $this->repository->make($model)->newInstance();
     }

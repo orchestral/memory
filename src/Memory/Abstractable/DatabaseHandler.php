@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
 use Illuminate\Cache\Repository;
+use Illuminate\Support\Arr;
 use Orchestra\Memory\MemoryHandlerInterface;
 use Orchestra\Support\Str;
 
@@ -25,7 +26,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
 
-            $items = array_add($items, $memory->name, unserialize($value));
+            $items = Arr::add($items, $memory->name, unserialize($value));
 
             $this->addKey($memory->name, array(
                 'id'    => $memory->id,

@@ -2,6 +2,7 @@
 
 use Illuminate\Cache\Repository;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Arr;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
 class FluentMemoryHandler extends DatabaseHandler
@@ -36,7 +37,7 @@ class FluentMemoryHandler extends DatabaseHandler
 
         $this->repository = $repository;
 
-        if (array_get($this->config, 'cache', false)) {
+        if (Arr::get($this->config, 'cache', false)) {
             $this->cache = $cache;
         }
     }
@@ -73,7 +74,7 @@ class FluentMemoryHandler extends DatabaseHandler
      */
     protected function resolver()
     {
-        $table = array_get($this->config, 'table', $this->name);
+        $table = Arr::get($this->config, 'table', $this->name);
 
         return $this->repository->table($table);
     }

@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
+use Illuminate\Support\Arr;
+
 abstract class Handler
 {
     /**
@@ -76,7 +78,7 @@ abstract class Handler
         $option['checksum'] = $this->generateNewChecksum($option['value']);
         unset($option['value']);
 
-        $this->keyMap = array_add($this->keyMap, $name, $option);
+        $this->keyMap = Arr::add($this->keyMap, $name, $option);
     }
 
     /**
@@ -88,7 +90,7 @@ abstract class Handler
      */
     protected function check($name, $check = '')
     {
-        return (array_get($this->keyMap, "{$name}.checksum") === $this->generateNewChecksum($check));
+        return (Arr::get($this->keyMap, "{$name}.checksum") === $this->generateNewChecksum($check));
     }
 
     /**
@@ -112,7 +114,7 @@ abstract class Handler
      */
     protected function getKeyId($name)
     {
-        return array_get($this->keyMap, "{$name}.id");
+        return Arr::get($this->keyMap, "{$name}.id");
     }
 
     /**

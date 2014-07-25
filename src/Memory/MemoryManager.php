@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Orchestra\Support\Manager;
 
 class MemoryManager extends Manager
@@ -127,7 +128,7 @@ class MemoryManager extends Manager
      */
     protected function getCacheRepository(array $config)
     {
-        $connection = array_get($config, 'connections.cache');
+        $connection = Arr::get($config, 'connections.cache');
 
         return $this->app['cache']->driver($connection);
     }

@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Cache\Repository;
+use Illuminate\Support\Arr;
 use Orchestra\Memory\Abstractable\Handler;
 
 class CacheMemoryHandler extends Handler implements MemoryHandlerInterface
@@ -23,7 +24,7 @@ class CacheMemoryHandler extends Handler implements MemoryHandlerInterface
     {
         $this->cache = $cache;
 
-        $name = array_get($config, 'name', $name);
+        $name = Arr::get($config, 'name', $name);
 
         parent::__construct($name, $config);
     }
