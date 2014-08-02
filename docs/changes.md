@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.6 {#v2-1-6}
+
+* Fixes mass assignment issue when using Eloquent driver.
+
 ### v2.1.5 {#v2-1-5}
 
 * Swap type-hint from `Illuminate\Cache\CacheManager` to `Illuminate\Cache\Repository` to slightly reduce tight-coupling to Laravel app.

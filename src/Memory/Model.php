@@ -10,4 +10,18 @@ class Model extends Eloquent
      * @var string
      */
     protected $table = 'orchestra_options';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = array('name', 'value');
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }
