@@ -1,9 +1,11 @@
 <?php namespace Orchestra\Memory;
 
-use Orchestra\Support\Relic;
+use Orchestra\Support\Traits\DataContainerTrait;
 
-class Provider extends Relic
+class Provider
 {
+    use DataContainerTrait;
+
     /**
      * Handler instance.
      *
