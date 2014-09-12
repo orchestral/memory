@@ -1,4 +1,4 @@
-Memory Component for Orchestra Platform 2
+Memory Component for Orchestra Platform
 ==============
 
 Memory Component handles runtime configuration either using "in memory" Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Memory Component allow those configuration to be persistent in between request by utilising multiple data storage option either through cache or database.
@@ -20,7 +20,7 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
   - [Retrieving Items](#retrieving-items)
   - [Removing Items](#removing-items)
   - [Extending Memory](#extending-memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v2-3)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v3-0)
 
 ## Version Compatibility
 
@@ -29,7 +29,7 @@ Laravel    | Memory
  4.0.x     | 2.0.x
  4.1.x     | 2.1.x
  4.2.x     | 2.2.x
- 4.3.x     | 2.3.x@dev
+ 3.0.x     | 3.0.x@dev
 
 ## Installation
 
@@ -38,7 +38,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/memory": "2.3.*"
+		"orchestra/memory": "3.0.*"
 	}
 }
 ```
@@ -50,7 +50,7 @@ And then run `composer install` from the terminal.
 Above installation can also be simplify by using the following command:
 
 ```
-composer require "orchestra/memory=2.3.*"
+composer require "orchestra/memory=3.0.*"
 ```
 
 ## Configuration
