@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Memory;
 
+use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
 use Illuminate\Container\Container;
-use Illuminate\Support\Arr;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
 class EloquentMemoryHandler extends DatabaseHandler
