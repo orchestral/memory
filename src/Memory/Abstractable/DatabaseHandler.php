@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Memory\Abstractable;
 
+use Orchestra\Support\Str;
 use Illuminate\Cache\Repository;
 use Orchestra\Memory\MemoryHandlerInterface;
-use Orchestra\Support\Str;
 
 abstract class DatabaseHandler extends Handler implements MemoryHandlerInterface
 {
