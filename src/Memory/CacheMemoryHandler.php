@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Memory;
 
-use Illuminate\Cache\Repository;
 use Illuminate\Support\Arr;
+use Illuminate\Cache\Repository;
 use Orchestra\Memory\Abstractable\Handler;
 
 class CacheMemoryHandler extends Handler implements MemoryHandlerInterface
