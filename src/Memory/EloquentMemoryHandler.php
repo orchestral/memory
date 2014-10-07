@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
 class EloquentMemoryHandler extends DatabaseHandler
@@ -26,10 +26,10 @@ class EloquentMemoryHandler extends DatabaseHandler
     /**
      * Setup a new memory handler.
      *
-     * @param  string                           $name
-     * @param  array                            $config
-     * @param  \Illuminate\Container\Container  $repository
-     * @param  \Illuminate\Cache\Repository     $cache
+     * @param  string                                      $name
+     * @param  array                                       $config
+     * @param  \Illuminate\Contracts\Container\Container   $repository
+     * @param  \Illuminate\Cache\Repository                $cache
      */
     public function __construct($name, array $config, Container $repository, Repository $cache)
     {
