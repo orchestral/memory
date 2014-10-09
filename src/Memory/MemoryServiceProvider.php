@@ -39,7 +39,7 @@ class MemoryServiceProvider extends ServiceProvider
     {
         $app = $this->app;
 
-        $app->after(function () use ($app) {
+        $app['router']->after(function () use ($app) {
             $app['orchestra.memory']->finish();
         });
     }
