@@ -15,13 +15,7 @@ abstract class DatabaseHandler extends Handler implements MemoryHandler
     public function initiate()
     {
         $items    = [];
-        $cacheKey = $this->cacheKey;
-
-        $memories = $this->cache->rememberForever($cacheKey, function () use ($cacheKey) {
-            $result = $this->resolver()->get();
-
-            return $result;
-        });
+        $memories = $this->cache instanceof Repository ? $this->getItemsFromCache() : $this->getItemsFromDatabase();
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);
@@ -81,4 +75,26 @@ abstract class DatabaseHandler extends Handler implements MemoryHandler
      * @return object
      */
     abstract protected function resolver();
+
+    /**
+     * Get items from cache.
+     *
+     * @return array
+     */
+    protected function getItemsFromCache()
+    {
+        return $this->cache->rememberForever($this->cacheKey, function () {
+            return $this->getItemsFromDatabase();
+        });
+    }
+
+    /**
+     * Get items from database.
+     *
+     * @return array
+     */
+    protected function getItemsFromDatabase()
+    {
+        return $this->resolver()->get();
+    }
 }
