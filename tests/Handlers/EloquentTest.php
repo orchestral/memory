@@ -1,9 +1,10 @@
-<?php namespace Orchestra\Memory\TestCase;
+<?php namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
-use Orchestra\Memory\EloquentMemoryHandler;
+use Illuminate\Support\Fluent;
+use Orchestra\Memory\Handlers\Eloquent;
 
-class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
+class EloquentTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -21,8 +22,8 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     public static function providerEloquent()
     {
         return array(
-            new \Illuminate\Support\Fluent(array('id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";')),
-            new \Illuminate\Support\Fluent(array('id' => 2, 'name' => 'hello', 'value' => 's:5:"world";')),
+            new Fluent(array('id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";')),
+            new Fluent(array('id' => 2, 'name' => 'hello', 'value' => 's:5:"world";')),
         );
     }
 
@@ -44,14 +45,14 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
             ->shouldReceive('get')->andReturn(static::providerEloquent());
 
-        $stub = new EloquentMemoryHandler('stub', $config, $app, $cache);
+        $stub = new Eloquent('stub', $config, $app, $cache);
 
         $expected = array(
             'foo'   => 'foobar',
             'hello' => 'world',
         );
 
-        $this->assertInstanceOf('\Orchestra\Memory\EloquentMemoryHandler', $stub);
+        $this->assertInstanceOf('\Orchestra\Memory\Handlers\Eloquent', $stub);
         $this->assertEquals($expected, $stub->initiate());
     }
 
@@ -85,7 +86,7 @@ class EloquentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
         $checkWithoutCountQuery->shouldReceive('first')->andReturnNull();
         $fooEntity->shouldReceive('save')->once()->andReturn(true);
 
-        $stub = new EloquentMemoryHandler('stub', $config, $app, $cache);
+        $stub = new Eloquent('stub', $config, $app, $cache);
         $stub->initiate();
 
         $items = array(

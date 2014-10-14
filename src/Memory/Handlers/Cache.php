@@ -1,11 +1,11 @@
-<?php namespace Orchestra\Memory;
+<?php namespace Orchestra\Memory\Handlers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
 use Orchestra\Memory\Abstractable\Handler;
 use Orchestra\Contracts\Memory\MemoryHandler;
 
-class CacheMemoryHandler extends Handler implements MemoryHandler
+class Cache extends Handler implements MemoryHandler
 {
     /**
      * Storage name.
@@ -37,7 +37,7 @@ class CacheMemoryHandler extends Handler implements MemoryHandler
      */
     public function initiate()
     {
-        return $this->cache->get("orchestra.memory.{$this->name}", array());
+        return $this->cache->get("orchestra.memory.{$this->name}", []);
     }
 
     /**

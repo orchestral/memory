@@ -1,14 +1,14 @@
-<?php namespace Orchestra\Memory\TestCase;
+<?php namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
-use Orchestra\Memory\RuntimeMemoryHandler;
+use Orchestra\Memory\Handlers\Runtime;
 
-class RuntimeMemoryHandlerTest extends \PHPUnit_Framework_TestCase
+class RuntimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Stub instance.
      *
-     * @var Orchestra\Memory\RuntimeMemoryHandler
+     * @var Orchestra\Memory\Handlers\Runtime
      */
     private $stub = null;
 
@@ -17,7 +17,7 @@ class RuntimeMemoryHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->stub = new RuntimeMemoryHandler('stub', array());
+        $this->stub = new Runtime('stub', array());
     }
 
     /**
@@ -30,7 +30,7 @@ class RuntimeMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\RuntimeMemoryHandler::__construct()
+     * Test Orchestra\Memory\Handlers\Runtime::__construct()
      *
      * @test
      */
@@ -48,7 +48,7 @@ class RuntimeMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\RuntimeMemoryHandler::initiate()
+     * Test Orchestra\Memory\Handlers\Runtime::initiate()
      *
      * @test
      */
@@ -58,7 +58,7 @@ class RuntimeMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\RuntimeMemoryHandler::finish()
+     * Test Orchestra\Memory\Handlers\Runtime::finish()
      *
      * @test
      */

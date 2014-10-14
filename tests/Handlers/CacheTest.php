@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Memory\Drivers\TestCase;
+<?php namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
-use Orchestra\Memory\CacheMemoryHandler;
+use Orchestra\Memory\Handlers\Cache;
 
-class CacheMemoryHandlerTest extends \PHPUnit_Framework_TestCase
+class CacheTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -14,7 +14,7 @@ class CacheMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\CacheMemoryHandler::initiate() method.
+     * Test Orchestra\Memory\Handlers\Cache::initiate() method.
      *
      * @test
      */
@@ -32,13 +32,13 @@ class CacheMemoryHandlerTest extends \PHPUnit_Framework_TestCase
 
         $cache->shouldReceive('get')->once()->andReturn($value);
 
-        $stub = new CacheMemoryHandler('cachemock', array(), $cache);
+        $stub = new Cache('cachemock', array(), $cache);
 
         $this->assertEquals($value, $stub->initiate());
     }
 
     /**
-     * Test Orchestra\Memory\CacheMemoryHandler::finish()
+     * Test Orchestra\Memory\Handlers\Cache::finish()
      *
      * @test
      */
@@ -48,7 +48,7 @@ class CacheMemoryHandlerTest extends \PHPUnit_Framework_TestCase
 
         $cache->shouldReceive('forever')->once()->andReturn(true);
 
-        $stub = new CacheMemoryHandler('cachemock', array(), $cache);
+        $stub = new Cache('cachemock', array(), $cache);
 
         $this->assertTrue($stub->finish());
     }

@@ -1,11 +1,11 @@
-<?php namespace Orchestra\Memory;
+<?php namespace Orchestra\Memory\Handlers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
 use Orchestra\Memory\Abstractable\DatabaseHandler;
 
-class EloquentMemoryHandler extends DatabaseHandler
+class Eloquent extends DatabaseHandler
 {
     /**
      * Storage name.
@@ -19,9 +19,9 @@ class EloquentMemoryHandler extends DatabaseHandler
      *
      * @var array
      */
-    protected $config = array(
+    protected $config = [
         'cache' => false,
-    );
+    ];
 
     /**
      * Setup a new memory handler.
@@ -55,10 +55,10 @@ class EloquentMemoryHandler extends DatabaseHandler
         $model = $this->resolver()->where('name', '=', $key)->first();
 
         if (true === $isNew && is_null($model)) {
-            $this->resolver()->create(array(
+            $this->resolver()->create([
                 'name'  => $key,
                 'value' => $value,
-            ));
+            ]);
         } else {
             $model->value = $value;
 

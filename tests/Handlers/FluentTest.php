@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Memory\TestCase;
+<?php namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
-use Orchestra\Memory\FluentMemoryHandler;
+use Orchestra\Memory\Handlers\Fluent;
 
-class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
+class FluentTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -27,7 +27,7 @@ class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\FluentMemoryHandler::initiate() method.
+     * Test Orchestra\Memory\Handlers\Fluent::initiate() method.
      *
      * @test
      */
@@ -45,19 +45,19 @@ class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
         $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-stub')->andReturn($query)
             ->shouldReceive('get')->andReturn($items);
 
-        $stub = new FluentMemoryHandler('stub', $config, $db, $cache);
+        $stub = new Fluent('stub', $config, $db, $cache);
 
         $expected = array(
             'foo'   => 'foobar',
             'hello' => 'world',
         );
 
-        $this->assertInstanceOf('\Orchestra\Memory\FluentMemoryHandler', $stub);
+        $this->assertInstanceOf('\Orchestra\Memory\Handlers\Fluent', $stub);
         $this->assertEquals($expected, $stub->initiate());
     }
 
     /**
-     * Test Orchestra\Memory\FluentMemoryHandler::finish() method.
+     * Test Orchestra\Memory\Handlers\Fluent::finish() method.
      *
      * @test
      * @group support
@@ -86,7 +86,7 @@ class FluentMemoryHandlerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-stub')->andReturn($selectQuery);
         $db->shouldReceive('table')->times(5)->andReturn($selectQuery);
 
-        $stub = new FluentMemoryHandler('stub', $config, $db, $cache);
+        $stub = new Fluent('stub', $config, $db, $cache);
         $stub->initiate();
 
         $items = array(

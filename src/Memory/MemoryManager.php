@@ -3,6 +3,11 @@
 use Exception;
 use Illuminate\Support\Arr;
 use Orchestra\Support\Manager;
+use Orchestra\Memory\Handlers\Cache;
+use Orchestra\Memory\Handlers\Fluent;
+use Orchestra\Memory\Handlers\Runtime;
+use Orchestra\Memory\Handlers\Eloquent;
+use Orchestra\Contracts\Memory\MemoryHandler;
 
 class MemoryManager extends Manager
 {
@@ -14,11 +19,11 @@ class MemoryManager extends Manager
      */
     protected function createFluentDriver($name)
     {
-        $config  = $this->app['config']->get("orchestra/memory::fluent.{$name}", array());
-        $cache   = $this->getCacheRepository($config);
-        $handler = new FluentMemoryHandler($name, $config, $this->app['db'], $cache);
+        $config = $this->app['config']->get("orchestra/memory::fluent.{$name}", []);
 
-        return new Provider($handler);
+        $cache = $this->getCacheRepository($config);
+
+        return $this->createProvider(new Fluent($name, $config, $this->app['db'], $cache));
     }
 
     /**
@@ -29,11 +34,11 @@ class MemoryManager extends Manager
      */
     protected function createEloquentDriver($name)
     {
-        $config  = $this->app['config']->get("orchestra/memory::eloquent.{$name}", array());
-        $cache   = $this->getCacheRepository($config);
-        $handler = new EloquentMemoryHandler($name, $config, $this->app, $cache);
+        $config = $this->app['config']->get("orchestra/memory::eloquent.{$name}", []);
 
-        return new Provider($handler);
+        $cache = $this->getCacheRepository($config);
+
+        return $this->createProvider(new Eloquent($name, $config, $this->app, $cache));
     }
 
     /**
@@ -44,11 +49,11 @@ class MemoryManager extends Manager
      */
     protected function createCacheDriver($name)
     {
-        $config  = $this->app['config']->get("orchestra/memory::cache.{$name}", array());
-        $cache   = $this->getCacheRepository($config);
-        $handler = new CacheMemoryHandler($name, $config, $cache);
+        $config = $this->app['config']->get("orchestra/memory::cache.{$name}", []);
 
-        return new Provider($handler);
+        $cache = $this->getCacheRepository($config);
+
+        return $this->createProvider(new Cache($name, $config, $cache));
     }
 
     /**
@@ -59,9 +64,19 @@ class MemoryManager extends Manager
      */
     protected function createRuntimeDriver($name)
     {
-        $config  = $this->app['config']->get("orchestra/memory::runtime.{$name}", array());
-        $handler = new RuntimeMemoryHandler($name, $config);
+        $config = $this->app['config']->get("orchestra/memory::runtime.{$name}", []);
 
+        return $this->createProvider(new Runtime($name, $config));
+    }
+
+    /**
+     * Create a memory provider.
+     *
+     * @param  \Orchestra\Contracts\Memory\MemoryHandler $handler
+     * @return \Orchestra\Contracts\Memory\Provider
+     */
+    protected function createProvider(MemoryHandler $handler)
+    {
         return new Provider($handler);
     }
 
