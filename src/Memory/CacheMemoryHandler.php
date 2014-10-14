@@ -3,8 +3,9 @@
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
 use Orchestra\Memory\Abstractable\Handler;
+use Orchestra\Contracts\Memory\MemoryHandler;
 
-class CacheMemoryHandler extends Handler implements MemoryHandlerInterface
+class CacheMemoryHandler extends Handler implements MemoryHandler
 {
     /**
      * Storage name.
@@ -43,7 +44,7 @@ class CacheMemoryHandler extends Handler implements MemoryHandlerInterface
      * Save data to cache.
      *
      * @param  array   $items
-     * @return boolean
+     * @return bool
      */
     public function finish(array $items = array())
     {

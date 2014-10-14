@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Memory;
 
 use Orchestra\Memory\Abstractable\Handler;
+use Orchestra\Contracts\Memory\MemoryHandler;
 
-class RuntimeMemoryHandler extends Handler implements MemoryHandlerInterface
+class RuntimeMemoryHandler extends Handler implements MemoryHandler
 {
     /**
      * Storage name.
@@ -18,7 +19,7 @@ class RuntimeMemoryHandler extends Handler implements MemoryHandlerInterface
      */
     public function initiate()
     {
-        return array();
+        return [];
     }
 
     /**
