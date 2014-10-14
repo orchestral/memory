@@ -8,7 +8,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
     /**
      * Stub instance.
      *
-     * @var Orchestra\Memory\Handlers\Runtime
+     * @var \Orchestra\Memory\Handlers\Runtime
      */
     private $stub = null;
 

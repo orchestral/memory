@@ -14,14 +14,16 @@ abstract class DatabaseHandler extends Handler implements MemoryHandler
      */
     public function initiate()
     {
-        $items = array();
-        $query = $this->resolver();
+        $items    = [];
+        $cacheKey = $this->cacheKey;
 
-        if ($this->cache instanceof Repository) {
-            $query->remember(60, $this->cacheKey);
-        }
+        $memories = $this->cache->get($cacheKey, function () use ($cacheKey) {
+            $result = $this->resolver()->get();
 
-        $memories = $query->get();
+            $this->cache->put($cacheKey, $result, 60);
+
+            return $result;
+        });
 
         foreach ($memories as $memory) {
             $value = Str::streamGetContents($memory->value);

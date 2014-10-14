@@ -19,7 +19,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public static function providerEloquent()
+    protected function eloquentDataProvider()
     {
         return array(
             new Fluent(array('id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";')),
@@ -39,11 +39,17 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $config = array('model' => 'EloquentHandlerModelMock', 'cache' => true);
+        $data   = $this->eloquentDataProvider();
 
         $app->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
+        $cache->shouldReceive('get')->once()
+                ->with('db-memory:eloquent-stub', m::type('Closure'))
+                ->andReturnUsing(function ($n, $c) {
+                    return $c();
+                })
+            ->shouldReceive('put')->once()->with('db-memory:eloquent-stub', $data, 60)->andReturnNull();
         $eloquent->shouldReceive('newInstance')->once()->andReturn($eloquent)
-            ->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
-            ->shouldReceive('get')->andReturn(static::providerEloquent());
+            ->shouldReceive('get')->andReturn($data);
 
         $stub = new Eloquent('stub', $config, $app, $cache);
 
@@ -68,16 +74,22 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $config = array('model' => $eloquent, 'cache' => true);
+        $data   = $this->eloquentDataProvider();
 
-        $checkWithCountQuery    = m::mock('DB\Query');
-        $checkWithoutCountQuery = m::mock('DB\Query');
+        $checkWithCountQuery    = m::mock('\Illuminate\Database\Query\Builder');
+        $checkWithoutCountQuery = m::mock('\Illuminate\Database\Query\Builder');
         $fooEntity              = m::mock('FooEntityMock');
 
         $app->shouldReceive('make')->times(4)->with('EloquentHandlerModelMock')->andReturn($eloquent);
-        $cache->shouldReceive('forget')->once()->with('db-memory:eloquent-stub')->andReturn(null);
+        $cache->shouldReceive('get')->once()
+            ->with('db-memory:eloquent-stub', m::type('Closure'))
+            ->andReturnUsing(function ($n, $c) {
+                    return $c();
+                })
+            ->shouldReceive('put')->once()->with('db-memory:eloquent-stub', $data, 60)->andReturnNull()
+            ->shouldReceive('forget')->once()->with('db-memory:eloquent-stub')->andReturn(null);
         $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
-            ->shouldReceive('remember')->once()->with(60, "db-memory:eloquent-stub")->andReturn($eloquent)
-            ->shouldReceive('get')->once()->andReturn(static::providerEloquent())
+            ->shouldReceive('get')->once()->andReturn($data)
             ->shouldReceive('create')->once()->andReturn(true)
             ->shouldReceive('where')->with('name', '=', 'foo')->andReturn($checkWithCountQuery)
             ->shouldReceive('where')->with('name', '=', 'hello')->andReturn($checkWithCountQuery)

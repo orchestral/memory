@@ -46,15 +46,14 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $cache    = m::mock('\Illuminate\Cache\Repository');
         $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
-        $query    = m::mock('DB\Query');
 
         $app->shouldReceive('offsetGet')->times(3)->with('cache')->andReturn($cache)
             ->shouldReceive('offsetGet')->times(4)->with('config')->andReturn($config)
-            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db)
-            ->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
+            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->times(3)->with(null)->andReturnSelf()
-            ->shouldReceive('get')->andReturn(array())->shouldReceive('forever')->andReturn(true);
+            ->shouldReceive('get')->andReturn(array())
+            ->shouldReceive('forever')->andReturn(true);
 
         $config->shouldReceive('get')->once()
                 ->with('orchestra/memory::cache.default', array())->andReturn(array())
@@ -66,12 +65,6 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
                 ->andReturn(array('model' => $eloquent, 'cache' => true))
             ->shouldReceive('get')->once()
                 ->with('orchestra/memory::runtime.default', array())->andReturn(array());
-        $eloquent->shouldReceive('newInstance')->once()->andReturn($eloquent)
-            ->shouldReceive('remember')->once()->with(60, 'db-memory:eloquent-default')->andReturn($eloquent)
-            ->shouldReceive('get')->andReturn(array());
-        $db->shouldReceive('table')->andReturn($query);
-        $query->shouldReceive('remember')->once()->with(60, 'db-memory:fluent-default')->andReturn($query)
-            ->shouldReceive('get')->andReturn(array());
 
         $stub = new MemoryManager($app);
 
@@ -90,30 +83,30 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config   = m::mock('\Illuminate\Config\Repository');
-        $cache    = m::mock('\Illuminate\Cache\Repository');
-        $db       = m::mock('\Illuminate\Database\DatabaseManager');
-        $eloquent = m::mock('EloquentHandlerModelMock');
-        $query    = m::mock('DB\Query');
+        $config = m::mock('\Illuminate\Config\Repository');
+        $cache  = m::mock('\Illuminate\Cache\Repository');
+        $db     = m::mock('\Illuminate\Database\DatabaseManager');
+        $query  = m::mock('\Illuminate\Database\Query\Builder');
+        $data   = [];
 
         $app->shouldReceive('offsetGet')->times(2)->with('config')->andReturn($config)
             ->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
-        $cache->shouldReceive('driver')->once()->with(null)->andReturnSelf();
+        $cache->shouldReceive('driver')->once()->with(null)->andReturnSelf()
+            ->shouldReceive('get')->once()->with('db-memory:fluent-default', m::type('Closure'))
+                ->andReturnUsing(function ($n, $c) {
+                    return $c();
+                })
+            ->shouldReceive('put')->once()->with('db-memory:fluent-default', $data, 60)->andReturnNull();
 
         $config->shouldReceive('get')->once()
-                ->with('orchestra/memory::driver', 'fluent.default')
-                ->andReturn('fluent.default')
+                ->with('orchestra/memory::driver', 'fluent.default')->andReturn('fluent.default')
             ->shouldReceive('get')->once()
                 ->with('orchestra/memory::fluent.default', array())
-                ->andReturn(array('table' => 'orchestra_options', 'cache' => true))
-            ->shouldReceive('get')->never()
-                ->with('orchestra/memory::runtime.orchestra', array())->andReturn(array());
+                ->andReturn(array('table' => 'orchestra_options', 'cache' => true));
         $db->shouldReceive('table')->once()->with('orchestra_options')->andReturn($query);
-        $query->shouldReceive('remember')->once()
-                ->with(60, 'db-memory:fluent-default')->andReturn($query)
-            ->shouldReceive('get')->once()->andReturn(array());
+        $query->shouldReceive('get')->once()->andReturn($data);
 
         $stub = new MemoryManager($app);
 
@@ -129,16 +122,19 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config   = m::mock('\Illuminate\Config\Repository');
-        $cache    = m::mock('\Illuminate\Cache\Repository');
-        $db       = m::mock('\Illuminate\Database\DatabaseManager');
-        $query    = m::mock('DB\Query');
+        $config = m::mock('\Illuminate\Config\Repository');
+        $cache  = m::mock('\Illuminate\Cache\Repository');
+        $db     = m::mock('\Illuminate\Database\DatabaseManager');
 
         $app->shouldReceive('offsetGet')->times(3)->with('config')->andReturn($config)
             ->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
-        $cache->shouldReceive('driver')->once()->with('foo')->andReturnSelf();
+        $cache->shouldReceive('driver')->once()->with('foo')->andReturnSelf()
+            ->shouldReceive('get')->once()->with('db-memory:fluent-default', m::type('Closure'))
+                ->andReturnUsing(function ($n, $c) {
+                    return $c();
+                });
 
         $config->shouldReceive('get')->once()
                 ->with('orchestra/memory::driver', 'fluent.default')
