@@ -17,10 +17,8 @@ abstract class DatabaseHandler extends Handler implements MemoryHandler
         $items    = [];
         $cacheKey = $this->cacheKey;
 
-        $memories = $this->cache->get($cacheKey, function () use ($cacheKey) {
+        $memories = $this->cache->rememberForever($cacheKey, function () use ($cacheKey) {
             $result = $this->resolver()->get();
-
-            $this->cache->put($cacheKey, $result, 60);
 
             return $result;
         });

@@ -42,12 +42,11 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $data   = $this->eloquentDataProvider();
 
         $app->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
-        $cache->shouldReceive('get')->once()
+        $cache->shouldReceive('rememberForever')->once()
                 ->with('db-memory:eloquent-stub', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) {
                     return $c();
-                })
-            ->shouldReceive('put')->once()->with('db-memory:eloquent-stub', $data, 60)->andReturnNull();
+                });
         $eloquent->shouldReceive('newInstance')->once()->andReturn($eloquent)
             ->shouldReceive('get')->andReturn($data);
 
@@ -81,12 +80,11 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $fooEntity              = m::mock('FooEntityMock');
 
         $app->shouldReceive('make')->times(4)->with('EloquentHandlerModelMock')->andReturn($eloquent);
-        $cache->shouldReceive('get')->once()
+        $cache->shouldReceive('rememberForever')->once()
             ->with('db-memory:eloquent-stub', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) {
                     return $c();
                 })
-            ->shouldReceive('put')->once()->with('db-memory:eloquent-stub', $data, 60)->andReturnNull()
             ->shouldReceive('forget')->once()->with('db-memory:eloquent-stub')->andReturn(null);
         $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
             ->shouldReceive('get')->once()->andReturn($data)

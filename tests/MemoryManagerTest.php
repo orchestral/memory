@@ -53,6 +53,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 
         $cache->shouldReceive('driver')->times(3)->with(null)->andReturnSelf()
             ->shouldReceive('get')->andReturn(array())
+            ->shouldReceive('rememberForever')->andReturn(array())
             ->shouldReceive('forever')->andReturn(true);
 
         $config->shouldReceive('get')->once()
@@ -94,11 +95,10 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->once()->with(null)->andReturnSelf()
-            ->shouldReceive('get')->once()->with('db-memory:fluent-default', m::type('Closure'))
+            ->shouldReceive('rememberForever')->once()->with('db-memory:fluent-default', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) {
                     return $c();
-                })
-            ->shouldReceive('put')->once()->with('db-memory:fluent-default', $data, 60)->andReturnNull();
+                });
 
         $config->shouldReceive('get')->once()
                 ->with('orchestra/memory::driver', 'fluent.default')->andReturn('fluent.default')
@@ -131,7 +131,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->once()->with('foo')->andReturnSelf()
-            ->shouldReceive('get')->once()->with('db-memory:fluent-default', m::type('Closure'))
+            ->shouldReceive('rememberForever')->once()->with('db-memory:fluent-default', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) {
                     return $c();
                 });

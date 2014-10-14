@@ -42,12 +42,11 @@ class FluentTest extends \PHPUnit_Framework_TestCase
         $query = m::mock('\Illuminate\Database\Query\Builder');
 
         $db->shouldReceive('table')->once()->andReturn($query);
-        $cache->shouldReceive('get')->once()
+        $cache->shouldReceive('rememberForever')->once()
             ->with('db-memory:fluent-stub', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) {
                 return $c();
-            })
-            ->shouldReceive('put')->once()->with('db-memory:fluent-stub', $data, 60)->andReturnNull();
+            });
         $query->shouldReceive('get')->andReturn($data);
 
         $stub = new Fluent('stub', $config, $db, $cache);
@@ -79,12 +78,11 @@ class FluentTest extends \PHPUnit_Framework_TestCase
         $checkWithCountQuery    = m::mock('\Illuminate\Database\Query\Builder');
         $checkWithoutCountQuery = m::mock('\Illuminate\Database\Query\Builder');
 
-        $cache->shouldReceive('get')->once()
+        $cache->shouldReceive('rememberForever')->once()
             ->with('db-memory:fluent-stub', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) {
                     return $c();
                 })
-            ->shouldReceive('put')->once()->with('db-memory:fluent-stub', $data, 60)->andReturnNull()
             ->shouldReceive('forget')->once()->with('db-memory:fluent-stub')->andReturn(null);
         $checkWithCountQuery->shouldReceive('count')->andReturn(1);
         $checkWithoutCountQuery->shouldReceive('count')->andReturn(0);
