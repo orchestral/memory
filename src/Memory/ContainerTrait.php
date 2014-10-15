@@ -1,11 +1,13 @@
 <?php namespace Orchestra\Memory;
 
+use Orchestra\Contracts\Memory\Provider as ProviderContract;
+
 trait ContainerTrait
 {
     /**
      * Memory instance.
      *
-     * @var \Orchestra\Memory\Provider
+     * @var \Orchestra\Contracts\Memory\Provider
      */
     protected $memory = null;
 
@@ -16,16 +18,16 @@ trait ContainerTrait
      */
     public function attached()
     {
-        return ($this->memory instanceof Provider);
+        return ($this->memory instanceof ProviderContract);
     }
 
     /**
      * Attach memory provider.
      *
-     * @param  \Orchestra\Memory\Provider  $memory
+     * @param  \Orchestra\Contracts\Memory\Provider  $memory
      * @return object
      */
-    public function attach(Provider $memory)
+    public function attach(ProviderContract $memory)
     {
         $this->setMemoryProvider($memory);
 
@@ -35,10 +37,10 @@ trait ContainerTrait
     /**
      * Set memory provider.
      *
-     * @param  \Orchestra\Memory\Provider  $memory
+     * @param  \Orchestra\Contracts\Memory\Provider  $memory
      * @return object
      */
-    public function setMemoryProvider(Provider $memory)
+    public function setMemoryProvider(ProviderContract $memory)
     {
         $this->memory = $memory;
 
@@ -48,7 +50,7 @@ trait ContainerTrait
     /**
      * Set memory provider.
      *
-     * @return \Orchestra\Memory\Provider|null
+     * @return \Orchestra\Contracts\Memory\Provider|null
      */
     public function getMemoryProvider()
     {
