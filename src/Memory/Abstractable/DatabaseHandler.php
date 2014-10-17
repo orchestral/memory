@@ -3,9 +3,9 @@
 use Orchestra\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
-use Orchestra\Contracts\Memory\MemoryHandler;
+use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
-abstract class DatabaseHandler extends Handler implements MemoryHandler
+abstract class DatabaseHandler extends Handler implements HandlerContract
 {
     /**
      * Load the data from database.

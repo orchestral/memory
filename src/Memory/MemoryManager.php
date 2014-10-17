@@ -7,7 +7,7 @@ use Orchestra\Memory\Handlers\Cache;
 use Orchestra\Memory\Handlers\Fluent;
 use Orchestra\Memory\Handlers\Runtime;
 use Orchestra\Memory\Handlers\Eloquent;
-use Orchestra\Contracts\Memory\MemoryHandler;
+use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class MemoryManager extends Manager
 {
@@ -72,10 +72,10 @@ class MemoryManager extends Manager
     /**
      * Create a memory provider.
      *
-     * @param  \Orchestra\Contracts\Memory\MemoryHandler $handler
+     * @param  \Orchestra\Contracts\Memory\Handler $handler
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function createProvider(MemoryHandler $handler)
+    protected function createProvider(HandlerContract $handler)
     {
         return new Provider($handler);
     }

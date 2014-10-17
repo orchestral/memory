@@ -3,9 +3,9 @@
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
 use Orchestra\Memory\Abstractable\Handler;
-use Orchestra\Contracts\Memory\MemoryHandler;
+use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
-class Cache extends Handler implements MemoryHandler
+class Cache extends Handler implements HandlerContract
 {
     /**
      * Storage name.
