@@ -20,7 +20,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getStubInstanceOne()
     {
-        $handler = m::mock('\Orchestra\Contracts\Memory\MemoryHandler');
+        $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $data = array(
             'foo' => array(
@@ -41,7 +41,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getStubInstanceTwo()
     {
-        $handler = m::mock('\Orchestra\Contracts\Memory\MemoryHandler');
+        $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $data = array(
             'foo' => array(
@@ -70,7 +70,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $handler = m::mock('\Orchestra\Contracts\Memory\MemoryHandler');
+        $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $handler->shouldReceive('initiate')->once()->andReturn(array('foo' => 'foobar'));
 
@@ -87,7 +87,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $handler = m::mock('\Orchestra\Contracts\Memory\MemoryHandler');
+        $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $handler->shouldReceive('initiate')->once()->andReturn(array('foo' => 'foobar'))
             ->shouldReceive('finish')->once()->with(array('foo' => 'foobar'))->andReturn(true);
@@ -126,7 +126,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testPutMethod()
     {
-        $handler = m::mock('\Orchestra\Contracts\Memory\MemoryHandler');
+        $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $handler->shouldReceive('initiate')->once()->andReturn(array());
 
@@ -150,7 +150,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testForgetMethod()
     {
-        $handler = m::mock('\Orchestra\Contracts\Memory\MemoryHandler');
+        $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $data = array(
             'hello' => array(

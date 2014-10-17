@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-use Orchestra\Contracts\Memory\MemoryHandler;
+use Orchestra\Contracts\Memory\Handler;
 use Orchestra\Support\Traits\DataContainerTrait;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
 
@@ -11,16 +11,16 @@ class Provider implements ProviderContract
     /**
      * Handler instance.
      *
-     * @var \Orchestra\Contracts\Memory\MemoryHandler
+     * @var \Orchestra\Contracts\Memory\Handler
      */
     protected $handler;
 
     /**
      * Construct an instance.
      *
-     * @param  \Orchestra\Contracts\Memory\MemoryHandler  $handler
+     * @param  \Orchestra\Contracts\Memory\Handler  $handler
      */
-    public function __construct(MemoryHandler $handler)
+    public function __construct(Handler $handler)
     {
         $this->handler = $handler;
 
@@ -30,7 +30,7 @@ class Provider implements ProviderContract
     /**
      * Get handler instance.
      *
-     * @return \Orchestra\Contracts\Memory\MemoryHandler
+     * @return \Orchestra\Contracts\Memory\Handler
      */
     public function getHandler()
     {

@@ -4,7 +4,7 @@ use Mockery as m;
 use Orchestra\Memory\Provider;
 use Orchestra\Memory\MemoryManager;
 use Orchestra\Memory\Abstractable\Handler;
-use Orchestra\Contracts\Memory\MemoryHandler;
+use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -187,7 +187,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 
         $handler->setAccessible(true);
 
-        $this->assertInstanceOf('\Orchestra\Contracts\Memory\MemoryHandler', $handler->getValue($stub));
+        $this->assertInstanceOf('\Orchestra\Contracts\Memory\Handler', $handler->getValue($stub));
     }
 
     /**
@@ -255,7 +255,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class StubMemoryHandler extends Handler implements MemoryHandler
+class StubMemoryHandler extends Handler implements HandlerContract
 {
     protected $storage = 'stub';
 
