@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Memory;
 
-use Orchestra\Contracts\Memory\Handler;
 use Orchestra\Support\Traits\DataContainerTrait;
+use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
 
 class Provider implements ProviderContract
@@ -20,7 +20,7 @@ class Provider implements ProviderContract
      *
      * @param  \Orchestra\Contracts\Memory\Handler  $handler
      */
-    public function __construct(Handler $handler)
+    public function __construct(HandlerContract $handler)
     {
         $this->handler = $handler;
 
