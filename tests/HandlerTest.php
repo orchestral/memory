@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Memory\Abstractable\TestCase;
+<?php namespace Orchestra\Memory\TestCase;
 
 class HandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +11,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class StubHandler extends \Orchestra\Memory\Abstractable\Handler
+class StubHandler extends \Orchestra\Memory\Handler
 {
 	protected $storage = 'stub';
 }

@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory\Handlers;
 
-use Orchestra\Memory\Abstractable\Handler;
+use Orchestra\Memory\Handler;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class Runtime extends Handler implements HandlerContract

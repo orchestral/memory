@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Memory\Handlers;
 
 use Illuminate\Support\Arr;
+use Orchestra\Memory\Handler;
 use Illuminate\Cache\Repository;
-use Orchestra\Memory\Abstractable\Handler;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class Cache extends Handler implements HandlerContract

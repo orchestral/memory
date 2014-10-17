@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
+use Orchestra\Memory\Handler;
 use Orchestra\Memory\Provider;
 use Orchestra\Memory\MemoryManager;
-use Orchestra\Memory\Abstractable\Handler;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class MemoryManagerTest extends \PHPUnit_Framework_TestCase

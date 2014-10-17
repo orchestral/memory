@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Memory\Abstractable;
+<?php namespace Orchestra\Memory;
 
 use Orchestra\Support\Str;
 use Illuminate\Support\Arr;

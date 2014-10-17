@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
+use Orchestra\Memory\DatabaseHandler;
 use Illuminate\Database\DatabaseManager;
-use Orchestra\Memory\Abstractable\DatabaseHandler;
 
 class Fluent extends DatabaseHandler
 {
