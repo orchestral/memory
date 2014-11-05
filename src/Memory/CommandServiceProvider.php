@@ -19,7 +19,7 @@ class CommandServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('orchestra.commands.memory', function () {
+        $this->app->singleton('orchestra.commands.memory', function () {
             return new MemoryCommand;
         });
 
@@ -33,6 +33,6 @@ class CommandServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('orchestra.commands.memory');
+        return ['orchestra.commands.memory'];
     }
 }

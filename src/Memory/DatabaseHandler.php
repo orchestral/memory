@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Memory;
 
-use Orchestra\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Cache\Repository;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
@@ -18,14 +17,14 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         $memories = $this->cache instanceof Repository ? $this->getItemsFromCache() : $this->getItemsFromDatabase();
 
         foreach ($memories as $memory) {
-            $value = Str::streamGetContents($memory->value);
+            $value = $memory->value;
 
             $items = Arr::add($items, $memory->name, unserialize($value));
 
-            $this->addKey($memory->name, array(
+            $this->addKey($memory->name, [
                 'id'    => $memory->id,
                 'value' => $value,
-            ));
+            ]);
         }
 
         return $items;
@@ -37,7 +36,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      * @param  array   $items
      * @return bool
      */
-    public function finish(array $items = array())
+    public function finish(array $items = [])
     {
         $changed = false;
 

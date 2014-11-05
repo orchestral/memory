@@ -14,8 +14,8 @@ class MemoryManager extends Manager
     /**
      * Create Fluent driver.
      *
-     * @param  string   $name
-     * @return \Orchestra\Memory\Provider
+     * @param  string  $name
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createFluentDriver($name)
     {
@@ -29,8 +29,8 @@ class MemoryManager extends Manager
     /**
      * Create Eloquent driver.
      *
-     * @param  string   $name
-     * @return \Orchestra\Memory\Provider
+     * @param  string  $name
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createEloquentDriver($name)
     {
@@ -44,8 +44,8 @@ class MemoryManager extends Manager
     /**
      * Create Cache driver.
      *
-     * @param  string   $name
-     * @return \Orchestra\Memory\Provider
+     * @param  string  $name
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createCacheDriver($name)
     {
@@ -60,7 +60,7 @@ class MemoryManager extends Manager
      * Create Runtime driver.
      *
      * @param  string   $name
-     * @return \Orchestra\Memory\Provider
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createRuntimeDriver($name)
     {
@@ -105,7 +105,7 @@ class MemoryManager extends Manager
      * Make default driver or fallback to runtime.
      *
      * @param  string   $fallbackName
-     * @return \Orchestra\Memory\Provider
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     public function makeOrFallback($fallbackName = 'orchestra')
     {

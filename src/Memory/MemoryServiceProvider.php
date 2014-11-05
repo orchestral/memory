@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-use Illuminate\Support\ServiceProvider;
+use Orchestra\Support\Providers\ServiceProvider;
 
 class MemoryServiceProvider extends ServiceProvider
 {
@@ -11,7 +11,7 @@ class MemoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('orchestra.memory', function ($app) {
+        $this->app->singleton('orchestra.memory', function ($app) {
             return new MemoryManager($app);
         });
     }
@@ -25,7 +25,7 @@ class MemoryServiceProvider extends ServiceProvider
     {
         $path = realpath(__DIR__.'/../');
 
-        $this->package('orchestra/memory', 'orchestra/memory', $path);
+        $this->addConfigComponent('orchestra/memory', 'orchestra/memory', $path.'/config');
 
         $this->registerMemoryEvent();
     }

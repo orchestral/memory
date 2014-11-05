@@ -25,10 +25,10 @@ class Runtime extends Handler implements HandlerContract
     /**
      * Save empty data to /dev/null.
      *
-     * @param  array   $items
+     * @param  array  $items
      * @return boolean
      */
-    public function finish(array $items = array())
+    public function finish(array $items = [])
     {
         return true;
     }

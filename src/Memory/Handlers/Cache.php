@@ -17,9 +17,9 @@ class Cache extends Handler implements HandlerContract
     /**
      * Setup a new memory handler.
      *
-     * @param  string                       $name
-     * @param  array                        $config
-     * @param  \Illuminate\Cache\Repository $cache
+     * @param  string  $name
+     * @param  array  $config
+     * @param  \Illuminate\Cache\Repository  $cache
      */
     public function __construct($name, array $config, Repository $cache)
     {
@@ -46,7 +46,7 @@ class Cache extends Handler implements HandlerContract
      * @param  array   $items
      * @return bool
      */
-    public function finish(array $items = array())
+    public function finish(array $items = [])
     {
         $this->cache->forever("orchestra.memory.{$this->name}", $items);
 

@@ -26,10 +26,10 @@ class Fluent extends DatabaseHandler
     /**
      * Setup a new memory handler.
      *
-     * @param  string                                 $name
-     * @param  array                                  $config
-     * @param  \Illuminate\Database\DatabaseManager   $repository
-     * @param  \Illuminate\Cache\Repository           $cache
+     * @param  string  $name
+     * @param  array  $config
+     * @param  \Illuminate\Database\DatabaseManager  $repository
+     * @param  \Illuminate\Cache\Repository  $cache
      */
     public function __construct($name, array $config, DatabaseManager $repository, Repository $cache)
     {
@@ -45,9 +45,9 @@ class Fluent extends DatabaseHandler
     /**
      * Create/insert data to database.
      *
-     * @param  string   $key
-     * @param  mixed    $value
-     * @param  bool     $isNew
+     * @param  string  $key
+     * @param  mixed   $value
+     * @param  bool    $isNew
      * @return bool
      */
     protected function save($key, $value, $isNew = false)

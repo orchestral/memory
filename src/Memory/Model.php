@@ -16,7 +16,7 @@ class Model extends Eloquent
      *
      * @var array
      */
-    protected $fillable = array('name', 'value');
+    protected $fillable = ['name', 'value'];
 
     /**
      * Indicates if the model should be timestamped.
