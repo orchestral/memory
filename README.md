@@ -3,11 +3,12 @@ Memory Component for Orchestra Platform
 
 Memory Component handles runtime configuration either using "in memory" Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Memory Component allow those configuration to be persistent in between request by utilising multiple data storage option either through cache or database.
 
-[![Latest Stable Version](https://poser.pugx.org/orchestra/memory/v/stable.png)](https://packagist.org/packages/orchestra/memory)
-[![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads.png)](https://packagist.org/packages/orchestra/memory)
-[![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=master)](https://travis-ci.org/orchestral/memory)
-[![Coverage Status](https://coveralls.io/repos/orchestral/memory/badge.png?branch=master)](https://coveralls.io/r/orchestral/memory?branch=master)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/memory/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/orchestral/memory/)
+[![Latest Stable Version](https://img.shields.io/github/release/orchestral/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
+[![Total Downloads](https://img.shields.io/packagist/dt/orchestra/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
+[![MIT License](https://img.shields.io/packagist/l/orchestra/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
+[![Build Status](https://img.shields.io/travis/orchestral/memory/master.svg?style=flat)](https://travis-ci.org/orchestral/memory)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/master.svg?style=flat)](https://coveralls.io/r/orchestral/memory?branch=master)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/master.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/memory/)
 
 ## Table of Content
 
