@@ -23,7 +23,7 @@ class MemoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $path = realpath(__DIR__.'/../');
+        $path = realpath(__DIR__.'/../resources');
 
         $this->addConfigComponent('orchestra/memory', 'orchestra/memory', $path.'/config');
 
