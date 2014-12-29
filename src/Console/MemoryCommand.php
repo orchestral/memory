@@ -23,7 +23,7 @@ class MemoryCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $path = 'vendor/orchestra/memory/resources/database/migrations';
 
