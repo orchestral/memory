@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Illuminate\Support\Arr;
-use Illuminate\Cache\Repository;
+use Illuminate\Contracts\Cache\Repository;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 abstract class DatabaseHandler extends Handler implements HandlerContract

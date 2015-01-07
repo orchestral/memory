@@ -20,7 +20,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitiateMethod()
     {
-        $cache = m::mock('\Illuminate\Cache\Repository');
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
 
         $value = array(
             'name' => 'Orchestra',
@@ -44,7 +44,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $cache = m::mock('\Illuminate\Cache\Repository');
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
 
         $cache->shouldReceive('forever')->once()->andReturn(true);
 

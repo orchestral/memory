@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Memory\Handlers;
 
 use Illuminate\Support\Arr;
-use Illuminate\Cache\Repository;
 use Orchestra\Memory\DatabaseHandler;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
 
 class Eloquent extends DatabaseHandler
@@ -29,7 +29,7 @@ class Eloquent extends DatabaseHandler
      * @param  string  $name
      * @param  array  $config
      * @param  \Illuminate\Contracts\Container\Container  $repository
-     * @param  \Illuminate\Cache\Repository  $cache
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
     public function __construct($name, array $config, Container $repository, Repository $cache)
     {

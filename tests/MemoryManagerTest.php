@@ -42,8 +42,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config   = m::mock('\Illuminate\Config\Repository');
-        $cache    = m::mock('\Illuminate\Cache\Repository');
+        $config   = m::mock('\Illuminate\Contracts\Config\Repository');
+        $cache    = m::mock('\Illuminate\Contracts\Cache\Repository');
         $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
@@ -84,8 +84,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config = m::mock('\Illuminate\Config\Repository');
-        $cache  = m::mock('\Illuminate\Cache\Repository');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
+        $cache  = m::mock('\Illuminate\Contracts\Cache\Repository');
         $db     = m::mock('\Illuminate\Database\DatabaseManager');
         $query  = m::mock('\Illuminate\Database\Query\Builder');
         $data   = [];
@@ -122,8 +122,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $config = m::mock('\Illuminate\Config\Repository');
-        $cache  = m::mock('\Illuminate\Cache\Repository');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
+        $cache  = m::mock('\Illuminate\Contracts\Cache\Repository');
         $db     = m::mock('\Illuminate\Database\DatabaseManager');
 
         $app->shouldReceive('offsetGet')->times(3)->with('config')->andReturn($config)
@@ -198,7 +198,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     public function testFinishMethod()
     {
         $app    = $this->app;
-        $config = m::mock('\Illuminate\Config\Repository');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
@@ -222,7 +222,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     public function testMakeMethodForDefaultDriver()
     {
         $app    = $this->app;
-        $config = m::mock('\Illuminate\Config\Repository');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
@@ -243,7 +243,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetDefaultDriverMethod()
     {
         $app    = $this->app;
-        $config = m::mock('\Illuminate\Config\Repository');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $app->shouldReceive('offsetGet')->once()->with('config')->andReturn($config);
 

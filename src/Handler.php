@@ -28,7 +28,7 @@ abstract class Handler
     /**
      * Cache instance.
      *
-     * @var \Illuminate\Cache\Repository
+     * @var \Illuminate\Contracts\Cache\Repository
      */
     protected $cache;
 
@@ -44,14 +44,14 @@ abstract class Handler
      *
      * @var array
      */
-    protected $config = array();
+    protected $config = [];
 
     /**
      * Cached key value map with md5 checksum.
      *
      * @var array
      */
-    protected $keyMap = array();
+    protected $keyMap = [];
 
     /**
      * Setup a new memory handler.

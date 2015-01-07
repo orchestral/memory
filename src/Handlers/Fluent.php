@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Memory\Handlers;
 
 use Illuminate\Support\Arr;
-use Illuminate\Cache\Repository;
 use Orchestra\Memory\DatabaseHandler;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Contracts\Cache\Repository;
 
 class Fluent extends DatabaseHandler
 {
@@ -29,7 +29,7 @@ class Fluent extends DatabaseHandler
      * @param  string  $name
      * @param  array  $config
      * @param  \Illuminate\Database\DatabaseManager  $repository
-     * @param  \Illuminate\Cache\Repository  $cache
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
     public function __construct($name, array $config, DatabaseManager $repository, Repository $cache)
     {

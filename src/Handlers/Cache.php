@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Orchestra\Memory\Handler;
-use Illuminate\Cache\Repository;
+use Illuminate\Contracts\Cache\Repository;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class Cache extends Handler implements HandlerContract
@@ -19,7 +19,7 @@ class Cache extends Handler implements HandlerContract
      *
      * @param  string  $name
      * @param  array  $config
-     * @param  \Illuminate\Cache\Repository  $cache
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
     public function __construct($name, array $config, Repository $cache)
     {
@@ -43,7 +43,7 @@ class Cache extends Handler implements HandlerContract
     /**
      * Save data to cache.
      *
-     * @param  array   $items
+     * @param  array  $items
      * @return bool
      */
     public function finish(array $items = [])
