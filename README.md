@@ -6,9 +6,9 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
 [![Latest Stable Version](https://img.shields.io/github/release/orchestral/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
 [![Total Downloads](https://img.shields.io/packagist/dt/orchestra/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
 [![MIT License](https://img.shields.io/packagist/l/orchestra/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
-[![Build Status](https://img.shields.io/travis/orchestral/memory/3.0.svg?style=flat)](https://travis-ci.org/orchestral/memory)
-[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/3.0.svg?style=flat)](https://coveralls.io/r/orchestral/memory?branch=3.0)
-[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/3.0.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/memory/)
+[![Build Status](https://img.shields.io/travis/orchestral/memory/master.svg?style=flat)](https://travis-ci.org/orchestral/memory)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/master.svg?style=flat)](https://coveralls.io/r/orchestral/memory?branch=master)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/master.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/memory/)
 
 ## Table of Content
 
@@ -30,7 +30,8 @@ Laravel    | Memory
  4.0.x     | 2.0.x
  4.1.x     | 2.1.x
  4.2.x     | 2.2.x
- 3.0.x     | 3.0.x@dev
+ 5.0.x     | 3.0.x@dev
+ 5.1.x     | 3.1.x@dev
 
 ## Installation
 
@@ -39,7 +40,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/memory": "3.0.*"
+		"orchestra/memory": "3.1.*"
 	}
 }
 ```
@@ -51,7 +52,7 @@ And then run `composer install` from the terminal.
 Above installation can also be simplify by using the following command:
 
 ```
-composer require "orchestra/memory=3.0.*"
+composer require "orchestra/memory=3.1.*"
 ```
 
 ## Configuration

@@ -21,12 +21,12 @@
 	},
 	"require": {
 		"php": ">=5.4.0",
-		"orchestra/support": "3.0.*"
+		"orchestra/support": "3.1.*"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
-		"illuminate/container": "5.0.*",
-		"illuminate/database": "5.0.*"
+		"illuminate/container": "5.1.*",
+		"illuminate/database": "5.1.*"
 	},
 	"suggest": {
 		"laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform",
