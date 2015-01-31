@@ -59,14 +59,14 @@ composer require "orchestra/memory=3.0.*"
 Next add the service provider in `app/config/app.php`.
 
 ```php
-'providers' => array(
+'providers' => [
 
 	// ...
 
 	'Orchestra\Memory\MemoryServiceProvider',
 
 	'Orchestra\Memory\CommandServiceProvider',
-),
+],
 ```
 
 ### Aliases
@@ -74,12 +74,12 @@ Next add the service provider in `app/config/app.php`.
 You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `app/config/app.php`:
 
 ```php
-'aliases' => array(
+'aliases' => [
 
 	// ...
 
-	'Orchestra\Memory' => 'Orchestra\Support\Facades\Memory',
-),
+	'Memory' => 'Orchestra\Support\Facades\Memory',
+],
 ```
 
 ### Migrations
@@ -107,19 +107,19 @@ php artisan config:publish --packages=orchestra/memory
 Below are list of possible ways to use Memory Component:
 
 ```php
-$runtime  = Orchestra\Memory::make('runtime');
-$fluent   = Orchestra\Memory::make('fluent');
-$eloquent = Orchestra\Memory::make('eloquent');
-$cache    = Orchestra\Memory::make('cache');
+$runtime  = Memory::make('runtime');
+$fluent   = Memory::make('fluent');
+$eloquent = Memory::make('eloquent');
+$cache    = Memory::make('cache');
 ```
 
 However, most of the time you wouldn't need to have additional memory instance other than the default which is using `orchestra_options` table.
 
 ```php
-$memory = Orchestra\Memory::make();
+$memory = Memory::make();
 ```
 
-> When using with Orchestra Platform, `Orchestra\Memory::make()` would be used throughout the application.
+> When using with Orchestra Platform, `Memory::make()` would be used throughout the application.
 
 ### Storing Items
 
@@ -129,7 +129,7 @@ Storing items in the Memory Component is simple. Simply call the put method:
 $memory->put('site.author', 'Taylor');
 
 // or you can also use
-Orchestra\Memory::put('site.author', 'Taylor');
+Memory::put('site.author', 'Taylor');
 ```
 
 The first parameter is the **key** to the config item. You will use this key to retrieve the item from the config. The second parameter is the **value** of the item.
@@ -142,7 +142,7 @@ Retrieving items from Memory Component is even more simple than storing them. It
 $name = $memory->get('site.author');
 
 // or you can also use
-$name = Orchestra\Memory::get('site.author');
+$name = Memory::get('site.author');
 ```
 
 By default, `NULL` will be returned if the item does not exist. However, you may pass a different default value as a second parameter to the method:
@@ -161,7 +161,7 @@ Need to get rid of an item? No problem. Just mention the name of the item to the
 $memory->forget('site.author');
 
 // or you can also use
-Orchestra\Memory::forget('site.author');
+Memory::forget('site.author');
 ```
 
 ### Extending Memory
@@ -178,14 +178,14 @@ class AcmeMemoryHandler implements MemoryHandlerInterface
     // Add your implementation
 }
 
-Orchestra\Memory::extend('acme', function ($app, $name) {
+Memory::extend('acme', function ($app, $name) {
     $handler = new AcmeMemoryHandler($name);
 
     return new Orchestra\Memory\Provider($handler);
 });
 
 // Now you can use it as
-$acme = Orchestra\Memory::make('acme.default');
+$acme = Memory::make('acme.default');
 ```
 
 > You can also extends `Orchestra\Memory\Abstractable\Handler` which add some boilerplate code on your custom handler.
