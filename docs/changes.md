@@ -8,7 +8,7 @@ title: Memory Change Log
 ### v3.0.0 {#v3-0-0}
 
 * Update support to Laravel Framework v5.0.
-* Simplify PSR-2 path.
+* Simplify PSR-4 path.
 * Rename `Orchestra\Memory\Abstractable\Handler` to `Orchestra\Memory\Handler`.
 * Move all handlers to `Orchestra\Memory\Handlers` namespace.
 
