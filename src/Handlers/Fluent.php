@@ -56,10 +56,10 @@ class Fluent extends DatabaseHandler
         $id    = $this->getKeyId($key);
 
         if (true === $isNew && $count < 1) {
-            $this->resolver()->insert(array(
+            $this->resolver()->insert([
                 'name'  => $key,
                 'value' => $value,
-            ));
+            ]);
         } else {
             $this->resolver()->where('id', '=', $id)->update([
                 'value' => $value,

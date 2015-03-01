@@ -132,7 +132,7 @@ class MemoryManager extends Manager
             unset($this->drivers[$name]);
         }
 
-        $this->drivers = array();
+        $this->drivers = [];
     }
 
     /**
