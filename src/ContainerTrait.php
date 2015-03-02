@@ -25,6 +25,7 @@ trait ContainerTrait
      * Attach memory provider.
      *
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
+     *
      * @return object
      */
     public function attach(ProviderContract $memory)
@@ -38,6 +39,7 @@ trait ContainerTrait
      * Set memory provider.
      *
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
+     *
      * @return object
      */
     public function setMemoryProvider(ProviderContract $memory)

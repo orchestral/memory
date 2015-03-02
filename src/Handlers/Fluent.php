@@ -48,6 +48,7 @@ class Fluent extends DatabaseHandler
      * @param  string  $key
      * @param  mixed   $value
      * @param  bool    $isNew
+     *
      * @return bool
      */
     protected function save($key, $value, $isNew = false)

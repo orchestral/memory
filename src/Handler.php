@@ -71,6 +71,7 @@ abstract class Handler
      *
      * @param  string  $name
      * @param  array   $option
+     *
      * @return void
      */
     protected function addKey($name, $option)
@@ -86,6 +87,7 @@ abstract class Handler
      *
      * @param  string  $name
      * @param  string  $check
+     *
      * @return bool
      */
     protected function check($name, $check = '')
@@ -97,6 +99,7 @@ abstract class Handler
      * Generate a checksum from given value.
      *
      * @param  mixed  $value
+     *
      * @return string
      */
     protected function generateNewChecksum($value)
@@ -110,6 +113,7 @@ abstract class Handler
      * Is given key a new content.
      *
      * @param  string  $name
+     *
      * @return int
      */
     protected function getKeyId($name)
@@ -141,6 +145,7 @@ abstract class Handler
      * Get if from content is new.
      *
      * @param  string  $name
+     *
      * @return bool
      */
     protected function isNewKey($name)

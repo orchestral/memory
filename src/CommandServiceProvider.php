@@ -20,7 +20,7 @@ class CommandServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('orchestra.commands.memory', function () {
-            return new MemoryCommand;
+            return new MemoryCommand();
         });
 
         $this->commands('orchestra.commands.memory');

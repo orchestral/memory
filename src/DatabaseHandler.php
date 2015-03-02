@@ -34,6 +34,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      * Save data to database.
      *
      * @param  array   $items
+     *
      * @return bool
      */
     public function finish(array $items = [])
@@ -64,6 +65,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      * @param  string   $key
      * @param  mixed    $value
      * @param  bool     $isNew
+     *
      * @return bool
      */
     abstract protected function save($key, $value, $isNew = false);
