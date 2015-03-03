@@ -44,6 +44,7 @@ class Cache extends Handler implements HandlerContract
      * Save data to cache.
      *
      * @param  array  $items
+     *
      * @return bool
      */
     public function finish(array $items = [])

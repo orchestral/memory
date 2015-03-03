@@ -15,6 +15,7 @@ class MemoryManager extends Manager
      * Create Fluent driver.
      *
      * @param  string  $name
+     *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createFluentDriver($name)
@@ -30,6 +31,7 @@ class MemoryManager extends Manager
      * Create Eloquent driver.
      *
      * @param  string  $name
+     *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createEloquentDriver($name)
@@ -45,6 +47,7 @@ class MemoryManager extends Manager
      * Create Cache driver.
      *
      * @param  string  $name
+     *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createCacheDriver($name)
@@ -60,6 +63,7 @@ class MemoryManager extends Manager
      * Create Runtime driver.
      *
      * @param  string   $name
+     *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createRuntimeDriver($name)
@@ -73,6 +77,7 @@ class MemoryManager extends Manager
      * Create a memory provider.
      *
      * @param  \Orchestra\Contracts\Memory\Handler $handler
+     *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createProvider(HandlerContract $handler)
@@ -94,6 +99,7 @@ class MemoryManager extends Manager
      * Set the default driver.
      *
      * @param  string   $name
+     *
      * @return void
      */
     public function setDefaultDriver($name)
@@ -105,6 +111,7 @@ class MemoryManager extends Manager
      * Make default driver or fallback to runtime.
      *
      * @param  string   $fallbackName
+     *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     public function makeOrFallback($fallbackName = 'orchestra')
@@ -132,13 +139,14 @@ class MemoryManager extends Manager
             unset($this->drivers[$name]);
         }
 
-        $this->drivers = array();
+        $this->drivers = [];
     }
 
     /**
      * Get cache repository.
      *
      * @param  array    $config
+     *
      * @return \Illuminate\Cache\Repository
      */
     protected function getCacheRepository(array $config)

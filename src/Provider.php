@@ -52,6 +52,7 @@ class Provider implements ProviderContract
      *
      * @param  string  $key    A string of key to add the value.
      * @param  mixed   $value  The value.
+     *
      * @return mixed
      */
     public function put($key, $value = '')
