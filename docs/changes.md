@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.1 {#v3-0-1}
+
+* Use `Illuminate\Foundation\Application::terminating()` instead of `Illuminate\Routing\Router::after()` to close open memory handler.
+
 ### v3.0.0 {#v3-0-0}
 
 * Update support to Laravel Framework v5.0.
