@@ -22,12 +22,12 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
-        $data = array(
-            'foo' => array(
+        $data = [
+            'foo' => [
                 'bar' => 'hello world',
-            ),
+            ],
             'username' => 'laravel',
-        );
+        ];
 
         $handler->shouldReceive('initiate')->once()->andReturn($data);
 
@@ -43,12 +43,12 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
-        $data = array(
-            'foo' => array(
+        $data = [
+            'foo' => [
                 'bar' => 'hello world',
-            ),
+            ],
             'username' => 'laravel',
-        );
+        ];
 
         $handler->shouldReceive('initiate')->once()->andReturn($data);
 
@@ -72,7 +72,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
-        $handler->shouldReceive('initiate')->once()->andReturn(array('foo' => 'foobar'));
+        $handler->shouldReceive('initiate')->once()->andReturn(['foo' => 'foobar']);
 
         $stub = new Provider($handler);
 
@@ -81,7 +81,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\Drivers\Driver::finish()
+     * Test Orchestra\Memory\Drivers\Driver::finish().
      *
      * @test
      */
@@ -89,8 +89,8 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
-        $handler->shouldReceive('initiate')->once()->andReturn(array('foo' => 'foobar'))
-            ->shouldReceive('finish')->once()->with(array('foo' => 'foobar'))->andReturn(true);
+        $handler->shouldReceive('initiate')->once()->andReturn(['foo' => 'foobar'])
+            ->shouldReceive('finish')->once()->with(['foo'            => 'foobar'])->andReturn(true);
 
         $stub = new Provider($handler);
 
@@ -107,11 +107,11 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
         $stub1 = $this->getStubInstanceOne();
         $stub2 = $this->getStubInstanceTwo();
 
-        $this->assertEquals(array('bar' => 'hello world'), $stub1->get('foo'));
+        $this->assertEquals(['bar' => 'hello world'], $stub1->get('foo'));
         $this->assertEquals('hello world', $stub1->get('foo.bar'));
         $this->assertEquals('laravel', $stub1->get('username'));
 
-        $this->assertEquals(array('bar' => 'hello world'), $stub2->get('foo'));
+        $this->assertEquals(['bar' => 'hello world'], $stub2->get('foo'));
         $this->assertEquals('hello world', $stub2->get('foo.bar'));
         $this->assertEquals('laravel', $stub2->get('username'));
 
@@ -128,19 +128,19 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
-        $handler->shouldReceive('initiate')->once()->andReturn(array());
+        $handler->shouldReceive('initiate')->once()->andReturn([]);
 
         $stub = new Provider($handler);
 
-        $refl = new \ReflectionObject($stub);
+        $refl  = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
 
-        $this->assertEquals(array(), $items->getValue($stub));
+        $this->assertEquals([], $items->getValue($stub));
 
         $stub->put('foo', 'foobar');
 
-        $this->assertEquals(array('foo' => 'foobar'), $items->getValue($stub));
+        $this->assertEquals(['foo' => 'foobar'], $items->getValue($stub));
     }
 
     /**
@@ -152,12 +152,12 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
-        $data = array(
-            'hello' => array(
+        $data = [
+            'hello' => [
                 'world' => 'hello world',
-            ),
+            ],
             'username' => 'laravel',
-        );
+        ];
 
         $handler->shouldReceive('initiate')->once()->andReturn($data);
 
@@ -165,6 +165,6 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
 
         $stub->forget('hello.world');
 
-        $this->assertEquals(array(), $stub->get('hello'));
+        $this->assertEquals([], $stub->get('hello'));
     }
 }

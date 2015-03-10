@@ -15,16 +15,16 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Add data provider
+     * Add data provider.
      *
      * @return array
      */
     protected function eloquentDataProvider()
     {
-        return array(
-            new Fluent(array('id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";')),
-            new Fluent(array('id' => 2, 'name' => 'hello', 'value' => 's:5:"world";')),
-        );
+        return [
+            new Fluent(['id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";']),
+            new Fluent(['id' => 2, 'name' => 'hello', 'value' => 's:5:"world";']),
+        ];
     }
 
     /**
@@ -38,7 +38,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $cache    = m::mock('\Illuminate\Contracts\Cache\Repository');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
-        $config = array('model' => 'EloquentHandlerModelMock', 'cache' => true);
+        $config = ['model' => 'EloquentHandlerModelMock', 'cache' => true];
         $data   = $this->eloquentDataProvider();
 
         $app->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
@@ -52,10 +52,10 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Eloquent('stub', $config, $app, $cache);
 
-        $expected = array(
+        $expected = [
             'foo'   => 'foobar',
             'hello' => 'world',
-        );
+        ];
 
         $this->assertInstanceOf('\Orchestra\Memory\Handlers\Eloquent', $stub);
         $this->assertEquals($expected, $stub->initiate());
@@ -72,7 +72,7 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $cache    = m::mock('\Illuminate\Contracts\Cache\Repository');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
-        $config = array('model' => $eloquent, 'cache' => true);
+        $config = ['model' => $eloquent, 'cache' => true];
         $data   = $this->eloquentDataProvider();
 
         $checkWithCountQuery    = m::mock('\Illuminate\Database\Query\Builder');
@@ -99,11 +99,11 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
         $stub = new Eloquent('stub', $config, $app, $cache);
         $stub->initiate();
 
-        $items = array(
-            'foo' => 'foobar is wicked',
-            'hello' => 'world',
+        $items = [
+            'foo'     => 'foobar is wicked',
+            'hello'   => 'world',
             'stubbed' => 'Foobar was awesome',
-        );
+        ];
 
         $this->assertTrue($stub->finish($items));
     }

@@ -22,23 +22,23 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
 
-        $value = array(
-            'name' => 'Orchestra',
-            'theme' => array(
-                'backend' => 'default',
+        $value = [
+            'name'  => 'Orchestra',
+            'theme' => [
+                'backend'  => 'default',
                 'frontend' => 'default',
-            ),
-        );
+            ],
+        ];
 
         $cache->shouldReceive('get')->once()->andReturn($value);
 
-        $stub = new Cache('cachemock', array(), $cache);
+        $stub = new Cache('cachemock', [], $cache);
 
         $this->assertEquals($value, $stub->initiate());
     }
 
     /**
-     * Test Orchestra\Memory\Handlers\Cache::finish()
+     * Test Orchestra\Memory\Handlers\Cache::finish().
      *
      * @test
      */
@@ -48,7 +48,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
         $cache->shouldReceive('forever')->once()->andReturn(true);
 
-        $stub = new Cache('cachemock', array(), $cache);
+        $stub = new Cache('cachemock', [], $cache);
 
         $this->assertTrue($stub->finish());
     }

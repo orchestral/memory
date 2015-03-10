@@ -52,20 +52,20 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->times(3)->with(null)->andReturnSelf()
-            ->shouldReceive('get')->andReturn(array())
-            ->shouldReceive('rememberForever')->andReturn(array())
+            ->shouldReceive('get')->andReturn([])
+            ->shouldReceive('rememberForever')->andReturn([])
             ->shouldReceive('forever')->andReturn(true);
 
         $config->shouldReceive('get')->once()
-                ->with('orchestra/memory::cache.default', array())->andReturn(array())
+                ->with('orchestra/memory::cache.default', [])->andReturn([])
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::fluent.default', array())
-                ->andReturn(array('table' => 'orchestra_options', 'cache' => true))
+                ->with('orchestra/memory::fluent.default', [])
+                ->andReturn(['table' => 'orchestra_options', 'cache' => true])
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::eloquent.default', array())
-                ->andReturn(array('model' => $eloquent, 'cache' => true))
+                ->with('orchestra/memory::eloquent.default', [])
+                ->andReturn(['model' => $eloquent, 'cache' => true])
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::runtime.default', array())->andReturn(array());
+                ->with('orchestra/memory::runtime.default', [])->andReturn([]);
 
         $stub = new MemoryManager($app);
 
@@ -103,8 +103,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $config->shouldReceive('get')->once()
                 ->with('orchestra/memory::driver', 'fluent.default')->andReturn('fluent.default')
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::fluent.default', array())
-                ->andReturn(array('table' => 'orchestra_options', 'cache' => true));
+                ->with('orchestra/memory::fluent.default', [])
+                ->andReturn(['table' => 'orchestra_options', 'cache' => true]);
         $db->shouldReceive('table')->once()->with('orchestra_options')->andReturn($query);
         $query->shouldReceive('get')->once()->andReturn($data);
 
@@ -140,10 +140,10 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra/memory::driver', 'fluent.default')
                 ->andReturn('fluent.default')
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::fluent.default', array())
-                ->andReturn(array('table' => 'orchestra_options', 'cache' => true, 'connections' => array('cache' => 'foo')))
+                ->with('orchestra/memory::fluent.default', [])
+                ->andReturn(['table' => 'orchestra_options', 'cache' => true, 'connections' => ['cache' => 'foo']])
             ->shouldReceive('get')->once()
-                ->with('orchestra/memory::runtime.orchestra', array())->andReturn(array());
+                ->with('orchestra/memory::runtime.orchestra', [])->andReturn([]);
         $db->shouldReceive('table')->once()->with('orchestra_options')->andThrow('Exception');
 
         $stub = new MemoryManager($app);
@@ -152,7 +152,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that Orchestra\Memory\MemoryManager::make() return exception when given invalid driver
+     * Test that Orchestra\Memory\MemoryManager::make() return exception when given invalid driver.
      *
      * @expectedException \InvalidArgumentException
      */
@@ -173,7 +173,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $stub = new MemoryManager($app);
 
         $stub->extend('stub', function ($app, $name) {
-            $handler = new StubMemoryHandler($name, array());
+            $handler = new StubMemoryHandler($name, []);
 
             return new Provider($handler);
         });
@@ -202,7 +202,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 
         $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
-        $config->shouldReceive('get')->with('orchestra/memory::runtime.fool', array())->twice()->andReturn(array());
+        $config->shouldReceive('get')->with('orchestra/memory::runtime.fool', [])->twice()->andReturn([]);
 
         $stub = new MemoryManager($app);
         $foo  = $stub->make('runtime.fool');
@@ -227,7 +227,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $app->shouldReceive('offsetGet')->twice()->with('config')->andReturn($config);
 
         $config->shouldReceive('get')->once()
-                ->with('orchestra/memory::runtime.default', array())->andReturn(array())
+                ->with('orchestra/memory::runtime.default', [])->andReturn([])
             ->shouldReceive('get')->once()
                 ->with('orchestra/memory::driver', 'fluent.default')->andReturn('runtime.default');
 
@@ -261,10 +261,10 @@ class StubMemoryHandler extends Handler implements HandlerContract
 
     public function initiate()
     {
-        return array();
+        return [];
     }
 
-    public function finish(array $items = array())
+    public function finish(array $items = [])
     {
         return true;
     }
