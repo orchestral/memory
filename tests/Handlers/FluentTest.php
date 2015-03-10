@@ -14,16 +14,16 @@ class FluentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Add data provider
+     * Add data provider.
      *
      * @return array
      */
     protected function fluentDataProvider()
     {
-        return array(
-            new \Illuminate\Support\Fluent(array('id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";')),
-            new \Illuminate\Support\Fluent(array('id' => 2, 'name' => 'hello', 'value' => 's:5:"world";')),
-        );
+        return [
+            new \Illuminate\Support\Fluent(['id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";']),
+            new \Illuminate\Support\Fluent(['id' => 2, 'name' => 'hello', 'value' => 's:5:"world";']),
+        ];
     }
 
     /**
@@ -34,9 +34,9 @@ class FluentTest extends \PHPUnit_Framework_TestCase
     public function testInitiateMethod()
     {
         $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db = m::mock('\Illuminate\Database\DatabaseManager');
+        $db    = m::mock('\Illuminate\Database\DatabaseManager');
 
-        $config = array('table' => 'orchestra_options', 'cache' => true);
+        $config = ['table' => 'orchestra_options', 'cache' => true];
         $data   = $this->fluentDataProvider();
 
         $query = m::mock('\Illuminate\Database\Query\Builder');
@@ -51,10 +51,10 @@ class FluentTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Fluent('stub', $config, $db, $cache);
 
-        $expected = array(
+        $expected = [
             'foo'   => 'foobar',
             'hello' => 'world',
-        );
+        ];
 
         $this->assertInstanceOf('\Orchestra\Memory\Handlers\Fluent', $stub);
         $this->assertEquals($expected, $stub->initiate());
@@ -69,9 +69,9 @@ class FluentTest extends \PHPUnit_Framework_TestCase
     public function testFinishMethod()
     {
         $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db = m::mock('\Illuminate\Database\DatabaseManager');
+        $db    = m::mock('\Illuminate\Database\DatabaseManager');
 
-        $config = array('table' => 'orchestra_options', 'cache' => true);
+        $config = ['table' => 'orchestra_options', 'cache' => true];
         $data   = $this->fluentDataProvider();
 
         $selectQuery            = m::mock('\Illuminate\Database\Query\Builder');
@@ -86,7 +86,7 @@ class FluentTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('forget')->once()->with('db-memory:fluent-stub')->andReturn(null);
         $checkWithCountQuery->shouldReceive('count')->andReturn(1);
         $checkWithoutCountQuery->shouldReceive('count')->andReturn(0);
-        $selectQuery->shouldReceive('update')->with(array('value' => serialize('foobar is wicked')))->once()->andReturn(true)
+        $selectQuery->shouldReceive('update')->with(['value' => serialize('foobar is wicked')])->once()->andReturn(true)
             ->shouldReceive('insert')->once()->andReturn(true)
             ->shouldReceive('where')->with('name', '=', 'foo')->andReturn($checkWithCountQuery)
             ->shouldReceive('where')->with('name', '=', 'hello')->andReturn($checkWithCountQuery)
@@ -98,11 +98,11 @@ class FluentTest extends \PHPUnit_Framework_TestCase
         $stub = new Fluent('stub', $config, $db, $cache);
         $stub->initiate();
 
-        $items = array(
-            'foo' => 'foobar is wicked',
-            'hello' => 'world',
+        $items = [
+            'foo'     => 'foobar is wicked',
+            'hello'   => 'world',
             'stubbed' => 'Foobar was awesome',
-        );
+        ];
 
         $this->assertTrue($stub->finish($items));
     }

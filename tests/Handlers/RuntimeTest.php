@@ -17,7 +17,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->stub = new Runtime('stub', array());
+        $this->stub = new Runtime('stub', []);
     }
 
     /**
@@ -30,7 +30,7 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\Handlers\Runtime::__construct()
+     * Test Orchestra\Memory\Handlers\Runtime::__construct().
      *
      * @test
      */
@@ -48,17 +48,17 @@ class RuntimeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Memory\Handlers\Runtime::initiate()
+     * Test Orchestra\Memory\Handlers\Runtime::initiate().
      *
      * @test
      */
     public function testInitiateMethod()
     {
-        $this->assertEquals(array(), $this->stub->initiate());
+        $this->assertEquals([], $this->stub->initiate());
     }
 
     /**
-     * Test Orchestra\Memory\Handlers\Runtime::finish()
+     * Test Orchestra\Memory\Handlers\Runtime::finish().
      *
      * @test
      */
