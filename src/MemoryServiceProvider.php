@@ -1,7 +1,5 @@
 <?php namespace Orchestra\Memory;
 
-use Orchestra\Support\Providers\ServiceProvider;
-
 class MemoryServiceProvider extends ServiceProvider
 {
     /**
@@ -32,19 +30,5 @@ class MemoryServiceProvider extends ServiceProvider
         $this->addConfigComponent('orchestra/memory', 'orchestra/memory', $path.'/config');
 
         $this->bootMemoryEvent();
-    }
-
-    /**
-     * Register memory events during booting.
-     *
-     * @return void
-     */
-    protected function bootMemoryEvent()
-    {
-        $app = $this->app;
-
-        $app->terminating(function () use ($app) {
-            $app['orchestra.memory']->finish();
-        });
     }
 }

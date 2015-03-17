@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-class LaravelServiceProvider extends MemoryServiceProvider
+class LaravelServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
@@ -33,19 +33,5 @@ class LaravelServiceProvider extends MemoryServiceProvider
         ]);
 
         $this->bootMemoryEvent();
-    }
-
-    /**
-     * Register memory events during booting.
-     *
-     * @return void
-     */
-    protected function bootMemoryEvent()
-    {
-        $app = $this->app;
-
-        $app->terminating(function () use ($app) {
-            $app['orchestra.memory']->finish();
-        });
     }
 }

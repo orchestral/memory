@@ -128,6 +128,7 @@ class MemoryManager extends Manager
      * Set configuration.
      *
      * @param  array|null  $config
+     *
      * @return $this
      */
     public function setConfig(array $config = null)
