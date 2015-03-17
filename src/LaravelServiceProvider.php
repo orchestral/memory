@@ -1,8 +1,6 @@
 <?php namespace Orchestra\Memory;
 
-use Orchestra\Support\Providers\ServiceProvider;
-
-class MemoryServiceProvider extends ServiceProvider
+class LaravelServiceProvider extends MemoryServiceProvider
 {
     /**
      * Register the service provider.
@@ -14,7 +12,7 @@ class MemoryServiceProvider extends ServiceProvider
         $this->app->singleton('orchestra.memory', function ($app) {
             $manager = new MemoryManager($app);
 
-            $manager->setConfig($app['config']['orchestra/memory::']);
+            $manager->setConfig($app['config']['orchestra.memory']);
 
             return $manager;
         });
@@ -29,7 +27,10 @@ class MemoryServiceProvider extends ServiceProvider
     {
         $path = realpath(__DIR__.'/../resources');
 
-        $this->addConfigComponent('orchestra/memory', 'orchestra/memory', $path.'/config');
+        $this->publishes([
+            "{$path}/config/config.php"   => config_path('orchestra/memory.php'),
+            "{$path}/database/migrations" => base_path('/database/migrations'),
+        ]);
 
         $this->bootMemoryEvent();
     }
