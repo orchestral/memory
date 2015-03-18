@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.3 {#v3.0.3}
+
+* Update `Orchestra\Memory\MemoryManager` to utilize configuration value from `$this->config` instead of fetching from `config` service location.
+
 ### v3.0.2 {#v3.0.2}
 
 * Add fallback support to Laravel 5 configuration.
