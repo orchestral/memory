@@ -16,7 +16,7 @@ class MemoryManager extends Manager
      *
      * @var array
      */
-    protected $config;
+    protected $config = [];
 
     /**
      * Create Fluent driver.
@@ -27,9 +27,8 @@ class MemoryManager extends Manager
      */
     protected function createFluentDriver($name)
     {
-        $config = $this->app['config']->get("orchestra/memory::fluent.{$name}", []);
-
-        $cache = $this->getCacheRepository($config);
+        $config = Arr::get($this->config, "fluent.{$name}", []);
+        $cache  = $this->getCacheRepository($config);
 
         return $this->createProvider(new Fluent($name, $config, $this->app['db'], $cache));
     }
@@ -43,9 +42,8 @@ class MemoryManager extends Manager
      */
     protected function createEloquentDriver($name)
     {
-        $config = $this->app['config']->get("orchestra/memory::eloquent.{$name}", []);
-
-        $cache = $this->getCacheRepository($config);
+        $config = Arr::get($this->config, "eloquent.{$name}", []);
+        $cache  = $this->getCacheRepository($config);
 
         return $this->createProvider(new Eloquent($name, $config, $this->app, $cache));
     }
@@ -59,9 +57,8 @@ class MemoryManager extends Manager
      */
     protected function createCacheDriver($name)
     {
-        $config = $this->app['config']->get("orchestra/memory::cache.{$name}", []);
-
-        $cache = $this->getCacheRepository($config);
+        $config = Arr::get($this->config, "cache.{$name}", []);
+        $cache  = $this->getCacheRepository($config);
 
         return $this->createProvider(new Cache($name, $config, $cache));
     }
@@ -75,7 +72,7 @@ class MemoryManager extends Manager
      */
     protected function createRuntimeDriver($name)
     {
-        $config = $this->app['config']->get("orchestra/memory::runtime.{$name}", []);
+        $config = Arr::get($this->config, "runtime.{$name}", []);
 
         return $this->createProvider(new Runtime($name, $config));
     }
@@ -99,7 +96,7 @@ class MemoryManager extends Manager
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']->get('orchestra/memory::driver', 'fluent.default');
+        return Arr::get($this->config, 'driver', 'fluent.default');
     }
 
     /**
@@ -111,13 +108,13 @@ class MemoryManager extends Manager
      */
     public function setDefaultDriver($name)
     {
-        $this->app['config']->set('orchestra/memory::driver', $name);
+        $this->config['driver'] = $name;
     }
 
     /**
      * Get configuration values.
      *
-     * @return array|null
+     * @return array
      */
     public function getConfig()
     {
@@ -127,11 +124,11 @@ class MemoryManager extends Manager
     /**
      * Set configuration.
      *
-     * @param  array|null  $config
+     * @param  array  $config
      *
      * @return $this
      */
-    public function setConfig(array $config = null)
+    public function setConfig(array $config)
     {
         $this->config = $config;
 
