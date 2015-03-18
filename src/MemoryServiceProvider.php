@@ -60,7 +60,7 @@ class MemoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function bootUnderLaravel($path)
+    protected function bootUnderLaravel($path)
     {
         if (!$this->app['config'] instanceof PackageRepository) {
             $this->mergeConfigFrom("{$path}/config/config.php", 'orchestra.memory');
