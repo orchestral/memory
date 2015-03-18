@@ -34,7 +34,9 @@ class MemoryServiceProvider extends ServiceProvider
 
         $this->addConfigComponent('orchestra/memory', 'orchestra/memory', $path.'/config');
 
-        $this->bootUnderLaravel($path);
+        if (! $this->hasPackageRepository()) {
+            $this->bootUnderLaravel($path);
+        }
 
         $this->bootMemoryEvent();
     }
@@ -62,13 +64,11 @@ class MemoryServiceProvider extends ServiceProvider
      */
     protected function bootUnderLaravel($path)
     {
-        if (!$this->app['config'] instanceof PackageRepository) {
-            $this->mergeConfigFrom("{$path}/config/config.php", 'orchestra.memory');
+        $this->mergeConfigFrom("{$path}/config/config.php", 'orchestra.memory');
 
-            $this->publishes([
-                "{$path}/config/config.php"   => config_path('orchestra/memory.php'),
-                "{$path}/database/migrations" => base_path('/database/migrations'),
-            ]);
-        }
+        $this->publishes([
+            "{$path}/config/config.php"   => config_path('orchestra/memory.php'),
+            "{$path}/database/migrations" => base_path('/database/migrations'),
+        ]);
     }
 }
