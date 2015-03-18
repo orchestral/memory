@@ -12,6 +12,13 @@ use Orchestra\Contracts\Memory\Handler as HandlerContract;
 class MemoryManager extends Manager
 {
     /**
+     * Configuration values.
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
      * Create Fluent driver.
      *
      * @param  string  $name
@@ -62,7 +69,7 @@ class MemoryManager extends Manager
     /**
      * Create Runtime driver.
      *
-     * @param  string   $name
+     * @param  string  $name
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
@@ -76,7 +83,7 @@ class MemoryManager extends Manager
     /**
      * Create a memory provider.
      *
-     * @param  \Orchestra\Contracts\Memory\Handler $handler
+     * @param  \Orchestra\Contracts\Memory\Handler  $handler
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
@@ -98,7 +105,7 @@ class MemoryManager extends Manager
     /**
      * Set the default driver.
      *
-     * @param  string   $name
+     * @param  string  $name
      *
      * @return void
      */
@@ -108,9 +115,33 @@ class MemoryManager extends Manager
     }
 
     /**
+     * Get configuration values.
+     *
+     * @return array|null
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set configuration.
+     *
+     * @param  array|null  $config
+     *
+     * @return $this
+     */
+    public function setConfig(array $config = null)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
      * Make default driver or fallback to runtime.
      *
-     * @param  string   $fallbackName
+     * @param  string  $fallbackName
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
@@ -145,9 +176,9 @@ class MemoryManager extends Manager
     /**
      * Get cache repository.
      *
-     * @param  array    $config
+     * @param  array  $config
      *
-     * @return \Illuminate\Cache\Repository
+     * @return \Illuminate\Contracts\Cache\Repository
      */
     protected function getCacheRepository(array $config)
     {
