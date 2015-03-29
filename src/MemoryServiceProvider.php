@@ -66,7 +66,7 @@ class MemoryServiceProvider extends ServiceProvider
 
         $this->publishes([
             "{$path}/config/config.php"   => config_path('orchestra/memory.php'),
-            "{$path}/database/migrations" => base_path('/database/migrations'),
+            "{$path}/database/migrations" => database_path('migrations'),
         ]);
     }
 }
