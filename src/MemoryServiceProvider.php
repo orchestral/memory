@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Memory;
 
 use Orchestra\Support\Providers\ServiceProvider;
-use Orchestra\Contracts\Config\PackageRepository;
 
 class MemoryServiceProvider extends ServiceProvider
 {
@@ -14,8 +13,7 @@ class MemoryServiceProvider extends ServiceProvider
     {
         $this->app->singleton('orchestra.memory', function ($app) {
             $manager = new MemoryManager($app);
-            $namespace = ($app['config'] instanceof PackageRepository
-                ? 'orchestra/memory::' : 'orchestra.memory');
+            $namespace = $this->hasPackageRepository() ? 'orchestra/memory::' : 'orchestra.memory';
 
             $manager->setConfig($app['config'][$namespace]);
 
@@ -68,7 +66,7 @@ class MemoryServiceProvider extends ServiceProvider
 
         $this->publishes([
             "{$path}/config/config.php"   => config_path('orchestra/memory.php'),
-            "{$path}/database/migrations" => base_path('/database/migrations'),
+            "{$path}/database/migrations" => database_path('migrations'),
         ]);
     }
 }
