@@ -172,9 +172,9 @@ There might be requirement that a different type of storage engine would be use 
 ```php
 <?php
 
-use Orchestra\Memory\MemoryHandlerInterface;
+use Orchestra\Contracts\Memory\Handler;
 
-class AcmeMemoryHandler implements MemoryHandlerInterface
+class AcmeMemoryHandler implements Handler
 {
     // Add your implementation
 }
