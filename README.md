@@ -6,9 +6,9 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
 [![Latest Stable Version](https://img.shields.io/github/release/orchestral/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
 [![Total Downloads](https://img.shields.io/packagist/dt/orchestra/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
 [![MIT License](https://img.shields.io/packagist/l/orchestra/memory.svg?style=flat)](https://packagist.org/packages/orchestra/memory)
-[![Build Status](https://img.shields.io/travis/orchestral/memory/master.svg?style=flat)](https://travis-ci.org/orchestral/memory)
-[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/master.svg?style=flat)](https://coveralls.io/r/orchestral/memory?branch=master)
-[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/master.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/memory/)
+[![Build Status](https://img.shields.io/travis/orchestral/memory/3.1.svg?style=flat)](https://travis-ci.org/orchestral/memory)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/3.1.svg?style=flat)](https://coveralls.io/r/orchestral/memory?branch=3.1)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/3.1.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/memory/)
 
 ## Table of Content
 
@@ -40,7 +40,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/memory": "3.1.*"
+		"orchestra/memory": "~3.0"
 	}
 }
 ```
@@ -51,13 +51,11 @@ And then run `composer install` from the terminal.
 
 Above installation can also be simplify by using the following command:
 
-```
-composer require "orchestra/memory=3.1.*"
-```
+    composer require "orchestra/memory=~3.0"
 
 ## Configuration
 
-Next add the service provider in `app/config/app.php`.
+Next add the service provider in `config/app.php`.
 
 ```php
 'providers' => [
@@ -72,7 +70,7 @@ Next add the service provider in `app/config/app.php`.
 
 ### Aliases
 
-You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `app/config/app.php`:
+You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `config/app.php`:
 
 ```php
 'aliases' => [
