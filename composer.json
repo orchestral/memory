@@ -21,16 +21,16 @@
 	},
 	"require": {
 		"php": ">=5.5.0",
-		"orchestra/support": "3.1.*"
+		"orchestra/support": "3.2.*"
 	},
 	"require-dev": {
 		"mockery/mockery": "^0.9.1",
-		"illuminate/container": "5.1.*",
-		"illuminate/database": "5.1.*"
+		"illuminate/container": "5.2.*",
+		"illuminate/database": "5.2.*"
 	},
 	"suggest": {
-		"laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform (~5.1).",
-		"orchestra/foundation": "Allow using orchestra/memory with Orchestra Platform (~3.1)."
+		"laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform (~5.2).",
+		"orchestra/foundation": "Allow using orchestra/memory with Orchestra Platform (~3.2)."
 	},
 	"extra": {
 		"branch-alias": {
