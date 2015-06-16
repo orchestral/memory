@@ -30,7 +30,7 @@ class MemoryManager extends Manager
         $config = Arr::get($this->config, "fluent.{$name}", []);
         $cache  = $this->getCacheRepository($config);
 
-        return $this->createProvider(new Fluent($name, $config, $this->app['db'], $cache));
+        return $this->createProvider(new Fluent($name, $config, $this->app->make('db'), $cache));
     }
 
     /**
@@ -181,6 +181,6 @@ class MemoryManager extends Manager
     {
         $connection = Arr::get($config, 'connections.cache');
 
-        return $this->app['cache']->driver($connection);
+        return $this->app->make('cache')->driver($connection);
     }
 }

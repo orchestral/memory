@@ -46,8 +46,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $db       = m::mock('\Illuminate\Database\DatabaseManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
-        $app->shouldReceive('offsetGet')->times(3)->with('cache')->andReturn($cache)
-            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
+        $app->shouldReceive('make')->times(3)->with('cache')->andReturn($cache)
+            ->shouldReceive('make')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->times(3)->with(null)->andReturnSelf()
             ->shouldReceive('get')->andReturn([])
@@ -85,8 +85,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $query  = m::mock('\Illuminate\Database\Query\Builder');
         $data   = [];
 
-        $app->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
-            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
+        $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
+            ->shouldReceive('make')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->once()->with(null)->andReturnSelf()
             ->shouldReceive('rememberForever')->once()->with('db-memory:fluent-default', m::type('Closure'))
@@ -121,8 +121,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $cache  = m::mock('\Illuminate\Contracts\Cache\Repository');
         $db     = m::mock('\Illuminate\Database\DatabaseManager');
 
-        $app->shouldReceive('offsetGet')->once()->with('cache')->andReturn($cache)
-            ->shouldReceive('offsetGet')->once()->with('db')->andReturn($db);
+        $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
+            ->shouldReceive('make')->once()->with('db')->andReturn($db);
 
         $cache->shouldReceive('driver')->once()->with('foo')->andReturnSelf()
             ->shouldReceive('rememberForever')->once()->with('db-memory:fluent-default', m::type('Closure'))

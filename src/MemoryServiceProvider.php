@@ -15,7 +15,7 @@ class MemoryServiceProvider extends ServiceProvider
             $manager = new MemoryManager($app);
             $namespace = $this->hasPackageRepository() ? 'orchestra/memory::' : 'orchestra.memory';
 
-            $manager->setConfig($app['config'][$namespace]);
+            $manager->setConfig($app->make('config')->get($namespace));
 
             return $manager;
         });
@@ -30,7 +30,7 @@ class MemoryServiceProvider extends ServiceProvider
     {
         $path = realpath(__DIR__.'/../resources');
 
-        $this->addConfigComponent('orchestra/memory', 'orchestra/memory', $path.'/config');
+        $this->addConfigComponent('orchestra/memory', 'orchestra/memory', "{$path}/config");
 
         if (! $this->hasPackageRepository()) {
             $this->bootUnderLaravel($path);
@@ -46,10 +46,8 @@ class MemoryServiceProvider extends ServiceProvider
      */
     protected function bootMemoryEvent()
     {
-        $app = $this->app;
-
-        $app->terminating(function () use ($app) {
-            $app['orchestra.memory']->finish();
+        $this->app->terminating(function () {
+            $this->app->make('orchestra.memory')->finish();
         });
     }
 
