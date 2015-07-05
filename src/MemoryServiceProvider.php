@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Memory;
 
+use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
 
 class MemoryServiceProvider extends ServiceProvider
@@ -11,7 +12,7 @@ class MemoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('orchestra.memory', function ($app) {
+        $this->app->singleton('orchestra.memory', function (Application $app) {
             $manager = new MemoryManager($app);
             $namespace = $this->hasPackageRepository() ? 'orchestra/memory::' : 'orchestra.memory';
 
