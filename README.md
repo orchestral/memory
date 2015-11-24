@@ -23,7 +23,7 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
   - [Retrieving Items](#retrieving-items)
   - [Removing Items](#removing-items)
   - [Extending Memory](#extending-memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v3-0)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v3-2)
 
 ## Version Compatibility
 
@@ -34,6 +34,7 @@ Laravel    | Memory
  4.2.x     | 2.2.x
  5.0.x     | 3.0.x
  5.1.x     | 3.1.x
+ 5.2.x     | 3.2.x
 
 ## Installation
 
@@ -64,9 +65,9 @@ Next add the service provider in `config/app.php`.
 
 	// ...
 
-	'Orchestra\Memory\MemoryServiceProvider',
+	Orchestra\Memory\MemoryServiceProvider::class,
 
-	'Orchestra\Memory\CommandServiceProvider',
+	Orchestra\Memory\CommandServiceProvider::class,
 ],
 ```
 
@@ -79,7 +80,7 @@ You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `co
 
 	// ...
 
-	'Memory' => 'Orchestra\Support\Facades\Memory',
+	'Memory' => Orchestra\Support\Facades\Memory::class,
 ],
 ```
 
