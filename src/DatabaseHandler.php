@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Memory;
 
+use PDOException;
 use Illuminate\Support\Arr;
 use Illuminate\Contracts\Cache\Repository;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
@@ -48,7 +49,12 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
             if (! $this->check($key, $value)) {
                 $changed = true;
 
-                $this->save($key, $value, $isNew);
+                try {
+                    $this->save($key, $value, $isNew);
+                } catch (PDOException $e) {
+                    // Should be able to ignore failure since it is possible that
+                    // the request is done on a read only connection.
+                }
             }
         }
 
