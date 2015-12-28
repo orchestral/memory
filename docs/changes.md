@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.2 {#v3-1-2}
+
+* Ignores `PDOException` exception when saving database based driver as the code maybe executed from outside of configured environment.
+
 ### v3.1.1 {#v3-1-1}
 
 * Improved performances by reducing call within `Illuminate\Container\Container`.
