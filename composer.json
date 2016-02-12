@@ -1,41 +1,41 @@
 {
-	"name": "orchestra/memory",
-	"description": "Memory Component for Orchestra Platform",
-	"homepage": "http://orchestraplatform.com/docs/latest/components/memory/",
-	"keywords": ["orchestra-platform", "orchestral", "laravel", "config", "database-config"],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Mior Muhammad Zaki",
-			"email": "crynobone@gmail.com",
-			"homepage": "https://github.com/crynobone"
-		}
-	],
-	"autoload": {
-		"classmap": [
-			"resources/database/migrations"
-		],
-		"psr-4": {
-			"Orchestra\\Memory\\" : "src/"
-		}
-	},
-	"require": {
-		"php": ">=5.4.0",
-		"orchestra/support": "3.0.*"
-	},
-	"require-dev": {
-		"mockery/mockery": "^0.9.1",
-		"illuminate/container": "5.0.*",
-		"illuminate/database": "5.0.*"
-	},
-	"suggest": {
-		"laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform (~5.0).",
-		"orchestra/foundation": "Allow using orchestra/memory with Orchestra Platform (~3.0)."
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "3.2-dev"
-		}
-	},
-	"minimum-stability": "dev"
+    "name": "orchestra/memory",
+    "description": "Memory Component for Orchestra Platform",
+    "homepage": "http://orchestraplatform.com/docs/latest/components/memory/",
+    "keywords": ["orchestra-platform", "orchestral", "laravel", "config", "database-config"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "homepage": "https://github.com/crynobone"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "resources/database/migrations"
+        ],
+        "psr-4": {
+            "Orchestra\\Memory\\" : "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "orchestra/support": "~3.0.4"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.1",
+        "illuminate/container": "5.0.*",
+        "illuminate/database": "5.0.*"
+    },
+    "suggest": {
+        "laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform (~5.0).",
+        "orchestra/foundation": "Allow using orchestra/memory with Orchestra Platform (~3.0)."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.2-dev"
+        }
+    },
+    "minimum-stability": "dev"
 }
