@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Exception;
+use RuntimeException;
 use Illuminate\Support\Arr;
 use Orchestra\Support\Manager;
 use Orchestra\Memory\Handlers\Cache;
@@ -86,7 +87,13 @@ class MemoryManager extends Manager
      */
     protected function createProvider(HandlerContract $handler)
     {
-        return new Provider($handler);
+        try {
+            $encrypter = $this->app->make('encrypter');
+        } catch (RuntimeException $e) {
+            $encrypter = null;
+        }
+
+        return new Provider($handler, $encrypter);
     }
 
     /**
