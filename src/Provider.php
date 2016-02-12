@@ -10,13 +10,6 @@ class Provider implements ProviderContract
     use DataContainerTrait;
 
     /**
-     * The encrypter implementation.
-     *
-     * @var \Illuminate\Contracts\Encryption\Encrypter|null
-     */
-    protected $encrypter;
-
-    /**
      * Handler instance.
      *
      * @var \Orchestra\Contracts\Memory\Handler
