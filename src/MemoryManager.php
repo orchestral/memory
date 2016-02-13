@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Memory;
 
 use Exception;
+use RuntimeException;
 use Illuminate\Support\Arr;
 use Orchestra\Support\Manager;
 use Orchestra\Memory\Handlers\Cache;
@@ -17,6 +18,29 @@ class MemoryManager extends Manager
      * @var array
      */
     protected $config = [];
+
+    /**
+     * The encrypter implementation.
+     *
+     * @var \Illuminate\Contracts\Encryption\Encrypter|null
+     */
+    protected $encrypter;
+
+    /**
+     * Create a new manager instance.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        try {
+            $this->encrypter = $app->make('encrypter');
+        } catch (RuntimeException $e) {
+            $this->encrypter = null;
+        }
+    }
 
     /**
      * Create Fluent driver.
@@ -86,7 +110,7 @@ class MemoryManager extends Manager
      */
     protected function createProvider(HandlerContract $handler)
     {
-        return new Provider($handler);
+        return new Provider($handler, $this->encrypter);
     }
 
     /**

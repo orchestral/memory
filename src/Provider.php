@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Memory;
 
+use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Support\Traits\DataContainerTrait;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
@@ -19,12 +20,13 @@ class Provider implements ProviderContract
      * Construct an instance.
      *
      * @param  \Orchestra\Contracts\Memory\Handler  $handler
+     * @param  \Illuminate\Contracts\Encryption\Encrypter|null  $encrypter
      */
-    public function __construct(HandlerContract $handler)
+    public function __construct(HandlerContract $handler, Encrypter $encrypter = null)
     {
-        $this->handler = $handler;
-
-        $this->items = $this->handler->initiate();
+        $this->handler   = $handler;
+        $this->encrypter = $encrypter;
+        $this->items     = $this->handler->initiate();
     }
 
     /**
@@ -58,6 +60,21 @@ class Provider implements ProviderContract
     public function put($key, $value = '')
     {
         $this->set($key, $value);
+
+        return $value;
+    }
+
+    /**
+     * Set a value from a key.
+     *
+     * @param  string  $key    A string of key to add the value.
+     * @param  mixed   $value  The value.
+     *
+     * @return mixed
+     */
+    public function securePut($key, $value = '')
+    {
+        $this->secureSet($key, $value);
 
         return $value;
     }
