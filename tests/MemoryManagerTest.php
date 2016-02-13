@@ -47,7 +47,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $app->shouldReceive('make')->times(3)->with('cache')->andReturn($cache)
-            ->shouldReceive('make')->once()->with('db')->andReturn($db);
+            ->shouldReceive('make')->once()->with('db')->andReturn($db)
+            ->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $cache->shouldReceive('driver')->times(3)->with(null)->andReturnSelf()
             ->shouldReceive('get')->andReturn([])
@@ -86,7 +87,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $data   = [];
 
         $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
-            ->shouldReceive('make')->once()->with('db')->andReturn($db);
+            ->shouldReceive('make')->once()->with('db')->andReturn($db)
+            ->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $cache->shouldReceive('driver')->once()->with(null)->andReturnSelf()
             ->shouldReceive('rememberForever')->once()->with('db-memory:fluent-default', m::type('Closure'))
@@ -122,7 +124,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $db     = m::mock('\Illuminate\Database\DatabaseManager');
 
         $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
-            ->shouldReceive('make')->once()->with('db')->andReturn($db);
+            ->shouldReceive('make')->once()->with('db')->andReturn($db)
+            ->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $cache->shouldReceive('driver')->once()->with('foo')->andReturnSelf()
             ->shouldReceive('rememberForever')->once()->with('db-memory:fluent-default', m::type('Closure'))
@@ -154,7 +157,11 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeExpectedException()
     {
-        with(new MemoryManager($this->app))->make('orm');
+        $app = $this->app;
+
+        $app->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
+
+        with(new MemoryManager($app))->make('orm');
     }
 
     /**
@@ -165,6 +172,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     public function testStubMemory()
     {
         $app = $this->app;
+
+        $app->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $stub = new MemoryManager($app);
 
@@ -193,7 +202,9 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinishMethod()
     {
-        $app    = $this->app;
+        $app = $this->app;
+
+        $app->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $stub = new MemoryManager($app);
         $foo  = $stub->make('runtime.fool');
@@ -212,8 +223,10 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethodForDefaultDriver()
     {
-        $app    = $this->app;
+        $app = $this->app;
         $config = ['driver' => 'runtime.default'];
+
+        $app->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $stub = new MemoryManager($app);
         $stub->setConfig($config);
@@ -228,6 +241,8 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetDefaultDriverMethod()
     {
         $app = $this->app;
+
+        $app->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $stub = new MemoryManager($app);
         $stub->setDefaultDriver('foo');

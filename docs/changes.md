@@ -16,6 +16,11 @@ title: Memory Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.3 {#v3-1-3}
+
+* Add support for new `Orchestra\Memory\Provider::secureGet()` and `Orchestra\Memory\Provider::secureSet()`.
+* Add `Orchestra\Memory\Provider::securePut()` as an encrypted alias to `Orchestra\Memory\Provider::put()`.
+
 ### v3.1.2 {#v3-1-2}
 
 * Ignores `PDOException` exception when saving database based driver as the code maybe executed from outside of configured environment.
@@ -29,6 +34,11 @@ title: Memory Change Log
 * Update support to Laravel Framework v5.1.
 
 ## Version 3.0 {#v3-0}
+
+### v3.0.6 {#v3-0-6}
+
+* Add support for new `Orchestra\Memory\Provider::secureGet()` and `Orchestra\Memory\Provider::secureSet()`.
+* Add `Orchestra\Memory\Provider::securePut()` as an encrypted alias to `Orchestra\Memory\Provider::put()`.
 
 ### v3.0.5 {#v3-0-5}
 
