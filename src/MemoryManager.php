@@ -20,6 +20,29 @@ class MemoryManager extends Manager
     protected $config = [];
 
     /**
+     * The encrypter implementation.
+     *
+     * @var \Illuminate\Contracts\Encryption\Encrypter|null
+     */
+    protected $encrypter;
+
+    /**
+     * Create a new manager instance.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        try {
+            $this->encrypter = $app->make('encrypter');
+        } catch (RuntimeException $e) {
+            $this->encrypter = null;
+        }
+    }
+
+    /**
      * Create Fluent driver.
      *
      * @param  string  $name
@@ -87,13 +110,7 @@ class MemoryManager extends Manager
      */
     protected function createProvider(HandlerContract $handler)
     {
-        try {
-            $encrypter = $this->app->make('encrypter');
-        } catch (RuntimeException $e) {
-            $encrypter = null;
-        }
-
-        return new Provider($handler, $encrypter);
+        return new Provider($handler, $this->encrypter);
     }
 
     /**
