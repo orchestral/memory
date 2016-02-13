@@ -10,13 +10,6 @@ class Provider implements ProviderContract
     use DataContainerTrait;
 
     /**
-     * The encrypter implementation.
-     *
-     * @var \Illuminate\Contracts\Encryption\Encrypter|null
-     */
-    protected $encrypter;
-
-    /**
      * Handler instance.
      *
      * @var \Orchestra\Contracts\Memory\Handler
@@ -31,9 +24,9 @@ class Provider implements ProviderContract
      */
     public function __construct(HandlerContract $handler, Encrypter $encrypter = null)
     {
-        $this->handler = $handler;
+        $this->handler   = $handler;
         $this->encrypter = $encrypter;
-        $this->items = $this->handler->initiate();
+        $this->items     = $this->handler->initiate();
     }
 
     /**

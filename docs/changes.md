@@ -19,6 +19,11 @@ title: Memory Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.6 {#v3-0-6}
+
+* Add support for new `Orchestra\Memory\Provider::secureGet()` and `Orchestra\Memory\Provider::secureSet()`.
+* Add `Orchestra\Memory\Provider::securePut()` as an encrypted alias to `Orchestra\Memory\Provider::put()`.
+
 ### v3.0.5 {#v3-0-5}
 
 * Use `database_path()` helper.
