@@ -24,9 +24,9 @@ class Provider implements ProviderContract
      */
     public function __construct(HandlerContract $handler, Encrypter $encrypter = null)
     {
-        $this->handler = $handler;
+        $this->handler   = $handler;
         $this->encrypter = $encrypter;
-        $this->items = $this->handler->initiate();
+        $this->items     = $this->handler->initiate();
     }
 
     /**
