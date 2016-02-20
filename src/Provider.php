@@ -46,7 +46,7 @@ class Provider implements ProviderContract
      */
     public function finish()
     {
-        return $this->handler->finish($this->items);
+        return $this->handler->finish($this->allWithRemoved());
     }
 
     /**
