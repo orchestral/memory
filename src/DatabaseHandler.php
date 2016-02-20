@@ -44,16 +44,16 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         foreach ($items as $key => $value) {
             $isNew = $this->isNewKey($key);
 
-            if (! is_null($value)) {
-                $value = serialize($value);
+            $serialized = serialize($value);
 
-                if (! $this->check($key, $value)) {
-                    $changed = true;
+            if (! $this->check($key, $serialized)) {
+                $changed = true;
 
-                    $this->save($key, $value, $isNew);
+                if (! is_null($value)) {
+                    $this->save($key, $serialized, $isNew);
+                } else {
+                    $this->delete($key);
                 }
-            } else {
-                $this->delete($key);
             }
         }
 
