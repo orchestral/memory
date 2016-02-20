@@ -42,18 +42,12 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         $changed = false;
 
         foreach ($items as $key => $value) {
-            $isNew = $this->isNewKey($key);
-
             $serialized = serialize($value);
 
             if (! $this->check($key, $serialized)) {
                 $changed = true;
 
-                if (! is_null($value)) {
-                    $this->save($key, $serialized, $isNew);
-                } else {
-                    $this->delete($key);
-                }
+                $this->saving($key, $serialized, $this->isNewKey($key));
             }
         }
 
@@ -65,15 +59,22 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     }
 
     /**
-     * Create/insert data to database.
+     * Attempt to save or remove data to the database.
      *
      * @param  string   $key
      * @param  mixed    $value
      * @param  bool     $isNew
      *
-     * @return bool
+     * @return void
      */
-    abstract protected function save($key, $value, $isNew = false);
+    protected function saving($key, $value, $isNew)
+    {
+        if ($value === 'N;') {
+            $this->delete($key);
+        } else {
+            $this->save($key, $value, $isNew);
+        }
+    }
 
     /**
      * Create/insert data to database.
@@ -81,6 +82,15 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      * @param  string   $key
      * @param  mixed    $value
      * @param  bool     $isNew
+     *
+     * @return void
+     */
+    abstract protected function save($key, $value, $isNew = false);
+
+    /**
+     * Remove data from database.
+     *
+     * @param  string   $key
      *
      * @return bool
      */
