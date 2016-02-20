@@ -49,7 +49,7 @@ class Fluent extends DatabaseHandler
      * @param  mixed   $value
      * @param  bool    $isNew
      *
-     * @return bool
+     * @return void
      */
     protected function save($key, $value, $isNew = false)
     {
@@ -69,13 +69,11 @@ class Fluent extends DatabaseHandler
     }
 
     /**
-     * Create/insert data to database.
+     * Remove data from database.
      *
      * @param  string   $key
-     * @param  mixed    $value
-     * @param  bool     $isNew
      *
-     * @return bool
+     * @return void
      */
     protected function delete($key)
     {
