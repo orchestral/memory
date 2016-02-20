@@ -69,6 +69,20 @@ class Fluent extends DatabaseHandler
     }
 
     /**
+     * Create/insert data to database.
+     *
+     * @param  string   $key
+     * @param  mixed    $value
+     * @param  bool     $isNew
+     *
+     * @return bool
+     */
+    protected function delete($key)
+    {
+        $this->resolver()->where('id', '=', $id)->delete();
+    }
+
+    /**
      * Get resolver instance.
      *
      * @return object
