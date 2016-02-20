@@ -44,13 +44,18 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
 
         foreach ($items as $key => $value) {
             $isNew = $this->isNewKey($key);
-            $value = serialize($value);
 
-            if (! $this->check($key, $value)) {
+            $serialized = serialize($value);
+
+            if (! $this->check($key, $serialized)) {
                 $changed = true;
 
                 try {
-                    $this->save($key, $value, $isNew);
+                    if (! is_null($value)) {
+                        $this->save($key, $serialized, $isNew);
+                    } else {
+                        $this->delete($key);
+                    }
                 } catch (PDOException $e) {
                     // Should be able to ignore failure since it is possible that
                     // the request is done on a read only connection.
@@ -75,6 +80,17 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      * @return bool
      */
     abstract protected function save($key, $value, $isNew = false);
+
+    /**
+     * Create/insert data to database.
+     *
+     * @param  string   $key
+     * @param  mixed    $value
+     * @param  bool     $isNew
+     *
+     * @return bool
+     */
+    abstract protected function delete($key);
 
     /**
      * Get resolver instance.
