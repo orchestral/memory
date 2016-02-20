@@ -92,7 +92,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @param  string   $key
      *
-     * @return bool
+     * @return void
      */
     abstract protected function delete($key);
 

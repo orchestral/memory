@@ -73,7 +73,7 @@ class Fluent extends DatabaseHandler
      *
      * @param  string   $key
      *
-     * @return bool
+     * @return void
      */
     protected function delete($key)
     {
