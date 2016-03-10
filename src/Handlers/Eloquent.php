@@ -76,7 +76,7 @@ class Eloquent extends DatabaseHandler
      */
     protected function delete($key)
     {
-        $this->resolver()->where('name', '=', $key)->delete();
+        $this->resolver()->where('id', '=', $this->getKeyId($key))->delete();
     }
 
     /**
