@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.3 {#v3-2-3}
+
+* Properly delete stored configuration/attributes when using `Orchestra\Memory\DatabaseHandler`.
+
 ### v3.2.2 {#v3-2-2}
 
 * Add support for new `Orchestra\Memory\Provider::secureGet()` and `Orchestra\Memory\Provider::secureSet()`.
