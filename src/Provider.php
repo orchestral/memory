@@ -1,13 +1,13 @@
 <?php namespace Orchestra\Memory;
 
+use Orchestra\Support\Traits\DataContainer;
 use Illuminate\Contracts\Encryption\Encrypter;
-use Orchestra\Support\Traits\DataContainerTrait;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
 
 class Provider implements ProviderContract
 {
-    use DataContainerTrait;
+    use DataContainer;
 
     /**
      * Handler instance.
