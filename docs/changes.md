@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.4 {#v3-2-4}
+
+* Add `Orchestra\Memory\Memorizable` to replace deprecated `Orchestra\Memory\ContainerTrait`.
+
 ### v3.2.3 {#v3-2-3}
 
 * Properly delete stored configuration/attributes when using `Orchestra\Memory\DatabaseHandler`.
