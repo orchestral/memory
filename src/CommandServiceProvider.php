@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory;
+<?php
+
+namespace Orchestra\Memory;
 
 use Orchestra\Memory\Console\MemoryCommand;
 use Orchestra\Support\Providers\CommandServiceProvider as ServiceProvider;

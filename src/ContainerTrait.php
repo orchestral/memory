@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory;
+<?php
+
+namespace Orchestra\Memory;
 
 /**
  * @deprecated v3.2.x

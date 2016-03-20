@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory\Handlers;
+<?php
+
+namespace Orchestra\Memory\Handlers;
 
 use Orchestra\Memory\Handler;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;

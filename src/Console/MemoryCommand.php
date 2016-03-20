@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory\Console;
+<?php
+
+namespace Orchestra\Memory\Console;
 
 use Illuminate\Console\Command;
 

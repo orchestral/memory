@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory;
+<?php
+
+namespace Orchestra\Memory;
 
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
 

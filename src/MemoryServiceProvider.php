@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory;
+<?php
+
+namespace Orchestra\Memory;
 
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
