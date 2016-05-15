@@ -8,9 +8,9 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
 [![Latest Stable Version](https://img.shields.io/github/release/orchestral/memory.svg?style=flat-square)](https://packagist.org/packages/orchestra/memory)
 [![Total Downloads](https://img.shields.io/packagist/dt/orchestra/memory.svg?style=flat-square)](https://packagist.org/packages/orchestra/memory)
 [![MIT License](https://img.shields.io/packagist/l/orchestra/memory.svg?style=flat-square)](https://packagist.org/packages/orchestra/memory)
-[![Build Status](https://img.shields.io/travis/orchestral/memory/master.svg?style=flat-square)](https://travis-ci.org/orchestral/memory)
-[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/master.svg?style=flat-square)](https://coveralls.io/r/orchestral/memory?branch=master)
-[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/orchestral/memory/)
+[![Build Status](https://img.shields.io/travis/orchestral/memory/3.3.svg?style=flat-square)](https://travis-ci.org/orchestral/memory)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/memory/3.3.svg?style=flat-square)](https://coveralls.io/r/orchestral/memory?branch=3.3)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/memory/3.3.svg?style=flat-square)](https://scrutinizer-ci.com/g/orchestral/memory/)
 
 ## Table of Content
 
