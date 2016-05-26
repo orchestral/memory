@@ -39,6 +39,10 @@ class MemoryServiceProvider extends ServiceProvider
             $this->bootUnderLaravel($path);
         }
 
+        $this->loadMigrationsFrom([
+            "{$path}/database/migrations"
+        ]);
+
         $this->bootMemoryEvent();
     }
 
