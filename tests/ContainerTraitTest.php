@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory\Abstractable\TestCase;
+<?php
+
+namespace Orchestra\Memory\Abstractable\TestCase;
 
 use Mockery as m;
 use Orchestra\Memory\ContainerTrait;

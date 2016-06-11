@@ -1,8 +1,11 @@
-<?php namespace Orchestra\Memory\TestCase;
+<?php
+
+namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
 use Orchestra\Memory\Handler;
 use Orchestra\Memory\Provider;
+use Illuminate\Support\Collection;
 use Orchestra\Memory\MemoryManager;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
@@ -52,7 +55,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
 
         $cache->shouldReceive('driver')->times(3)->with(null)->andReturnSelf()
             ->shouldReceive('get')->andReturn([])
-            ->shouldReceive('rememberForever')->andReturn([])
+            ->shouldReceive('rememberForever')->andReturn(new Collection([]))
             ->shouldReceive('forever')->andReturn(true);
 
         $config = [
@@ -84,7 +87,7 @@ class MemoryManagerTest extends \PHPUnit_Framework_TestCase
         $cache  = m::mock('\Illuminate\Contracts\Cache\Repository');
         $db     = m::mock('\Illuminate\Database\DatabaseManager');
         $query  = m::mock('\Illuminate\Database\Query\Builder');
-        $data   = [];
+        $data   = new Collection();
 
         $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('make')->once()->with('db')->andReturn($db)

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory\TestCase;
+<?php
+
+namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
 use Orchestra\Memory\Provider;

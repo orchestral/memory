@@ -40,7 +40,7 @@ class MemoryServiceProvider extends ServiceProvider
         }
 
         $this->loadMigrationsFrom([
-            "{$path}/database/migrations"
+            "{$path}/database/migrations",
         ]);
 
         $this->bootMemoryEvent();
@@ -70,8 +70,7 @@ class MemoryServiceProvider extends ServiceProvider
         $this->mergeConfigFrom("{$path}/config/config.php", 'orchestra.memory');
 
         $this->publishes([
-            "{$path}/config/config.php"   => config_path('orchestra/memory.php'),
-            "{$path}/database/migrations" => database_path('migrations'),
+            "{$path}/config/config.php" => config_path('orchestra/memory.php'),
         ]);
     }
 }

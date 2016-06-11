@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory\TestCase;
+<?php
+
+namespace Orchestra\Memory\TestCase;
 
 class HandlerTest extends \PHPUnit_Framework_TestCase
 {
