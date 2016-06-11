@@ -1,6 +1,9 @@
-<?php namespace Orchestra\Memory\Handlers\TestCase;
+<?php
+
+namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Collection;
 use Orchestra\Memory\Handlers\Fluent;
 
 class FluentTest extends \PHPUnit_Framework_TestCase
@@ -20,10 +23,10 @@ class FluentTest extends \PHPUnit_Framework_TestCase
      */
     protected function fluentDataProvider()
     {
-        return [
+        return new Collection([
             new \Illuminate\Support\Fluent(['id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";']),
             new \Illuminate\Support\Fluent(['id' => 2, 'name' => 'hello', 'value' => 's:5:"world";']),
-        ];
+        ]);
     }
 
     /**

@@ -19,7 +19,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         $items    = [];
         $memories = $this->cache instanceof Repository ? $this->getItemsFromCache() : $this->getItemsFromDatabase();
 
-        foreach ($memories as $memory) {
+        foreach ($memories->all() as $memory) {
             $value = $memory->value;
 
             $items = Arr::add($items, $memory->name, unserialize($value));
@@ -114,7 +114,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     /**
      * Get items from cache.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getItemsFromCache()
     {
@@ -126,7 +126,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     /**
      * Get items from database.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getItemsFromDatabase()
     {

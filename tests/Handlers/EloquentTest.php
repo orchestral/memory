@@ -1,7 +1,10 @@
-<?php namespace Orchestra\Memory\Handlers\TestCase;
+<?php
+
+namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Collection;
 use Orchestra\Memory\Handlers\Eloquent;
 
 class EloquentTest extends \PHPUnit_Framework_TestCase
@@ -21,10 +24,10 @@ class EloquentTest extends \PHPUnit_Framework_TestCase
      */
     protected function eloquentDataProvider()
     {
-        return [
+        return new Collection([
             new Fluent(['id' => 1, 'name' => 'foo', 'value' => 's:6:"foobar";']),
             new Fluent(['id' => 2, 'name' => 'hello', 'value' => 's:5:"world";']),
-        ];
+        ]);
     }
 
     /**
