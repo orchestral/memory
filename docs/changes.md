@@ -3,6 +3,17 @@ title: Memory Change Log
 
 ---
 
+## Version 3.3 {#v3-3}
+
+### v3.3.0 {#v3-3-0}
+
+* Update support to Laravel Framework v5.3.
+* Add support for new `Orchestra\Memory\Provider::secureGet()` and `Orchestra\Memory\Provider::secureSet()`.
+* Add `Orchestra\Memory\Provider::securePut()` as an encrypted alias to `Orchestra\Memory\Provider::put()`.
+* Properly delete stored configuration/attributes when using `Orchestra\Memory\DatabaseHandler`.
+* Add `Orchestra\Memory\Memorizable` to replace deprecated `Orchestra\Memory\ContainerTrait`.
+* Optimize `Orchestra\Memory\DatabaseHandler` since Laravel database would always return a collection when fetching from database either when using fluent query builder or eloquent.
+
 ## Version 3.2 {#v3-2}
 
 ### v3.2.4 {#v3-2-4}
