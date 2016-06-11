@@ -39,10 +39,6 @@ class MemoryServiceProvider extends ServiceProvider
             $this->bootUnderLaravel($path);
         }
 
-        $this->loadMigrationsFrom([
-            "{$path}/database/migrations"
-        ]);
-
         $this->bootMemoryEvent();
     }
 
@@ -56,6 +52,24 @@ class MemoryServiceProvider extends ServiceProvider
         $this->app->terminating(function () {
             $this->app->make('orchestra.memory')->finish();
         });
+    }
+
+    /**
+     * Boot migrations for component.
+     *
+     * @return void
+     */
+    protected function bootMigrations()
+    {
+        if (! $this->app->bound('migrator')) {
+            return ;
+        }
+
+        $path = realpath(__DIR__.'/../resources');
+
+        $this->loadMigrationsFrom([
+            "{$path}/database/migrations",
+        ]);
     }
 
     /**
