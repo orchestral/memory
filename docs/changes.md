@@ -5,6 +5,10 @@ title: Memory Change Log
 
 ## Version 3.3 {#v3-3}
 
+### v3.3.1 {#v3-3-1}
+
+* Add support for `Orchestra\Memory\DatabaseHandler` to handle return data when we receive instance of `Illuminate\Support\Collection` or `Illuminate\Contracts\Support\Arrayable`.
+
 ### v3.3.0 {#v3-3-0}
 
 * Update support to Laravel Framework v5.3.
