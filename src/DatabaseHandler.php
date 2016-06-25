@@ -4,7 +4,9 @@ namespace Orchestra\Memory;
 
 use PDOException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 abstract class DatabaseHandler extends Handler implements HandlerContract
@@ -19,7 +21,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         $items    = [];
         $memories = $this->cache instanceof Repository ? $this->getItemsFromCache() : $this->getItemsFromDatabase();
 
-        foreach ($memories->all() as $memory) {
+        foreach ($this->asArray($memories) as $memory) {
             $value = $memory->value;
 
             $items = Arr::add($items, $memory->name, unserialize($value));
@@ -131,5 +133,23 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     protected function getItemsFromDatabase()
     {
         return $this->resolver()->get();
+    }
+
+    /**
+     * Convert mixed value fetch from database to array.
+     *
+     * @param  \Illuminate\Support\Collection|\Illuminate\Contracts\Support\Arrayable|array  $data
+     *
+     * @return array
+     */
+    protected function asArray($data = [])
+    {
+        if ($data instanceof Collection) {
+            $data = $data->all();
+        } elseif ($data instanceof Arrayable) {
+            $data = $data->toArray();
+        }
+
+        return $data;
     }
 }
