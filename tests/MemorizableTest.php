@@ -3,11 +3,11 @@
 namespace Orchestra\Memory\Abstractable\TestCase;
 
 use Mockery as m;
-use Orchestra\Memory\ContainerTrait;
+use Orchestra\Memory\Memorizable;
 
-class ContainerTraitTest extends \PHPUnit_Framework_TestCase
+class MemorizableTest extends \PHPUnit_Framework_TestCase
 {
-    use ContainerTrait;
+    use Memorizable;
 
     /**
      * Test multiple functionality of Orchestra\Memory\Abstractable\Container.
