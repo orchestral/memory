@@ -25,9 +25,9 @@
         "orchestra/support": "~3.4.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.4",
         "illuminate/container": "~5.4.0",
-        "illuminate/database": "~5.4.0"
+        "illuminate/database": "~5.4.0",
+        "mockery/mockery": "^0.9.4"
     },
     "suggest": {
         "laravel/framework": "Allow using orchestra/memory component outside of Orchestra Platform (~5.4).",
@@ -37,6 +37,9 @@
         "branch-alias": {
             "dev-master": "3.4-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "minimum-stability": "dev"
 }
