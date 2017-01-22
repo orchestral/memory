@@ -23,7 +23,6 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
   - [Retrieving Items](#retrieving-items)
   - [Removing Items](#removing-items)
   - [Extending Memory](#extending-memory)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/memory/changes#v3-4)
 
 ## Version Compatibility
 
@@ -36,7 +35,7 @@ Laravel    | Memory
  5.1.x     | 3.1.x
  5.2.x     | 3.2.x
  5.3.x     | 3.3.x
- 5.4.x     | 3.4.x@dev
+ 5.4.x     | 3.4.x
 
 ## Installation
 
