@@ -4,10 +4,11 @@ namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
 use Orchestra\Memory\Handlers\Eloquent;
 
-class EloquentTest extends \PHPUnit_Framework_TestCase
+class EloquentTest extends TestCase
 {
     /**
      * Teardown the test environment.

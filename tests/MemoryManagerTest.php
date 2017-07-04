@@ -5,11 +5,12 @@ namespace Orchestra\Memory\TestCase;
 use Mockery as m;
 use Orchestra\Memory\Handler;
 use Orchestra\Memory\Provider;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
 use Orchestra\Memory\MemoryManager;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
-class MemoryManagerTest extends \PHPUnit_Framework_TestCase
+class MemoryManagerTest extends TestCase
 {
     /**
      * Application mock instance.

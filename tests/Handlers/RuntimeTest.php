@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Memory\Handlers\Runtime;
 
-class RuntimeTest extends \PHPUnit_Framework_TestCase
+class RuntimeTest extends TestCase
 {
     /**
      * Stub instance.

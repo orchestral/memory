@@ -2,7 +2,9 @@
 
 namespace Orchestra\Memory\TestCase;
 
-class HandlerTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class HandlerTest extends TestCase
 {
     public function testGetInformations()
     {
