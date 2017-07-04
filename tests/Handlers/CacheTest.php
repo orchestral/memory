@@ -3,9 +3,10 @@
 namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Memory\Handlers\Cache;
 
-class CacheTest extends \PHPUnit_Framework_TestCase
+class CacheTest extends TestCase
 {
     /**
      * Teardown the test environment.

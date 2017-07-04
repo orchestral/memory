@@ -3,9 +3,10 @@
 namespace Orchestra\Memory\Abstractable\TestCase;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Memory\Memorizable;
 
-class MemorizableTest extends \PHPUnit_Framework_TestCase
+class MemorizableTest extends TestCase
 {
     use Memorizable;
 

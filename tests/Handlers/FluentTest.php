@@ -3,10 +3,11 @@
 namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
 use Orchestra\Memory\Handlers\Fluent;
 
-class FluentTest extends \PHPUnit_Framework_TestCase
+class FluentTest extends TestCase
 {
     /**
      * Teardown the test environment.
