@@ -2,7 +2,6 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Illuminate\Support\Arr;
 use Orchestra\Memory\DatabaseHandler;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Cache\Repository;
@@ -39,7 +38,7 @@ class Fluent extends DatabaseHandler
 
         $this->repository = $repository;
 
-        if (Arr::get($this->config, 'cache', false)) {
+        if (($this->config['cache'] ?? false)) {
             $this->cache = $cache;
         }
     }
@@ -89,7 +88,7 @@ class Fluent extends DatabaseHandler
      */
     protected function resolver()
     {
-        $table = Arr::get($this->config, 'table', $this->name);
+        $table = $this->config['table'] ?? $this->name;
 
         return $this->repository->table($table);
     }

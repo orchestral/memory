@@ -4,7 +4,6 @@ namespace Orchestra\Memory;
 
 use Exception;
 use RuntimeException;
-use Illuminate\Support\Arr;
 use Orchestra\Support\Manager;
 use Orchestra\Memory\Handlers\Cache;
 use Orchestra\Memory\Handlers\Fluent;
@@ -53,7 +52,7 @@ class MemoryManager extends Manager
      */
     protected function createFluentDriver($name)
     {
-        $config = Arr::get($this->config, "fluent.{$name}", []);
+        $config = $this->config['fluent'][$name] ?? [];
         $cache  = $this->getCacheRepository($config);
 
         return $this->createProvider(new Fluent($name, $config, $this->app->make('db'), $cache));
@@ -68,7 +67,7 @@ class MemoryManager extends Manager
      */
     protected function createEloquentDriver($name)
     {
-        $config = Arr::get($this->config, "eloquent.{$name}", []);
+        $config = $this->config['eloquent'][$name] ?? [];
         $cache  = $this->getCacheRepository($config);
 
         return $this->createProvider(new Eloquent($name, $config, $this->app, $cache));
@@ -83,7 +82,7 @@ class MemoryManager extends Manager
      */
     protected function createCacheDriver($name)
     {
-        $config = Arr::get($this->config, "cache.{$name}", []);
+        $config = $this->config['cache'][$name] ?? [];
         $cache  = $this->getCacheRepository($config);
 
         return $this->createProvider(new Cache($name, $config, $cache));
@@ -98,7 +97,7 @@ class MemoryManager extends Manager
      */
     protected function createRuntimeDriver($name)
     {
-        $config = Arr::get($this->config, "runtime.{$name}", []);
+        $config = $this->config['runtime'][$name] ?? [];
 
         return $this->createProvider(new Runtime($name, $config));
     }
@@ -122,7 +121,7 @@ class MemoryManager extends Manager
      */
     public function getDefaultDriver()
     {
-        return Arr::get($this->config, 'driver', 'fluent.default');
+        return $this->config['driver'] ?? 'fluent.default';
     }
 
     /**
@@ -205,7 +204,7 @@ class MemoryManager extends Manager
      */
     protected function getCacheRepository(array $config)
     {
-        $connection = Arr::get($config, 'connections.cache');
+        $connection = $config['connections']['cache'] ?? null;
 
         return $this->app->make('cache')->driver($connection);
     }

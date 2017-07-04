@@ -2,7 +2,6 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Illuminate\Support\Arr;
 use Orchestra\Memory\DatabaseHandler;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
@@ -39,7 +38,7 @@ class Eloquent extends DatabaseHandler
 
         $this->repository = $repository;
 
-        if (Arr::get($this->config, 'cache', false)) {
+        if (($this->config['cache'] ?? false)) {
             $this->cache = $cache;
         }
     }
@@ -88,7 +87,7 @@ class Eloquent extends DatabaseHandler
      */
     protected function resolver()
     {
-        $model = Arr::get($this->config, 'model', $this->name);
+        $model = $this->config['model'] ?? $this->name;
 
         return $this->repository->make($model)->newInstance();
     }

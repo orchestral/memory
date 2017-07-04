@@ -2,7 +2,6 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Illuminate\Support\Arr;
 use Orchestra\Memory\Handler;
 use Illuminate\Contracts\Cache\Repository;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
@@ -27,7 +26,7 @@ class Cache extends Handler implements HandlerContract
     {
         $this->cache = $cache;
 
-        $name = Arr::get($config, 'name', $name);
+        $name = $config['name'] ?? $name;
 
         parent::__construct($name, $config);
     }
