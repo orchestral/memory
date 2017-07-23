@@ -23,19 +23,19 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
   - [Retrieving Items](#retrieving-items)
   - [Removing Items](#removing-items)
   - [Extending Memory](#extending-memory)
+* [Changelog](https://github.com/orchestral/memory/releases)
 
 ## Version Compatibility
 
 Laravel    | Memory
 :----------|:----------
- 4.0.x     | 2.0.x
- 4.1.x     | 2.1.x
- 4.2.x     | 2.2.x
+ 4.x.x     | 2.x.x
  5.0.x     | 3.0.x
  5.1.x     | 3.1.x
  5.2.x     | 3.2.x
  5.3.x     | 3.3.x
  5.4.x     | 3.4.x
+ 5.5.x     | 3.5.x@dev
 
 ## Installation
 
@@ -43,9 +43,9 @@ To install through composer, simply put the following in your `composer.json` fi
 
 ```json
 {
-	"require": {
-		"orchestra/memory": "~3.0"
-	}
+  "require": {
+    "orchestra/memory": "~3.0"
+  }
 }
 ```
 
@@ -55,7 +55,7 @@ And then run `composer install` from the terminal.
 
 Above installation can also be simplify by using the following command:
 
-    composer require "orchestra/memory=~3.0"
+  composer require "orchestra/memory=~3.0"
 
 ## Configuration
 
@@ -64,12 +64,12 @@ Next add the service provider in `config/app.php`.
 ```php
 'providers' => [
 
-	// ...
+  // ...
 
-	Orchestra\Memory\MemoryServiceProvider::class,
-
-	Orchestra\Memory\CommandServiceProvider::class,
-],
+  Orchestra\Memory\MemoryServiceProvider::class,
+  Orchestra\Memory\CommandServiceProvider::class,
+]
+,
 ```
 
 ### Aliases
@@ -79,9 +79,10 @@ You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `co
 ```php
 'aliases' => [
 
-	// ...
+  // ...
 
-	'Memory' => Orchestra\Support\Facades\Memory::class,
+  'Memory' => Orchestra\Support\Facades\Memory::class,
+
 ],
 ```
 
@@ -89,9 +90,8 @@ You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `co
 
 Before we can start using Memory Component, please run the following:
 
-```bash
-php artisan memory:migrate
-```
+  php artisan memory:migrate
+
 
 > The command utility is enabled via `Orchestra\Memory\CommandServiceProvider`.
 
@@ -99,9 +99,7 @@ php artisan memory:migrate
 
 Optionally, you can also publish the configuration file if there any requirement to change the default:
 
-```
-php artisan config:publish --packages=orchestra/memory
-```
+  php artisan config:publish --packages=orchestra/memory
 
 ## Usage
 
@@ -178,13 +176,13 @@ use Orchestra\Contracts\Memory\Handler;
 
 class AcmeMemoryHandler implements Handler
 {
-    // Add your implementation
+  // Add your implementation
 }
 
 Memory::extend('acme', function ($app, $name) {
-    $handler = new AcmeMemoryHandler($name);
-
-    return new Orchestra\Memory\Provider($handler);
+  return new Orchestra\Memory\Provider(
+    new AcmeMemoryHandler($name)
+  );
 });
 
 // Now you can use it as
@@ -192,7 +190,3 @@ $acme = Memory::make('acme.default');
 ```
 
 > You can also extends `Orchestra\Memory\Abstractable\Handler` which add some boilerplate code on your custom handler.
-
-## Resources
-
-* [Documentation](http://orchestraplatform.com/docs/latest/components/memory)
