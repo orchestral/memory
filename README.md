@@ -3,7 +3,7 @@ Memory Component for Orchestra Platform
 
 Memory Component handles runtime configuration either using "in memory" Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Memory Component allow those configuration to be persistent in between request by utilising multiple data storage option either through cache or database.
 
-[![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=3.5)](https://travis-ci.org/orchestral/memory)
+[![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=master)](https://travis-ci.org/orchestral/memory)
 [![Latest Stable Version](https://poser.pugx.org/orchestra/memory/version)](https://packagist.org/packages/orchestra/memory)
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads)](https://packagist.org/packages/orchestra/memory)
 [![Latest Unstable Version](https://poser.pugx.org/orchestra/memory/v/unstable)](//packagist.org/packages/orchestra/memory)
@@ -33,6 +33,7 @@ Laravel    | Memory
  5.3.x     | 3.3.x
  5.4.x     | 3.4.x
  5.5.x     | 3.5.x
+ 5.6.x     | 3.6.x@dev
 
 ## Installation
 
