@@ -25,9 +25,9 @@
         "orchestra/support": "~3.6.0"
     },
     "require-dev": {
-        "illuminate/container": "dev-master",
-        "illuminate/database": "dev-master",
-        "mockery/mockery": "^0.9.4",
+        "illuminate/container": "~3.6.0",
+        "illuminate/database": "~3.6.0",
+        "mockery/mockery": "~1.0",
         "phpunit/phpunit": "~6.0"
     },
     "extra": {
