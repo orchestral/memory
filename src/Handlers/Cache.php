@@ -48,7 +48,7 @@ class Cache extends Handler implements HandlerContract
      *
      * @return bool
      */
-    public function finish(array $items = [])
+    public function finish(array $items = []): bool
     {
         $this->cache->forever("orchestra.memory.{$this->name}", $items);
 
