@@ -26,9 +26,9 @@ class CacheTest extends TestCase
         $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
 
         $value = [
-            'name'  => 'Orchestra',
+            'name' => 'Orchestra',
             'theme' => [
-                'backend'  => 'default',
+                'backend' => 'default',
                 'frontend' => 'default',
             ],
         ];

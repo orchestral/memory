@@ -20,13 +20,13 @@
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "orchestra/contracts": "~3.6.0",
         "orchestra/support": "~3.6.0"
     },
     "require-dev": {
-        "illuminate/container": "~3.6.0",
-        "illuminate/database": "~3.6.0",
+        "illuminate/container": "~5.6.0",
+        "illuminate/database": "~5.6.0",
         "mockery/mockery": "~1.0",
         "phpunit/phpunit": "~6.0"
     },

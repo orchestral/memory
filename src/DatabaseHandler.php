@@ -16,9 +16,9 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return array
      */
-    public function initiate()
+    public function initiate(): array
     {
-        $items    = [];
+        $items = [];
         $memories = $this->cache instanceof Repository ? $this->getItemsFromCache() : $this->getItemsFromDatabase();
 
         foreach ($this->asArray($memories) as $memory) {
@@ -27,7 +27,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
             $items = Arr::add($items, $memory->name, unserialize($value));
 
             $this->addKey($memory->name, [
-                'id'    => $memory->id,
+                'id' => $memory->id,
                 'value' => $value,
             ]);
         }
@@ -42,7 +42,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return bool
      */
-    public function finish(array $items = [])
+    public function finish(array $items = []): bool
     {
         $changed = false;
 
@@ -77,7 +77,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return void
      */
-    protected function saving($key, $value, $isNew)
+    protected function saving(string $key, $value, bool $isNew): void
     {
         if ($value === 'N;') {
             $this->delete($key);
@@ -89,13 +89,13 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     /**
      * Create/insert data to database.
      *
-     * @param  string   $key
-     * @param  mixed    $value
-     * @param  bool     $isNew
+     * @param  string  $key
+     * @param  mixed  $value
+     * @param  bool  $isNew
      *
      * @return void
      */
-    abstract protected function save($key, $value, $isNew = false);
+    abstract protected function save(string $key, $value, bool $isNew = false): void;
 
     /**
      * Remove data from database.
@@ -104,7 +104,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return void
      */
-    abstract protected function delete($key);
+    abstract protected function delete(string $key): void;
 
     /**
      * Get resolver instance.
@@ -118,7 +118,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getItemsFromCache()
+    protected function getItemsFromCache(): Collection
     {
         return $this->cache->rememberForever($this->cacheKey, function () {
             return $this->getItemsFromDatabase();
@@ -130,7 +130,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getItemsFromDatabase()
+    protected function getItemsFromDatabase(): Collection
     {
         return $this->resolver()->get();
     }
@@ -142,7 +142,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      *
      * @return array
      */
-    protected function asArray($data = [])
+    protected function asArray($data = []): array
     {
         if ($data instanceof Collection) {
             $data = $data->all();

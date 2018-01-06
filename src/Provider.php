@@ -26,9 +26,9 @@ class Provider implements ProviderContract
      */
     public function __construct(HandlerContract $handler, Encrypter $encrypter = null)
     {
-        $this->handler   = $handler;
+        $this->handler = $handler;
         $this->encrypter = $encrypter;
-        $this->items     = $this->handler->initiate();
+        $this->items = $this->handler->initiate();
     }
 
     /**
@@ -54,8 +54,8 @@ class Provider implements ProviderContract
     /**
      * Set a value from a key.
      *
-     * @param  string  $key    A string of key to add the value.
-     * @param  mixed   $value  The value.
+     * @param  string  $key    a string of key to add the value
+     * @param  mixed   $value  the value
      *
      * @return mixed
      */
@@ -69,8 +69,8 @@ class Provider implements ProviderContract
     /**
      * Set a value from a key.
      *
-     * @param  string  $key    A string of key to add the value.
-     * @param  mixed   $value  The value.
+     * @param  string  $key    a string of key to add the value
+     * @param  mixed   $value  the value
      *
      * @return mixed
      */

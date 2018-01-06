@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Memory\Handlers\TestCase;
+<?php
+
+namespace Orchestra\Memory\Handlers\TestCase;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
@@ -37,8 +39,8 @@ class RuntimeTest extends TestCase
      */
     public function testConstructMethod()
     {
-        $refl    = new \ReflectionObject($this->stub);
-        $name    = $refl->getProperty('name');
+        $refl = new \ReflectionObject($this->stub);
+        $name = $refl->getProperty('name');
         $storage = $refl->getProperty('storage');
 
         $name->setAccessible(true);
