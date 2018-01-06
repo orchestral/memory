@@ -259,12 +259,12 @@ class StubMemoryHandler extends Handler implements HandlerContract
 {
     protected $storage = 'stub';
 
-    public function initiate()
+    public function initiate(): array
     {
         return [];
     }
 
-    public function finish(array $items = [])
+    public function finish(array $items = []): bool
     {
         return true;
     }
