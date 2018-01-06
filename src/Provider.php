@@ -46,7 +46,7 @@ class Provider implements ProviderContract
      *
      * @return bool
      */
-    public function finish()
+    public function finish(): bool
     {
         return $this->handler->finish($this->allWithRemoved());
     }
@@ -59,7 +59,7 @@ class Provider implements ProviderContract
      *
      * @return mixed
      */
-    public function put($key, $value = '')
+    public function put(string $key, $value = '')
     {
         $this->set($key, $value);
 
@@ -74,7 +74,7 @@ class Provider implements ProviderContract
      *
      * @return mixed
      */
-    public function securePut($key, $value = '')
+    public function securePut(string $key, $value = '')
     {
         $this->secureSet($key, $value);
 
