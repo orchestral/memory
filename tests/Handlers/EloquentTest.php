@@ -38,12 +38,12 @@ class EloquentTest extends TestCase
      */
     public function testInitiateMethod()
     {
-        $app      = m::mock('\Illuminate\Container\Container');
-        $cache    = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $app = m::mock('\Illuminate\Container\Container');
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $config = ['model' => 'EloquentHandlerModelMock', 'cache' => true];
-        $data   = $this->eloquentDataProvider();
+        $data = $this->eloquentDataProvider();
 
         $app->shouldReceive('make')->once()->with('EloquentHandlerModelMock')->andReturn($eloquent);
         $cache->shouldReceive('rememberForever')->once()
@@ -57,7 +57,7 @@ class EloquentTest extends TestCase
         $stub = new Eloquent('stub', $config, $app, $cache);
 
         $expected = [
-            'foo'   => 'foobar',
+            'foo' => 'foobar',
             'hello' => 'world',
         ];
 
@@ -72,23 +72,23 @@ class EloquentTest extends TestCase
      */
     public function testFinishMethod()
     {
-        $app      = m::mock('\Illuminate\Container\Container');
-        $cache    = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $app = m::mock('\Illuminate\Container\Container');
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $config = ['model' => $eloquent, 'cache' => true];
-        $data   = $this->eloquentDataProvider();
+        $data = $this->eloquentDataProvider();
 
-        $checkWithCountQuery    = m::mock('\Illuminate\Database\Query\Builder');
+        $checkWithCountQuery = m::mock('\Illuminate\Database\Query\Builder');
         $checkWithoutCountQuery = m::mock('\Illuminate\Database\Query\Builder');
-        $fooEntity              = m::mock('FooEntityMock');
+        $fooEntity = m::mock('FooEntityMock');
 
         $app->shouldReceive('make')->times(4)->with('EloquentHandlerModelMock')->andReturn($eloquent);
         $cache->shouldReceive('rememberForever')->once()
             ->with('db-memory:eloquent-stub', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) {
-                    return $c();
-                })
+                return $c();
+            })
             ->shouldReceive('forget')->once()->with('db-memory:eloquent-stub')->andReturn(null);
         $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
             ->shouldReceive('get')->once()->andReturn($data)
@@ -104,8 +104,8 @@ class EloquentTest extends TestCase
         $stub->initiate();
 
         $items = [
-            'foo'     => 'foobar is wicked',
-            'hello'   => 'world',
+            'foo' => 'foobar is wicked',
+            'hello' => 'world',
             'stubbed' => 'Foobar was awesome',
         ];
 

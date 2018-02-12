@@ -32,7 +32,7 @@ class Fluent extends DatabaseHandler
      * @param  \Illuminate\Database\DatabaseManager  $repository
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
-    public function __construct($name, array $config, DatabaseManager $repository, Repository $cache)
+    public function __construct(string $name, array $config, DatabaseManager $repository, Repository $cache)
     {
         parent::__construct($name, $config);
 
@@ -47,19 +47,19 @@ class Fluent extends DatabaseHandler
      * Create/insert data to database.
      *
      * @param  string  $key
-     * @param  mixed   $value
-     * @param  bool    $isNew
+     * @param  mixed  $value
+     * @param  bool  $isNew
      *
      * @return void
      */
-    protected function save($key, $value, $isNew = false)
+    protected function save(string $key, $value, bool $isNew = false): void
     {
         $count = $this->resolver()->where('name', '=', $key)->count();
-        $id    = $this->getKeyId($key);
+        $id = $this->getKeyId($key);
 
         if (true === $isNew && $count < 1) {
             $this->resolver()->insert([
-                'name'  => $key,
+                'name' => $key,
                 'value' => $value,
             ]);
         } else {
@@ -72,11 +72,11 @@ class Fluent extends DatabaseHandler
     /**
      * Remove data from database.
      *
-     * @param  string   $key
+     * @param  string  $key
      *
      * @return void
      */
-    protected function delete($key)
+    protected function delete(string $key): void
     {
         $this->resolver()->where('id', '=', $this->getKeyId($key))->delete();
     }

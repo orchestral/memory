@@ -19,7 +19,7 @@ class Runtime extends Handler implements HandlerContract
      *
      * @return array
      */
-    public function initiate()
+    public function initiate(): array
     {
         return [];
     }
@@ -31,7 +31,7 @@ class Runtime extends Handler implements HandlerContract
      *
      * @return bool
      */
-    public function finish(array $items = [])
+    public function finish(array $items = []): bool
     {
         return true;
     }

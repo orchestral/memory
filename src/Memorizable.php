@@ -18,9 +18,9 @@ trait Memorizable
      *
      * @return bool
      */
-    public function attached()
+    public function attached(): bool
     {
-        return ($this->memory instanceof ProviderContract);
+        return $this->memory instanceof ProviderContract;
     }
 
     /**
@@ -28,9 +28,9 @@ trait Memorizable
      *
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
      *
-     * @return object
+     * @return $this
      */
-    public function attach(ProviderContract $memory)
+    public function attach(ProviderContract $memory): self
     {
         $this->setMemoryProvider($memory);
 
@@ -42,9 +42,9 @@ trait Memorizable
      *
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
      *
-     * @return object
+     * @return $this
      */
-    public function setMemoryProvider(ProviderContract $memory)
+    public function setMemoryProvider(ProviderContract $memory): self
     {
         $this->memory = $memory;
 
@@ -56,7 +56,7 @@ trait Memorizable
      *
      * @return \Orchestra\Contracts\Memory\Provider|null
      */
-    public function getMemoryProvider()
+    public function getMemoryProvider(): ?ProviderContract
     {
         return $this->memory;
     }

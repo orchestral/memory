@@ -26,9 +26,9 @@ class Provider implements ProviderContract
      */
     public function __construct(HandlerContract $handler, Encrypter $encrypter = null)
     {
-        $this->handler   = $handler;
+        $this->handler = $handler;
         $this->encrypter = $encrypter;
-        $this->items     = $this->handler->initiate();
+        $this->items = $this->handler->initiate();
     }
 
     /**
@@ -46,7 +46,7 @@ class Provider implements ProviderContract
      *
      * @return bool
      */
-    public function finish()
+    public function finish(): bool
     {
         return $this->handler->finish($this->allWithRemoved());
     }
@@ -54,12 +54,12 @@ class Provider implements ProviderContract
     /**
      * Set a value from a key.
      *
-     * @param  string  $key    A string of key to add the value.
-     * @param  mixed   $value  The value.
+     * @param  string  $key    a string of key to add the value
+     * @param  mixed   $value  the value
      *
      * @return mixed
      */
-    public function put($key, $value = '')
+    public function put(string $key, $value = '')
     {
         $this->set($key, $value);
 
@@ -69,12 +69,12 @@ class Provider implements ProviderContract
     /**
      * Set a value from a key.
      *
-     * @param  string  $key    A string of key to add the value.
-     * @param  mixed   $value  The value.
+     * @param  string  $key    a string of key to add the value
+     * @param  mixed   $value  the value
      *
      * @return mixed
      */
-    public function securePut($key, $value = '')
+    public function securePut(string $key, $value = '')
     {
         $this->secureSet($key, $value);
 

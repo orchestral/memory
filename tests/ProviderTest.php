@@ -3,8 +3,8 @@
 namespace Orchestra\Memory\TestCase;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Memory\Provider;
+use PHPUnit\Framework\TestCase;
 
 class ProviderTest extends TestCase
 {
@@ -93,7 +93,7 @@ class ProviderTest extends TestCase
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
         $handler->shouldReceive('initiate')->once()->andReturn(['foo' => 'foobar'])
-            ->shouldReceive('finish')->once()->with(['foo'            => 'foobar'])->andReturn(true);
+            ->shouldReceive('finish')->once()->with(['foo' => 'foobar'])->andReturn(true);
 
         $stub = new Provider($handler);
 
@@ -135,7 +135,7 @@ class ProviderTest extends TestCase
 
         $stub = new Provider($handler);
 
-        $refl  = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
 

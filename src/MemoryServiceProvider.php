@@ -51,7 +51,7 @@ class MemoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootMemoryEvent()
+    protected function bootMemoryEvent(): void
     {
         $this->app->terminating(function () {
             $this->app->make('orchestra.memory')->finish();
@@ -65,7 +65,7 @@ class MemoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootUnderLaravel($path)
+    protected function bootUnderLaravel(string $path): void
     {
         $this->mergeConfigFrom("{$path}/config/config.php", 'orchestra.memory');
 

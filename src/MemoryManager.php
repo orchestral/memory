@@ -10,6 +10,8 @@ use Orchestra\Memory\Handlers\Fluent;
 use Orchestra\Memory\Handlers\Runtime;
 use Orchestra\Memory\Handlers\Eloquent;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
+use Orchestra\Contracts\Memory\Provider as ProviderContract;
+use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 class MemoryManager extends Manager
 {
@@ -50,10 +52,10 @@ class MemoryManager extends Manager
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function createFluentDriver($name)
+    protected function createFluentDriver(string $name): ProviderContract
     {
         $config = $this->config['fluent'][$name] ?? [];
-        $cache  = $this->getCacheRepository($config);
+        $cache = $this->getCacheRepository($config);
 
         return $this->createProvider(new Fluent($name, $config, $this->app->make('db'), $cache));
     }
@@ -65,10 +67,10 @@ class MemoryManager extends Manager
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function createEloquentDriver($name)
+    protected function createEloquentDriver(string $name): ProviderContract
     {
         $config = $this->config['eloquent'][$name] ?? [];
-        $cache  = $this->getCacheRepository($config);
+        $cache = $this->getCacheRepository($config);
 
         return $this->createProvider(new Eloquent($name, $config, $this->app, $cache));
     }
@@ -80,10 +82,10 @@ class MemoryManager extends Manager
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function createCacheDriver($name)
+    protected function createCacheDriver(string $name): ProviderContract
     {
         $config = $this->config['cache'][$name] ?? [];
-        $cache  = $this->getCacheRepository($config);
+        $cache = $this->getCacheRepository($config);
 
         return $this->createProvider(new Cache($name, $config, $cache));
     }
@@ -95,7 +97,7 @@ class MemoryManager extends Manager
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function createRuntimeDriver($name)
+    protected function createRuntimeDriver(string $name): ProviderContract
     {
         $config = $this->config['runtime'][$name] ?? [];
 
@@ -109,7 +111,7 @@ class MemoryManager extends Manager
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function createProvider(HandlerContract $handler)
+    protected function createProvider(HandlerContract $handler): ProviderContract
     {
         return new Provider($handler, $this->encrypter);
     }
@@ -153,7 +155,7 @@ class MemoryManager extends Manager
      *
      * @return $this
      */
-    public function setConfig(array $config)
+    public function setConfig(array $config): self
     {
         $this->config = $config;
 
@@ -167,7 +169,7 @@ class MemoryManager extends Manager
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    public function makeOrFallback($fallbackName = 'orchestra')
+    public function makeOrFallback(string $fallbackName = 'orchestra'): ProviderContract
     {
         $fallback = null;
 
@@ -185,7 +187,7 @@ class MemoryManager extends Manager
      *
      * @return void
      */
-    public function finish()
+    public function finish(): void
     {
         foreach ($this->drivers as $name => $class) {
             $class->finish();
@@ -202,7 +204,7 @@ class MemoryManager extends Manager
      *
      * @return \Illuminate\Contracts\Cache\Repository
      */
-    protected function getCacheRepository(array $config)
+    protected function getCacheRepository(array $config): CacheRepository
     {
         $connection = $config['connections']['cache'] ?? null;
 

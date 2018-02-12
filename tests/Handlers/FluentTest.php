@@ -38,10 +38,10 @@ class FluentTest extends TestCase
     public function testInitiateMethod()
     {
         $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db    = m::mock('\Illuminate\Database\DatabaseManager');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
 
         $config = ['table' => 'orchestra_options', 'cache' => true];
-        $data   = $this->fluentDataProvider();
+        $data = $this->fluentDataProvider();
 
         $query = m::mock('\Illuminate\Database\Query\Builder');
 
@@ -56,7 +56,7 @@ class FluentTest extends TestCase
         $stub = new Fluent('stub', $config, $db, $cache);
 
         $expected = [
-            'foo'   => 'foobar',
+            'foo' => 'foobar',
             'hello' => 'world',
         ];
 
@@ -73,20 +73,20 @@ class FluentTest extends TestCase
     public function testFinishMethod()
     {
         $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db    = m::mock('\Illuminate\Database\DatabaseManager');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
 
         $config = ['table' => 'orchestra_options', 'cache' => true];
-        $data   = $this->fluentDataProvider();
+        $data = $this->fluentDataProvider();
 
-        $selectQuery            = m::mock('\Illuminate\Database\Query\Builder');
-        $checkWithCountQuery    = m::mock('\Illuminate\Database\Query\Builder');
+        $selectQuery = m::mock('\Illuminate\Database\Query\Builder');
+        $checkWithCountQuery = m::mock('\Illuminate\Database\Query\Builder');
         $checkWithoutCountQuery = m::mock('\Illuminate\Database\Query\Builder');
 
         $cache->shouldReceive('rememberForever')->once()
             ->with('db-memory:fluent-stub', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) {
-                    return $c();
-                })
+                return $c();
+            })
             ->shouldReceive('forget')->once()->with('db-memory:fluent-stub')->andReturn(null);
         $checkWithCountQuery->shouldReceive('count')->andReturn(1);
         $checkWithoutCountQuery->shouldReceive('count')->andReturn(0);
@@ -103,8 +103,8 @@ class FluentTest extends TestCase
         $stub->initiate();
 
         $items = [
-            'foo'     => 'foobar is wicked',
-            'hello'   => 'world',
+            'foo' => 'foobar is wicked',
+            'hello' => 'world',
             'stubbed' => 'Foobar was awesome',
         ];
 

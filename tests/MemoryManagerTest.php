@@ -46,8 +46,8 @@ class MemoryManagerTest extends TestCase
     {
         $app = $this->app;
 
-        $cache    = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db       = m::mock('\Illuminate\Database\DatabaseManager');
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
         $eloquent = m::mock('EloquentHandlerModelMock');
 
         $app->shouldReceive('make')->times(3)->with('cache')->andReturn($cache)
@@ -85,10 +85,10 @@ class MemoryManagerTest extends TestCase
     {
         $app = $this->app;
 
-        $cache  = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db     = m::mock('\Illuminate\Database\DatabaseManager');
-        $query  = m::mock('\Illuminate\Database\Query\Builder');
-        $data   = new Collection();
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
+        $query = m::mock('\Illuminate\Database\Query\Builder');
+        $data = new Collection();
 
         $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('make')->once()->with('db')->andReturn($db)
@@ -124,8 +124,8 @@ class MemoryManagerTest extends TestCase
     {
         $app = $this->app;
 
-        $cache  = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $db     = m::mock('\Illuminate\Database\DatabaseManager');
+        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $db = m::mock('\Illuminate\Database\DatabaseManager');
 
         $app->shouldReceive('make')->once()->with('cache')->andReturn($cache)
             ->shouldReceive('make')->once()->with('db')->andReturn($db)
@@ -191,7 +191,7 @@ class MemoryManagerTest extends TestCase
 
         $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub);
 
-        $refl    = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $handler = $refl->getProperty('handler');
 
         $handler->setAccessible(true);
@@ -211,7 +211,7 @@ class MemoryManagerTest extends TestCase
         $app->shouldReceive('make')->once()->with('encrypter')->andThrow('\RuntimeException');
 
         $stub = new MemoryManager($app);
-        $foo  = $stub->make('runtime.fool');
+        $foo = $stub->make('runtime.fool');
 
         $this->assertTrue($foo === $stub->make('runtime.fool'));
 
@@ -259,12 +259,12 @@ class StubMemoryHandler extends Handler implements HandlerContract
 {
     protected $storage = 'stub';
 
-    public function initiate()
+    public function initiate(): array
     {
         return [];
     }
 
-    public function finish(array $items = [])
+    public function finish(array $items = []): bool
     {
         return true;
     }

@@ -22,7 +22,7 @@ class Cache extends Handler implements HandlerContract
      * @param  array  $config
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
-    public function __construct($name, array $config, Repository $cache)
+    public function __construct(string $name, array $config, Repository $cache)
     {
         $this->cache = $cache;
 
@@ -36,7 +36,7 @@ class Cache extends Handler implements HandlerContract
      *
      * @return array
      */
-    public function initiate()
+    public function initiate(): array
     {
         return $this->cache->get("orchestra.memory.{$this->name}", []);
     }
@@ -48,7 +48,7 @@ class Cache extends Handler implements HandlerContract
      *
      * @return bool
      */
-    public function finish(array $items = [])
+    public function finish(array $items = []): bool
     {
         $this->cache->forever("orchestra.memory.{$this->name}", $items);
 

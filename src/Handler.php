@@ -63,8 +63,8 @@ abstract class Handler
      */
     public function __construct($name, array $config)
     {
-        $this->name     = $name;
-        $this->config   = array_merge($this->config, $config);
+        $this->name = $name;
+        $this->config = array_merge($this->config, $config);
         $this->cacheKey = "db-memory:{$this->storage}-{$this->name}";
     }
 
@@ -72,11 +72,11 @@ abstract class Handler
      * Add key with id and checksum.
      *
      * @param  string  $name
-     * @param  array   $option
+     * @param  array  $option
      *
      * @return void
      */
-    protected function addKey($name, $option)
+    protected function addKey(string $name, array $option): void
     {
         $option['checksum'] = $this->generateNewChecksum($option['value']);
         unset($option['value']);
@@ -92,9 +92,9 @@ abstract class Handler
      *
      * @return bool
      */
-    protected function check($name, $check = '')
+    protected function check(string $name, string $check = ''): bool
     {
-        return (Arr::get($this->keyMap, "{$name}.checksum") === $this->generateNewChecksum($check));
+        return Arr::get($this->keyMap, "{$name}.checksum") === $this->generateNewChecksum($check);
     }
 
     /**
@@ -104,7 +104,7 @@ abstract class Handler
      *
      * @return string
      */
-    protected function generateNewChecksum($value)
+    protected function generateNewChecksum($value): string
     {
         ! is_string($value) && $value = (is_object($value) ? spl_object_hash($value) : serialize($value));
 
@@ -118,7 +118,7 @@ abstract class Handler
      *
      * @return int
      */
-    protected function getKeyId($name)
+    protected function getKeyId(string $name)
     {
         return Arr::get($this->keyMap, "{$name}.id");
     }
@@ -128,7 +128,7 @@ abstract class Handler
      *
      * @return string
      */
-    public function getStorageName()
+    public function getStorageName(): string
     {
         return $this->storage;
     }
@@ -138,7 +138,7 @@ abstract class Handler
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -150,7 +150,7 @@ abstract class Handler
      *
      * @return bool
      */
-    protected function isNewKey($name)
+    protected function isNewKey(string $name): bool
     {
         return is_null($this->getKeyId($name));
     }

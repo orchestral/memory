@@ -32,7 +32,7 @@ class Eloquent extends DatabaseHandler
      * @param  \Illuminate\Contracts\Container\Container  $repository
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
-    public function __construct($name, array $config, Container $repository, Repository $cache)
+    public function __construct(string $name, array $config, Container $repository, Repository $cache)
     {
         parent::__construct($name, $config);
 
@@ -47,18 +47,18 @@ class Eloquent extends DatabaseHandler
      * Create/insert data to database.
      *
      * @param  string  $key
-     * @param  mixed   $value
-     * @param  bool    $isNew
+     * @param  mixed  $value
+     * @param  bool  $isNew
      *
      * @return void
      */
-    protected function save($key, $value, $isNew = false)
+    protected function save(string $key, $value, bool $isNew = false): void
     {
         $model = $this->resolver()->where('name', '=', $key)->first();
 
         if (true === $isNew && is_null($model)) {
             $this->resolver()->create([
-                'name'  => $key,
+                'name' => $key,
                 'value' => $value,
             ]);
         } else {
@@ -71,11 +71,11 @@ class Eloquent extends DatabaseHandler
     /**
      * Remove data from database.
      *
-     * @param  string   $key
+     * @param  string  $key
      *
      * @return void
      */
-    protected function delete($key)
+    protected function delete(string $key): void
     {
         $this->resolver()->where('id', '=', $this->getKeyId($key))->delete();
     }
