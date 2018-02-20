@@ -2,29 +2,34 @@
 
 namespace Orchestra\Memory;
 
-use Orchestra\Memory\Console\MemoryCommand;
-use Orchestra\Support\Providers\CommandServiceProvider as ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider
 {
     /**
-     * The commands to be registered.
+     * Indicates if loading of the provider is deferred.
      *
-     * @var array
+     * @var bool
      */
-    protected $commands = [
-        'Memory' => 'orchestra.commands.memory',
-    ];
+    protected $defer = true;
 
     /**
      * Register the service provider.
      *
      * @return void
      */
-    public function registerMemoryCommand(): void
+    public function register()
     {
-        $this->app->singleton('orchestra.commands.memory', function () {
-            return new MemoryCommand();
-        });
+        //
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [];
     }
 }

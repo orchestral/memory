@@ -65,7 +65,6 @@ Next add the service provider in `config/app.php`.
   // ...
 
   Orchestra\Memory\MemoryServiceProvider::class,
-  Orchestra\Memory\CommandServiceProvider::class,
 ]
 ,
 ```
@@ -88,16 +87,13 @@ You might want to add `Orchestra\Support\Facades\Memory` to class aliases in `co
 
 Before we can start using Memory Component, please run the following:
 
-  php artisan memory:migrate
-
-
-> The command utility is enabled via `Orchestra\Memory\CommandServiceProvider`.
+  php artisan migrate
 
 ### Publish Configuration
 
 Optionally, you can also publish the configuration file if there any requirement to change the default:
 
-  php artisan config:publish --packages=orchestra/memory
+  php artisan vendor:publish --provider="Orchestra\\Memory\\MemoryServiceProvider"
 
 ## Usage
 
@@ -187,4 +183,4 @@ Memory::extend('acme', function ($app, $name) {
 $acme = Memory::make('acme.default');
 ```
 
-> You can also extends `Orchestra\Memory\Abstractable\Handler` which add some boilerplate code on your custom handler.
+> You can also extends `Orchestra\Memory\Handler` which add some boilerplate code on your custom handler.
