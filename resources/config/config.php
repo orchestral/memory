@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'driver' => 'fluent.default',
+    'driver' => env('MEMORY_DRIVER', 'fluent.default'),
 
     /*
     |----------------------------------------------------------------------
