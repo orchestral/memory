@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Memory\TestCase;
+namespace Orchestra\Memory\TestCase\Unit;
 
 use Mockery as m;
 use Orchestra\Memory\Provider;
@@ -11,7 +11,7 @@ class ProviderTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
@@ -66,12 +66,8 @@ class ProviderTest extends TestCase
         return $stub;
     }
 
-    /**
-     * Test constructing Orchestra\Memory\Provider.
-     *
-     * @test
-     */
-    public function testConstructMethod()
+    /** @test */
+    public function it_can_be_constructed()
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
@@ -88,7 +84,7 @@ class ProviderTest extends TestCase
      *
      * @test
      */
-    public function testFinishMethod()
+    public function it_can_be_destructed()
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
@@ -100,12 +96,8 @@ class ProviderTest extends TestCase
         $this->assertTrue($stub->finish());
     }
 
-    /**
-     * Test Orchestra\Memory\Drivers\Driver::get() method.
-     *
-     * @test
-     */
-    public function testGetMethod()
+    /** @test */
+    public function it_can_get_an_item()
     {
         $stub1 = $this->getStubInstanceOne();
         $stub2 = $this->getStubInstanceTwo();
@@ -127,7 +119,7 @@ class ProviderTest extends TestCase
      *
      * @test
      */
-    public function testPutMethod()
+    public function it_can_set_an_item()
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
@@ -135,23 +127,15 @@ class ProviderTest extends TestCase
 
         $stub = new Provider($handler);
 
-        $refl = new \ReflectionObject($stub);
-        $items = $refl->getProperty('items');
-        $items->setAccessible(true);
-
-        $this->assertEquals([], $items->getValue($stub));
+        $this->assertEquals([], $stub->all());
 
         $stub->put('foo', 'foobar');
 
-        $this->assertEquals(['foo' => 'foobar'], $items->getValue($stub));
+        $this->assertEquals(['foo' => 'foobar'], $stub->all());
     }
 
-    /**
-     * Test Orchestra\Memory\Drivers\Driver::forget() method.
-     *
-     * @test
-     */
-    public function testForgetMethod()
+    /** @test */
+    public function it_can_forget_an_item()
     {
         $handler = m::mock('\Orchestra\Contracts\Memory\Handler');
 
