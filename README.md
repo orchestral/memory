@@ -65,8 +65,7 @@ Next add the service provider in `config/app.php`.
 
   Orchestra\Memory\MemoryServiceProvider::class,
   Orchestra\Memory\CommandServiceProvider::class,
-]
-,
+],
 ```
 
 ### Aliases
