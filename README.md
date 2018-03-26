@@ -53,7 +53,7 @@ And then run `composer install` from the terminal.
 
 Above installation can also be simplify by using the following command:
 
-  composer require "orchestra/memory=~3.0"
+    composer require "orchestra/memory=~3.0"
 
 ## Configuration
 
@@ -65,8 +65,8 @@ Next add the service provider in `config/app.php`.
   // ...
 
   Orchestra\Memory\MemoryServiceProvider::class,
-]
-,
+
+],
 ```
 
 ### Aliases
