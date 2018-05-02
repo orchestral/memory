@@ -8,6 +8,7 @@ Memory Component handles runtime configuration either using "in memory" Runtime 
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads)](https://packagist.org/packages/orchestra/memory)
 [![Latest Unstable Version](https://poser.pugx.org/orchestra/memory/v/unstable)](//packagist.org/packages/orchestra/memory)
 [![License](https://poser.pugx.org/orchestra/memory/license)](https://packagist.org/packages/orchestra/memory)
+[![Coverage Status](https://coveralls.io/repos/github/orchestral/memory/badge.svg?branch=3.6)](https://coveralls.io/github/orchestral/memory?branch=3.6)
 
 ## Table of Content
 
