@@ -4,6 +4,9 @@ namespace Orchestra\Memory;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @deprecated v3.6.1
+ */
 class CommandServiceProvider extends ServiceProvider
 {
     /**
