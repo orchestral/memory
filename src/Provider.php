@@ -2,7 +2,7 @@
 
 namespace Orchestra\Memory;
 
-use Orchestra\Support\Traits\DataContainer;
+use Orchestra\Support\Concerns\DataContainer;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
