@@ -26,16 +26,16 @@
     },
     "require": {
         "php": ">=7.1",
-        "orchestra/contracts": "~3.7.0",
-        "orchestra/support": "~3.7.0"
+        "orchestra/contracts": "~3.8.0",
+        "orchestra/support": "~3.8.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
-        "orchestra/testbench": "~3.7.0"
+        "orchestra/testbench": "~3.8.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.7-dev"
+            "dev-master": "3.8-dev"
         }
     },
     "config": {
