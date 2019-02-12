@@ -24,7 +24,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         foreach ($this->asArray($memories) as $memory) {
             $value = $memory->value;
 
-            $items = Arr::add($items, $memory->name, unserialize($value));
+            $items = Arr::add($items, $memory->name, unserialize($value, ['allowed_classes' => false]));
 
             $this->addKey($memory->name, [
                 'id' => $memory->id,
