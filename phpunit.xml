@@ -25,7 +25,7 @@
     </filter>
 
     <php>
-        <env name="DB_CONNECTION" value="testing"/>
-        <env name="MEMORY_DRIVER" value="fluent.default"/>
+        <server name="DB_CONNECTION" value="testing"/>
+        <server name="MEMORY_DRIVER" value="fluent.default"/>
     </php>
 </phpunit>

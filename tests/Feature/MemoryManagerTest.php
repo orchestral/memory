@@ -121,12 +121,11 @@ class MemoryManagerTest extends TestCase
         $this->assertSame('mock', $handler->getName());
     }
 
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
+    /** @test */
     public function it_throws_exception_given_invalid_driver()
     {
+        $this->expectException('InvalidArgumentException');
+
         $this->withoutExceptionHandling();
 
         Memory::make('orm');
