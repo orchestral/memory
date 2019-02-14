@@ -56,7 +56,7 @@ class Eloquent extends DatabaseHandler
     {
         $model = $this->resolver()->where('name', '=', $key)->first();
 
-        if (true === $isNew && is_null($model)) {
+        if (true === $isNew && \is_null($model)) {
             $this->resolver()->create([
                 'name' => $key,
                 'value' => $value,
