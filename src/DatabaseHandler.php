@@ -24,7 +24,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         foreach ($this->asArray($memories) as $memory) {
             $value = $memory->value;
 
-            $items = Arr::add($items, $memory->name, unserialize($value, ['allowed_classes' => false]));
+            $items = Arr::add($items, $memory->name, \unserialize($value, ['allowed_classes' => false]));
 
             $this->addKey($memory->name, [
                 'id' => $memory->id,
@@ -47,7 +47,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
         $changed = false;
 
         foreach ($items as $key => $value) {
-            $serialized = serialize($value);
+            $serialized = \serialize($value);
 
             if (! $this->check($key, $serialized)) {
                 $changed = true;

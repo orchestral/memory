@@ -3,7 +3,6 @@
 namespace Orchestra\Memory\TestCase\Feature\Handlers;
 
 use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\Handlers\Runtime;
 use Orchestra\Memory\TestCase\Feature\TestCase;
 
 class RuntimeTest extends TestCase

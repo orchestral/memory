@@ -4,7 +4,6 @@ namespace Orchestra\Memory\TestCase\Feature\Handlers;
 
 use Orchestra\Memory\Model;
 use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\Handlers\Eloquent;
 use Orchestra\Memory\TestCase\Feature\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
