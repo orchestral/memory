@@ -64,7 +64,7 @@ abstract class Handler
     public function __construct($name, array $config)
     {
         $this->name = $name;
-        $this->config = array_merge($this->config, $config);
+        $this->config = \array_merge($this->config, $config);
         $this->cacheKey = "db-memory:{$this->storage}-{$this->name}";
     }
 
@@ -106,9 +106,11 @@ abstract class Handler
      */
     protected function generateNewChecksum($value): string
     {
-        ! is_string($value) && $value = (is_object($value) ? spl_object_hash($value) : serialize($value));
+        if (! \is_string($value)) {
+            $value = \is_object($value) ? \spl_object_hash($value) : \serialize($value);
+        }
 
-        return md5($value);
+        return \md5($value);
     }
 
     /**
@@ -152,6 +154,6 @@ abstract class Handler
      */
     protected function isNewKey(string $name): bool
     {
-        return is_null($this->getKeyId($name));
+        return \is_null($this->getKeyId($name));
     }
 }

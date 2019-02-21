@@ -31,7 +31,7 @@ class MemoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $path = realpath(__DIR__.'/../resources');
+        $path = \realpath(__DIR__.'/../resources');
 
         $this->addConfigComponent('orchestra/memory', 'orchestra/memory', "{$path}/config");
 
@@ -70,7 +70,7 @@ class MemoryServiceProvider extends ServiceProvider
         $this->mergeConfigFrom("{$path}/config/config.php", 'orchestra.memory');
 
         $this->publishes([
-            "{$path}/config/config.php" => config_path('orchestra/memory.php'),
+            "{$path}/config/config.php" => \config_path('orchestra/memory.php'),
         ]);
     }
 }
