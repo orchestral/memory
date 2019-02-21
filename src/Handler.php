@@ -106,7 +106,7 @@ abstract class Handler
      */
     protected function generateNewChecksum($value): string
     {
-        if (! is_string($value)) {
+        if (! \is_string($value)) {
             $value = \is_object($value) ? \spl_object_hash($value) : \serialize($value);
         }
 
