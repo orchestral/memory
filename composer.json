@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "classmap": [
-            "resources/database/migrations"
+            "database/migrations"
         ],
         "psr-4": {
             "Orchestra\\Memory\\" : "src/"
