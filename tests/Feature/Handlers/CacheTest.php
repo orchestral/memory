@@ -1,11 +1,11 @@
 <?php
 
-namespace Orchestra\Memory\TestCase\Feature\Handlers;
+namespace Orchestra\Memory\Tests\Feature\Handlers;
 
 use Mockery as m;
 use Illuminate\Support\Facades\Cache;
 use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\TestCase\Feature\TestCase;
+use Orchestra\Memory\Tests\Feature\TestCase;
 
 class CacheTest extends TestCase
 {

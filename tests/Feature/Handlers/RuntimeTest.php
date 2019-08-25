@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Memory\TestCase\Feature\Handlers;
+namespace Orchestra\Memory\Tests\Feature\Handlers;
 
 use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\TestCase\Feature\TestCase;
+use Orchestra\Memory\Tests\Feature\TestCase;
 
 class RuntimeTest extends TestCase
 {

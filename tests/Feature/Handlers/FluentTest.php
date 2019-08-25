@@ -1,10 +1,10 @@
 <?php
 
-namespace Orchestra\Memory\TestCase\Feature\Handlers;
+namespace Orchestra\Memory\Tests\Feature\Handlers;
 
 use Illuminate\Support\Facades\DB;
 use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\TestCase\Feature\TestCase;
+use Orchestra\Memory\Tests\Feature\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class FluentTest extends TestCase

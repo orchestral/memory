@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Memory\TestCase\Unit;
+namespace Orchestra\Memory\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Memory\TestCase\Unit\Handlers;
+namespace Orchestra\Memory\Tests\Unit\Handlers;
 
 use PHPUnit\Framework\TestCase;
 use Orchestra\Memory\Handlers\Runtime;
