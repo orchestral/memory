@@ -68,7 +68,7 @@ class MemoryManager extends Manager
         $config = $this->configurations['eloquent'][$name] ?? [];
         $cache = $this->getCacheRepository($config);
 
-        return $this->createProvider(new Eloquent($name, $config, $this->app, $cache));
+        return $this->createProvider(new Eloquent($name, $config, $this->container, $cache));
     }
 
     /**
