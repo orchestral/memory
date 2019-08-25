@@ -18,7 +18,7 @@ class MemoryServiceProvider extends ServiceProvider
             $manager = new MemoryManager($app);
             $namespace = $this->hasPackageRepository() ? 'orchestra/memory::' : 'orchestra.memory';
 
-            $manager->setConfig($app->make('config')->get($namespace));
+            $manager->setConfiguration($app->make('config')->get($namespace));
 
             return $manager;
         });

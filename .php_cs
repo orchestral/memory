@@ -1,7 +1,8 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-            ->in(__DIR__.'/resources')
+            ->in(__DIR__.'/config')
+            ->in(__DIR__.'/database')
             ->in(__DIR__.'/src')
             ->in(__DIR__.'/tests');
 

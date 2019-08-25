@@ -2,25 +2,21 @@
 
 namespace Orchestra\Memory;
 
-use Exception;
 use RuntimeException;
 use Orchestra\Support\Manager;
 use Orchestra\Memory\Handlers\Cache;
 use Orchestra\Memory\Handlers\Fluent;
 use Orchestra\Memory\Handlers\Runtime;
 use Orchestra\Memory\Handlers\Eloquent;
+use Illuminate\Contracts\Container\Container;
+use Orchestra\Support\Concerns\WithConfiguration;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 class MemoryManager extends Manager
 {
-    /**
-     * Configuration values.
-     *
-     * @var array
-     */
-    protected $config = [];
+    use WithConfiguration;
 
     /**
      * The encrypter implementation.
@@ -32,14 +28,14 @@ class MemoryManager extends Manager
     /**
      * Create a new manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Container\Container  $container
      */
-    public function __construct($app)
+    public function __construct(Container $container)
     {
-        parent::__construct($app);
+        parent::__construct($container);
 
         try {
-            $this->encrypter = $app->make('encrypter');
+            $this->encrypter = $container->make('encrypter');
         } catch (RuntimeException $e) {
             $this->encrypter = null;
         }
@@ -54,10 +50,10 @@ class MemoryManager extends Manager
      */
     protected function createFluentDriver(string $name): ProviderContract
     {
-        $config = $this->config['fluent'][$name] ?? [];
+        $config = $this->configurations['fluent'][$name] ?? [];
         $cache = $this->getCacheRepository($config);
 
-        return $this->createProvider(new Fluent($name, $config, $this->app->make('db'), $cache));
+        return $this->createProvider(new Fluent($name, $config, $this->container->make('db'), $cache));
     }
 
     /**
@@ -69,7 +65,7 @@ class MemoryManager extends Manager
      */
     protected function createEloquentDriver(string $name): ProviderContract
     {
-        $config = $this->config['eloquent'][$name] ?? [];
+        $config = $this->configurations['eloquent'][$name] ?? [];
         $cache = $this->getCacheRepository($config);
 
         return $this->createProvider(new Eloquent($name, $config, $this->app, $cache));
@@ -84,7 +80,7 @@ class MemoryManager extends Manager
      */
     protected function createCacheDriver(string $name): ProviderContract
     {
-        $config = $this->config['cache'][$name] ?? [];
+        $config = $this->configurations['cache'][$name] ?? [];
         $cache = $this->getCacheRepository($config);
 
         return $this->createProvider(new Cache($name, $config, $cache));
@@ -99,7 +95,7 @@ class MemoryManager extends Manager
      */
     protected function createRuntimeDriver(string $name): ProviderContract
     {
-        $config = $this->config['runtime'][$name] ?? [];
+        $config = $this->configurations['runtime'][$name] ?? [];
 
         return $this->createProvider(new Runtime($name, $config));
     }
@@ -123,7 +119,7 @@ class MemoryManager extends Manager
      */
     public function getDefaultDriver()
     {
-        return $this->config['driver'] ?? 'fluent.default';
+        return $this->configurations['driver'] ?? 'fluent.default';
     }
 
     /**
@@ -135,31 +131,7 @@ class MemoryManager extends Manager
      */
     public function setDefaultDriver($name)
     {
-        $this->config['driver'] = $name;
-    }
-
-    /**
-     * Get configuration values.
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Set configuration.
-     *
-     * @param  array  $config
-     *
-     * @return $this
-     */
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-
-        return $this;
+        $this->configurations['driver'] = $name;
     }
 
     /**
@@ -171,15 +143,11 @@ class MemoryManager extends Manager
      */
     public function makeOrFallback(string $fallbackName = 'orchestra'): ProviderContract
     {
-        $fallback = null;
-
-        try {
-            $fallback = $this->make();
-        } catch (Exception $e) {
-            $fallback = $this->driver("runtime.{$fallbackName}");
-        }
-
-        return $fallback;
+        return \rescue(function () {
+            return $this->make();
+        }, function () use ($fallbackName) {
+            return $this->driver("runtime.{$fallbackName}");
+        }, false);
     }
 
     /**
@@ -206,8 +174,8 @@ class MemoryManager extends Manager
      */
     protected function getCacheRepository(array $config): CacheRepository
     {
-        $connection = $config['connections']['cache'] ?? null;
-
-        return $this->app->make('cache')->driver($connection);
+        return $this->container->make('cache')->driver(
+            $config['connections']['cache'] ?? null
+        );
     }
 }

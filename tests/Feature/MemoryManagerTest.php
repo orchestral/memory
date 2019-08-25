@@ -45,7 +45,7 @@ class MemoryManagerTest extends TestCase
                 'orchestra' => [],
             ],
         ];
-        Memory::setConfig($config);
+        Memory::setConfiguration($config);
 
         $provider = Memory::makeOrFallback();
         $handler = $provider->getHandler();
@@ -73,7 +73,7 @@ class MemoryManagerTest extends TestCase
     {
         $config = ['driver' => 'runtime.default'];
 
-        Memory::setConfig($config);
+        Memory::setConfiguration($config);
         $provider = Memory::make();
         $handler = $provider->getHandler();
 
@@ -88,7 +88,7 @@ class MemoryManagerTest extends TestCase
     {
         Memory::setDefaultDriver('foo');
 
-        $this->assertSame('foo', Memory::getConfig()['driver']);
+        $this->assertSame('foo', Memory::getConfiguration()['driver']);
     }
 
     /** @test */
