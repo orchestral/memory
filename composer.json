@@ -26,12 +26,12 @@
     },
     "require": {
         "php": ">=7.2",
-        "orchestra/contracts": "^4.0",
-        "orchestra/support": "^4.0"
+        "orchestra/contracts": "^5.0",
+        "orchestra/support": "^5.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0"
+        "orchestra/testbench": "^5.0"
     },
     "extra": {
         "branch-alias": {
