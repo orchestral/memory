@@ -2,8 +2,8 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Orchestra\Memory\Handler;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
+use Orchestra\Memory\Handler;
 
 class Runtime extends Handler implements HandlerContract
 {

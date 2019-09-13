@@ -2,10 +2,10 @@
 
 namespace Orchestra\Memory\Tests\Feature\Handlers;
 
-use Orchestra\Memory\Model;
-use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\Tests\Feature\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Memory\Model;
+use Orchestra\Memory\Tests\Feature\TestCase;
+use Orchestra\Support\Facades\Memory;
 
 class EloquentTest extends TestCase
 {

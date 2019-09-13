@@ -2,9 +2,9 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Orchestra\Memory\Handler;
 use Illuminate\Contracts\Cache\Repository;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
+use Orchestra\Memory\Handler;
 
 class Cache extends Handler implements HandlerContract
 {

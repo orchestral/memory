@@ -2,9 +2,9 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Orchestra\Memory\DatabaseHandler;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Database\DatabaseManager;
+use Orchestra\Memory\DatabaseHandler;
 
 class Fluent extends DatabaseHandler
 {

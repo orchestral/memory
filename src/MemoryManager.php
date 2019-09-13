@@ -2,17 +2,17 @@
 
 namespace Orchestra\Memory;
 
-use RuntimeException;
-use Orchestra\Support\Manager;
-use Orchestra\Memory\Handlers\Cache;
-use Orchestra\Memory\Handlers\Fluent;
-use Orchestra\Memory\Handlers\Runtime;
-use Orchestra\Memory\Handlers\Eloquent;
+use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Contracts\Container\Container;
-use Orchestra\Support\Concerns\WithConfiguration;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Contracts\Memory\Provider as ProviderContract;
-use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Orchestra\Memory\Handlers\Cache;
+use Orchestra\Memory\Handlers\Eloquent;
+use Orchestra\Memory\Handlers\Fluent;
+use Orchestra\Memory\Handlers\Runtime;
+use Orchestra\Support\Concerns\WithConfiguration;
+use Orchestra\Support\Manager;
+use RuntimeException;
 
 class MemoryManager extends Manager
 {
