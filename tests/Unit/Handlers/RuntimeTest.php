@@ -2,8 +2,8 @@
 
 namespace Orchestra\Memory\Tests\Unit\Handlers;
 
-use PHPUnit\Framework\TestCase;
 use Orchestra\Memory\Handlers\Runtime;
+use PHPUnit\Framework\TestCase;
 
 class RuntimeTest extends TestCase
 {

@@ -2,12 +2,12 @@
 
 namespace Orchestra\Memory;
 
-use PDOException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Orchestra\Contracts\Memory\Handler as HandlerContract;
+use PDOException;
 
 abstract class DatabaseHandler extends Handler implements HandlerContract
 {

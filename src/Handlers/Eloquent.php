@@ -2,9 +2,9 @@
 
 namespace Orchestra\Memory\Handlers;
 
-use Orchestra\Memory\DatabaseHandler;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
+use Orchestra\Memory\DatabaseHandler;
 
 class Eloquent extends DatabaseHandler
 {

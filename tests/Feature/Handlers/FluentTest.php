@@ -2,10 +2,10 @@
 
 namespace Orchestra\Memory\Tests\Feature\Handlers;
 
-use Illuminate\Support\Facades\DB;
-use Orchestra\Support\Facades\Memory;
-use Orchestra\Memory\Tests\Feature\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Orchestra\Memory\Tests\Feature\TestCase;
+use Orchestra\Support\Facades\Memory;
 
 class FluentTest extends TestCase
 {

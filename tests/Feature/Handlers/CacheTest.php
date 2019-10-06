@@ -2,10 +2,10 @@
 
 namespace Orchestra\Memory\Tests\Feature\Handlers;
 
-use Mockery as m;
 use Illuminate\Support\Facades\Cache;
-use Orchestra\Support\Facades\Memory;
+use Mockery as m;
 use Orchestra\Memory\Tests\Feature\TestCase;
+use Orchestra\Support\Facades\Memory;
 
 class CacheTest extends TestCase
 {

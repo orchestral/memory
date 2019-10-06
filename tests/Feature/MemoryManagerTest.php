@@ -2,11 +2,11 @@
 
 namespace Orchestra\Memory\Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Contracts\Memory\Handler as HandlerContract;
 use Orchestra\Memory\Handler;
 use Orchestra\Memory\Provider;
 use Orchestra\Support\Facades\Memory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Orchestra\Contracts\Memory\Handler as HandlerContract;
 
 class MemoryManagerTest extends TestCase
 {
