@@ -3,12 +3,12 @@ Memory Component for Orchestra Platform
 
 Memory Component handles runtime configuration either using "in memory" Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Memory Component allow those configuration to be persistent in between request by utilising multiple data storage option either through cache or database.
 
-[![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=master)](https://travis-ci.org/orchestral/memory)
+[![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=5.x)](https://travis-ci.org/orchestral/memory)
 [![Latest Stable Version](https://poser.pugx.org/orchestra/memory/version)](https://packagist.org/packages/orchestra/memory)
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads)](https://packagist.org/packages/orchestra/memory)
 [![Latest Unstable Version](https://poser.pugx.org/orchestra/memory/v/unstable)](//packagist.org/packages/orchestra/memory)
 [![License](https://poser.pugx.org/orchestra/memory/license)](https://packagist.org/packages/orchestra/memory)
-[![Coverage Status](https://coveralls.io/repos/github/orchestral/memory/badge.svg?branch=master)](https://coveralls.io/github/orchestral/memory?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/orchestral/memory/badge.svg?branch=5.x)](https://coveralls.io/github/orchestral/memory?branch=5.x)
 
 ## Table of Content
 
@@ -32,26 +32,13 @@ Laravel    | Memory
  5.7.x     | 3.7.x
  5.8.x     | 3.8.x
  6.x       | 4.x
+ 7.x       | 5.x
 
 ## Installation
 
-To install through composer, simply put the following in your `composer.json` file:
+To install through composer, run the following command from terminal:
 
-```json
-{
-  "require": {
-    "orchestra/memory": "^4.0"
-  }
-}
-```
-
-And then run `composer install` from the terminal.
-
-### Quick Installation
-
-Above installation can also be simplify by using the following command:
-
-    composer require "orchestra/memory=^4.0"
+    composer require "orchestra/memory"
 
 ## Configuration
 
