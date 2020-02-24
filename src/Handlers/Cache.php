@@ -17,10 +17,6 @@ class Cache extends Handler implements HandlerContract
 
     /**
      * Setup a new memory handler.
-     *
-     * @param  string  $name
-     * @param  array  $config
-     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
     public function __construct(string $name, array $config, Repository $cache)
     {
@@ -33,8 +29,6 @@ class Cache extends Handler implements HandlerContract
 
     /**
      * Load the data from cache.
-     *
-     * @return array
      */
     public function initiate(): array
     {
@@ -43,10 +37,6 @@ class Cache extends Handler implements HandlerContract
 
     /**
      * Save data to cache.
-     *
-     * @param  array  $items
-     *
-     * @return bool
      */
     public function finish(array $items = []): bool
     {

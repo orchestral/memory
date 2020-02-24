@@ -16,8 +16,6 @@ class Runtime extends Handler implements HandlerContract
 
     /**
      * Load empty data for runtime.
-     *
-     * @return array
      */
     public function initiate(): array
     {
@@ -26,10 +24,6 @@ class Runtime extends Handler implements HandlerContract
 
     /**
      * Save empty data to /dev/null.
-     *
-     * @param  array  $items
-     *
-     * @return bool
      */
     public function finish(array $items = []): bool
     {

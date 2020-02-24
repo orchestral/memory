@@ -15,8 +15,6 @@ trait Memorizable
 
     /**
      * Check whether a Memory instance is already attached to the container.
-     *
-     * @return bool
      */
     final public function attached(): bool
     {
@@ -25,8 +23,6 @@ trait Memorizable
 
     /**
      * Attach memory provider.
-     *
-     * @param  \Orchestra\Contracts\Memory\Provider  $memory
      *
      * @return $this
      */
@@ -40,8 +36,6 @@ trait Memorizable
     /**
      * Set memory provider.
      *
-     * @param  \Orchestra\Contracts\Memory\Provider  $memory
-     *
      * @return $this
      */
     final public function setMemoryProvider(ProviderContract $memory): self
@@ -53,8 +47,6 @@ trait Memorizable
 
     /**
      * Set memory provider.
-     *
-     * @return \Orchestra\Contracts\Memory\Provider|null
      */
     final public function getMemoryProvider(): ?ProviderContract
     {

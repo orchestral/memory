@@ -13,8 +13,6 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
 {
     /**
      * Load the data from database.
-     *
-     * @return array
      */
     public function initiate(): array
     {
@@ -37,10 +35,6 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
 
     /**
      * Save data to database.
-     *
-     * @param  array   $items
-     *
-     * @return bool
      */
     public function finish(array $items = []): bool
     {
@@ -71,11 +65,7 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     /**
      * Attempt to save or remove data to the database.
      *
-     * @param  string   $key
-     * @param  mixed    $value
-     * @param  bool     $isNew
-     *
-     * @return void
+     * @param  mixed  $value
      */
     protected function saving(string $key, $value, bool $isNew): void
     {
@@ -89,20 +79,12 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
     /**
      * Create/insert data to database.
      *
-     * @param  string  $key
      * @param  mixed  $value
-     * @param  bool  $isNew
-     *
-     * @return void
      */
     abstract protected function save(string $key, $value, bool $isNew = false): void;
 
     /**
      * Remove data from database.
-     *
-     * @param  string   $key
-     *
-     * @return void
      */
     abstract protected function delete(string $key): void;
 
@@ -115,8 +97,6 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
 
     /**
      * Get items from cache.
-     *
-     * @return \Illuminate\Support\Collection
      */
     protected function getItemsFromCache(): Collection
     {
@@ -127,8 +107,6 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
 
     /**
      * Get items from database.
-     *
-     * @return \Illuminate\Support\Collection
      */
     protected function getItemsFromDatabase(): Collection
     {
@@ -139,8 +117,6 @@ abstract class DatabaseHandler extends Handler implements HandlerContract
      * Convert mixed value fetch from database to array.
      *
      * @param  \Illuminate\Support\Collection|\Illuminate\Contracts\Support\Arrayable|array  $data
-     *
-     * @return array
      */
     protected function asArray($data = []): array
     {

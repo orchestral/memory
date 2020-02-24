@@ -48,8 +48,6 @@ class MemoryServiceProvider extends ServiceProvider
 
     /**
      * Register memory events during booting.
-     *
-     * @return void
      */
     protected function bootMemoryEvent(): void
     {
@@ -60,10 +58,6 @@ class MemoryServiceProvider extends ServiceProvider
 
     /**
      * Boot under Laravel setup.
-     *
-     * @param  string  $path
-     *
-     * @return void
      */
     protected function bootUnderLaravel(string $path): void
     {
