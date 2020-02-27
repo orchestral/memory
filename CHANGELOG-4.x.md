@@ -1,10 +1,10 @@
-# Changelog for 3.x
+# Changelog for 4.x
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/memory`.
 
 ## 4.0.0
 
-Released: 2019-9-02
+Released: 2019-09-02
 
 ### Changes
 
