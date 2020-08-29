@@ -14,7 +14,7 @@ class OrchestraMemoryCreateOptionsTable extends Migration
     public function up()
     {
         Schema::create('orchestra_options', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 64);
             $table->longText('value');
 

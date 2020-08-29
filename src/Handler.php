@@ -57,24 +57,17 @@ abstract class Handler
 
     /**
      * Setup a new memory handler.
-     *
-     * @param  string  $name
-     * @param  array   $config
      */
-    public function __construct($name, array $config)
+    public function __construct(string $name, array $config)
     {
         $this->name = $name;
         $this->config = \array_merge($this->config, $config);
-        $this->cacheKey = "db-memory:{$this->storage}-{$this->name}";
+
+        $this->cacheKey = "db-memory:{$this->storage}-{$name}";
     }
 
     /**
      * Add key with id and checksum.
-     *
-     * @param  string  $name
-     * @param  array  $option
-     *
-     * @return void
      */
     protected function addKey(string $name, array $option): void
     {
@@ -86,11 +79,6 @@ abstract class Handler
 
     /**
      * Verify checksum.
-     *
-     * @param  string  $name
-     * @param  string  $check
-     *
-     * @return bool
      */
     protected function check(string $name, string $check = ''): bool
     {
@@ -101,8 +89,6 @@ abstract class Handler
      * Generate a checksum from given value.
      *
      * @param  mixed  $value
-     *
-     * @return string
      */
     protected function generateNewChecksum($value): string
     {
@@ -116,9 +102,7 @@ abstract class Handler
     /**
      * Is given key a new content.
      *
-     * @param  string  $name
-     *
-     * @return int
+     * @return int|null
      */
     protected function getKeyId(string $name)
     {
@@ -127,8 +111,6 @@ abstract class Handler
 
     /**
      * Get storage name.
-     *
-     * @return string
      */
     public function getStorageName(): string
     {
@@ -137,8 +119,6 @@ abstract class Handler
 
     /**
      * Get handler name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -147,10 +127,6 @@ abstract class Handler
 
     /**
      * Get if from content is new.
-     *
-     * @param  string  $name
-     *
-     * @return bool
      */
     protected function isNewKey(string $name): bool
     {

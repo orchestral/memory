@@ -20,9 +20,6 @@ class Provider implements ProviderContract
 
     /**
      * Construct an instance.
-     *
-     * @param  \Orchestra\Contracts\Memory\Handler  $handler
-     * @param  \Illuminate\Contracts\Encryption\Encrypter|null  $encrypter
      */
     public function __construct(HandlerContract $handler, Encrypter $encrypter = null)
     {
@@ -33,18 +30,14 @@ class Provider implements ProviderContract
 
     /**
      * Get handler instance.
-     *
-     * @return \Orchestra\Contracts\Memory\Handler
      */
-    public function getHandler()
+    public function getHandler(): HandlerContract
     {
         return $this->handler;
     }
 
     /**
      * Shutdown/finish method.
-     *
-     * @return bool
      */
     public function finish(): bool
     {
@@ -54,8 +47,7 @@ class Provider implements ProviderContract
     /**
      * Set a value from a key.
      *
-     * @param  string  $key    a string of key to add the value
-     * @param  mixed   $value  the value
+     * @param  mixed  $value
      *
      * @return mixed
      */
@@ -69,8 +61,7 @@ class Provider implements ProviderContract
     /**
      * Set a value from a key.
      *
-     * @param  string  $key    a string of key to add the value
-     * @param  mixed   $value  the value
+     * @param  mixed  $value
      *
      * @return mixed
      */

@@ -27,8 +27,6 @@ class MemoryManager extends Manager
 
     /**
      * Create a new manager instance.
-     *
-     * @param  \Illuminate\Contracts\Container\Container  $container
      */
     public function __construct(Container $container)
     {
@@ -43,10 +41,6 @@ class MemoryManager extends Manager
 
     /**
      * Create Fluent driver.
-     *
-     * @param  string  $name
-     *
-     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createFluentDriver(string $name): ProviderContract
     {
@@ -58,10 +52,6 @@ class MemoryManager extends Manager
 
     /**
      * Create Eloquent driver.
-     *
-     * @param  string  $name
-     *
-     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createEloquentDriver(string $name): ProviderContract
     {
@@ -73,10 +63,6 @@ class MemoryManager extends Manager
 
     /**
      * Create Cache driver.
-     *
-     * @param  string  $name
-     *
-     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createCacheDriver(string $name): ProviderContract
     {
@@ -88,10 +74,6 @@ class MemoryManager extends Manager
 
     /**
      * Create Runtime driver.
-     *
-     * @param  string  $name
-     *
-     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createRuntimeDriver(string $name): ProviderContract
     {
@@ -102,10 +84,6 @@ class MemoryManager extends Manager
 
     /**
      * Create a memory provider.
-     *
-     * @param  \Orchestra\Contracts\Memory\Handler  $handler
-     *
-     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function createProvider(HandlerContract $handler): ProviderContract
     {
@@ -136,10 +114,6 @@ class MemoryManager extends Manager
 
     /**
      * Make default driver or fallback to runtime.
-     *
-     * @param  string  $fallbackName
-     *
-     * @return \Orchestra\Contracts\Memory\Provider
      */
     public function makeOrFallback(string $fallbackName = 'orchestra'): ProviderContract
     {
@@ -152,8 +126,6 @@ class MemoryManager extends Manager
 
     /**
      * Loop every instance and execute finish method (if available).
-     *
-     * @return void
      */
     public function finish(): void
     {
@@ -167,10 +139,6 @@ class MemoryManager extends Manager
 
     /**
      * Get cache repository.
-     *
-     * @param  array  $config
-     *
-     * @return \Illuminate\Contracts\Cache\Repository
      */
     protected function getCacheRepository(array $config): CacheRepository
     {
