@@ -26,6 +26,7 @@
     },
     "require": {
         "php": "^7.3 || ^8.0",
+        "illuminate/database": "^8.37",
         "orchestra/contracts": "^6.0",
         "orchestra/support": "^6.0"
     },
