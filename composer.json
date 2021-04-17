@@ -31,7 +31,7 @@
         "orchestra/support": "^6.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.19"
+        "orchestra/testbench": "^6.17"
     },
     "extra": {
         "branch-alias": {
