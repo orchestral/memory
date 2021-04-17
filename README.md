@@ -3,25 +3,12 @@ Memory Component for Orchestra Platform
 
 Memory Component handles runtime configuration either using "in memory" Runtime or database using Cache, Fluent Query Builder or Eloquent ORM. Instead of just allowing static configuration to be used, Memory Component allow those configuration to be persistent in between request by utilising multiple data storage option either through cache or database.
 
-[![Build Status](https://travis-ci.org/orchestral/memory.svg?branch=master)](https://travis-ci.org/orchestral/memory)
+[![tests](https://github.com/orchestral/memory/workflows/tests/badge.svg?branch=master)](https://github.com/orchestral/memory/actions?query=workflow%3Atests+branch%3Amaster)
 [![Latest Stable Version](https://poser.pugx.org/orchestra/memory/version)](https://packagist.org/packages/orchestra/memory)
 [![Total Downloads](https://poser.pugx.org/orchestra/memory/downloads)](https://packagist.org/packages/orchestra/memory)
 [![Latest Unstable Version](https://poser.pugx.org/orchestra/memory/v/unstable)](//packagist.org/packages/orchestra/memory)
 [![License](https://poser.pugx.org/orchestra/memory/license)](https://packagist.org/packages/orchestra/memory)
 [![Coverage Status](https://coveralls.io/repos/github/orchestral/memory/badge.svg?branch=master)](https://coveralls.io/github/orchestral/memory?branch=master)
-
-## Table of Content
-
-* [Version Compatibility](#version-compatibility)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Usage](#usage)
-  - [Creating Instance](#creating-instance)
-  - [Storing Items](#storing-items)
-  - [Retrieving Items](#retrieving-items)
-  - [Removing Items](#removing-items)
-  - [Extending Memory](#extending-memory)
-* [Changelog](https://github.com/orchestral/memory/releases)
 
 ## Version Compatibility
 
@@ -39,7 +26,9 @@ Laravel    | Memory
 
 To install through composer, run the following command from terminal:
 
-    composer require "orchestra/memory"
+```bash
+composer require "orchestra/memory"
+```
 
 ## Configuration
 
@@ -79,7 +68,9 @@ Before we can start using Memory Component, please run the following:
 
 Optionally, you can also publish the configuration file if there any requirement to change the default:
 
-  php artisan vendor:publish --provider="Orchestra\\Memory\\MemoryServiceProvider"
+```bash
+php artisan vendor:publish --provider="Orchestra\\Memory\\MemoryServiceProvider"
+```
 
 ## Usage
 

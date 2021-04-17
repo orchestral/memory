@@ -3,6 +3,7 @@
 namespace Orchestra\Memory;
 
 use Illuminate\Contracts\Container\Container;
+use Laravel\Octane\Events\RequestReceived;
 use Orchestra\Support\Providers\ServiceProvider;
 
 class MemoryServiceProvider extends ServiceProvider
@@ -15,12 +16,7 @@ class MemoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('orchestra.memory', function (Container $app) {
-            $manager = new MemoryManager($app);
-            $namespace = $this->hasPackageRepository() ? 'orchestra/memory::' : 'orchestra.memory';
-
-            $manager->setConfiguration($app->make('config')->get($namespace));
-
-            return $manager;
+            return new MemoryManager($app);
         });
     }
 
@@ -43,16 +39,26 @@ class MemoryServiceProvider extends ServiceProvider
             "{$path}/database/migrations",
         ]);
 
-        $this->bootMemoryEvent();
+        $this->bootEvents();
     }
 
     /**
      * Register memory events during booting.
      */
-    protected function bootMemoryEvent(): void
+    protected function bootEvents(): void
     {
+        $this->callAfterResolving('orchestra.memory', function ($manager, $app) {
+            $namespace = $this->hasPackageRepository() ? 'orchestra/memory::' : 'orchestra.memory';
+
+            $manager->setConfiguration($app->make('config')->get($namespace));
+        });
+
+        $this->app['events']->listen(RequestReceived::class, function ($event) {
+            $event->sandbox->make('orchestra.memory')->finish();
+        });
+
         $this->app->terminating(function () {
-            $this->app->make('orchestra.memory')->finish();
+            app('orchestra.memory')->finish();
         });
     }
 
